@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WanderLux Travel — Luxury Travel Experiences</title>
+  <meta name="description" content="WanderLux Travel crafts extraordinary journeys tailored to you. Discover curated destinations, expert travel agents, and exclusive packages." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════════
+       NAVIGATION
+  ══════════════════════════════════════════════════════ -->
+  <nav id="navbar" class="transparent">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+          <div class="logo-icon">✈</div>
+          <div class="logo-text">
+            WanderLux
+            <span>Travel Agency</span>
+          </div>
+        </a>
+
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="packages.html">Packages & Destinations</a></li>
+          <li><a href="agents.html">Our Agents</a></li>
+          <li><a href="packing-guide.html">Packing Guide</a></li>
+          <li><a href="booking.html">Book Now</a></li>
+        </ul>
+
+        <div class="nav-cta">
+          <span class="nav-phone"><i class="fas fa-phone-alt"></i> +1 (800) 926-3371</span>
+          <a href="booking.html" class="btn btn-primary">Get a Quote</a>
+        </div>
+
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════════
+       HERO BANNER
+  ══════════════════════════════════════════════════════ -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <i class="fas fa-award"></i> #1 Rated Travel Agency 2024
+        </div>
+        <h1 class="hero-title">
+          Discover the World<br />
+          in <span class="accent">Extraordinary</span><br />
+          Style
+        </h1>
+        <p class="hero-sub">
+          Handcrafted journeys, expert guidance, and unforgettable memories await.
+          Let our specialists design the perfect adventure for you.
+        </p>
+        <div class="hero-actions">
+          <a href="packages.html" class="btn btn-primary">
+            <i class="fas fa-compass"></i> Explore Packages
+          </a>
+          <a href="booking.html" class="btn btn-outline-white">
+            <i class="fas fa-calendar-check"></i> Book a Trip
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="num">12<span>k+</span></div>
+            <div class="lbl">Happy Travelers</div>
+          </div>
+          <div class="hero-stat">
+            <div class="num">80<span>+</span></div>
+            <div class="lbl">Destinations</div>
+          </div>
+          <div class="hero-stat">
+            <div class="num">15<span>yr</span></div>
+            <div class="lbl">Experience</div>
+          </div>
+          <div class="hero-stat">
+            <div class="num">4.9<span>★</span></div>
+            <div class="lbl">Avg. Rating</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       QUICK SEARCH
+  ══════════════════════════════════════════════════════ -->
+  <div class="container" style="position:relative; z-index:10;">
+    <div class="search-bar-wrapper">
+      <div class="search-bar-inner">
+        <div class="search-field">
+          <label><i class="fas fa-map-marker-alt"></i>&nbsp; Destination</label>
+          <input type="text" placeholder="Where would you like to go?" />
+        </div>
+        <div class="search-field">
+          <label><i class="far fa-calendar"></i>&nbsp; Departure Date</label>
+          <input type="date" />
+        </div>
+        <div class="search-field">
+          <label><i class="fas fa-users"></i>&nbsp; Travelers</label>
+          <select>
+            <option>1 Adult</option>
+            <option>2 Adults</option>
+            <option>2 Adults, 1 Child</option>
+            <option>2 Adults, 2 Children</option>
+            <option>Group (5+)</option>
+          </select>
+        </div>
+        <a href="packages.html" class="btn btn-ocean" style="white-space:nowrap;">
+          <i class="fas fa-search"></i> Search
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       ABOUT SECTION
+  ══════════════════════════════════════════════════════ -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+
+        <!-- Images column -->
+        <div class="about-images">
+          <div class="about-img-main">
+            <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=700&q=80" alt="Travel experience" loading="lazy" />
+          </div>
+          <div class="about-img-accent">
+            <img src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?w=400&q=80" alt="Travelers exploring" loading="lazy" />
+          </div>
+          <div class="about-badge">
+            <div class="years">15</div>
+            <div class="label">Years of<br>Excellence</div>
+          </div>
+        </div>
+
+        <!-- Text column -->
+        <div class="about-text">
+          <span class="section-label">Who We Are</span>
+          <h2 class="section-title">
+            Your Journey Starts with<br />
+            <span>Passion & Expertise</span>
+          </h2>
+          <p class="section-sub">
+            At WanderLux, we believe travel is more than a destination — it's a transformation.
+            Founded in 2009, our agency has curated thousands of exceptional journeys for discerning
+            travelers across the globe.
+          </p>
+          <p style="color:var(--gray-600); font-size:.95rem; margin-top:1rem; line-height:1.75;">
+            From the sun-drenched beaches of the Maldives to the ancient temples of Kyoto,
+            our team of seasoned travel specialists craft every itinerary with meticulous care,
+            ensuring each trip is uniquely yours. We handle every detail so you can simply
+            enjoy the experience.
+          </p>
+
+          <div class="about-features">
+            <div class="feature-item">
+              <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+              <div>
+                <h4>Fully Insured</h4>
+                <p>Complete travel protection & peace of mind</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon"><i class="fas fa-headset"></i></div>
+              <div>
+                <h4>24/7 Support</h4>
+                <p>We're always here, wherever you are</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon"><i class="fas fa-star"></i></div>
+              <div>
+                <h4>Curated Experiences</h4>
+                <p>Hand-picked hotels, tours & activities</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon"><i class="fas fa-leaf"></i></div>
+              <div>
+                <h4>Eco-Conscious</h4>
+                <p>Committed to sustainable travel</p>
+              </div>
+            </div>
+          </div>
+
+          <a href="agents.html" class="btn btn-primary">
+            Meet Our Team <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       FEATURED DESTINATIONS
+  ══════════════════════════════════════════════════════ -->
+  <section id="destinations">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Explore the World</span>
+        <h2 class="section-title">Trending <span>Destinations</span></h2>
+        <p class="section-sub">
+          From tropical escapes to mountain retreats — discover our most sought-after destinations.
+        </p>
+      </div>
+
+      <div class="dest-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="beach">🏖 Beach</button>
+        <button class="filter-btn" data-filter="culture">🏛 Culture</button>
+        <button class="filter-btn" data-filter="adventure">🧗 Adventure</button>
+        <button class="filter-btn" data-filter="luxury">💎 Luxury</button>
+        <button class="filter-btn" data-filter="family">👨‍👩‍👧 Family</button>
+      </div>
+
+      <div class="dest-grid">
+
+        <!-- Card 1 -->
+        <div class="dest-card" data-cat="beach luxury">
+          <div class="dest-img">
+            <img src="https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=600&q=80" alt="Maldives" loading="lazy" />
+            <span class="dest-tag">Bestseller</span>
+            <button class="dest-wishlist"><i class="far fa-heart"></i></button>
+          </div>
+          <div class="dest-body">
+            <div class="dest-location"><i class="fas fa-map-marker-alt"></i> Indian Ocean</div>
+            <h3 class="dest-name">Maldives Island Retreat</h3>
+            <p class="dest-desc">Crystal-clear lagoons, overwater bungalows, and breathtaking sunsets. The ultimate luxury escape awaits.</p>
+            <div class="dest-footer">
+              <div class="dest-price">
+                <div class="from">From</div>
+                <div class="amount">$3,499</div>
+                <div class="per">/person</div>
+              </div>
+              <div class="dest-meta">
+                <span class="dest-duration"><i class="far fa-clock"></i> 7 nights</span>
+                <span class="dest-rating"><span class="stars">★★★★★</span> 4.9</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="dest-card" data-cat="culture luxury">
+          <div class="dest-img">
+            <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&q=80" alt="Paris" loading="lazy" />
+            <span class="dest-tag">Popular</span>
+            <button class="dest-wishlist"><i class="far fa-heart"></i></button>
+          </div>
+          <div class="dest-body">
+            <div class="dest-location"><i class="fas fa-map-marker-alt"></i> France, Europe</div>
+            <h3 class="dest-name">Paris, the City of Light</h3>
+            <p class="dest-desc">Art, cuisine, fashion, and the iconic Eiffel Tower. Paris captures hearts like no other city on earth.</p>
+            <div class="dest-footer">
+              <div class="dest-price">
+                <div class="from">From</div>
+                <div class="amount">$2,199</div>
+                <div class="per">/person</div>
+              </div>
+              <div class="dest-meta">
+                <span class="dest-duration"><i class="far fa-clock"></i> 6 nights</span>
+                <span class="dest-rating"><span class="stars">★★★★★</span> 4.8</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="dest-card" data-cat="beach adventure">
+          <div class="dest-img">
+            <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=600&q=80" alt="Bali" loading="lazy" />
+            <span class="dest-tag">New</span>
+            <button class="dest-wishlist"><i class="far fa-heart"></i></button>
+          </div>
+          <div class="dest-body">
+            <div class="dest-location"><i class="fas fa-map-marker-alt"></i> Indonesia, Asia</div>
+            <h3 class="dest-name">Bali — Island of the Gods</h3>
+            <p class="dest-desc">Terraced rice paddies, ancient temples, vibrant nightlife, and pristine beaches in one magical island.</p>
+            <div class="dest-footer">
+              <div class="dest-price">
+                <div class="from">From</div>
+                <div class="amount">$1,799</div>
+                <div class="per">/person</div>
+              </div>
+              <div class="dest-meta">
+                <span class="dest-duration"><i class="far fa-clock"></i> 8 nights</span>
+                <span class="dest-rating"><span class="stars">★★★★★</span> 4.9</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="dest-card" data-cat="culture adventure">
+          <div class="dest-img">
+            <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=600&q=80" alt="Tokyo" loading="lazy" />
+            <button class="dest-wishlist"><i class="far fa-heart"></i></button>
+          </div>
+          <div class="dest-body">
+            <div class="dest-location"><i class="fas fa-map-marker-alt"></i> Japan, Asia</div>
+            <h3 class="dest-name">Tokyo — Where Futures Begin</h3>
+            <p class="dest-desc">Ancient tradition meets neon-lit innovation. Sushi, cherry blossoms, and endless wonder in every street.</p>
+            <div class="dest-footer">
+              <div class="dest-price">
+                <div class="from">From</div>
+                <div class="amount">$2,899</div>
+                <div class="per">/person</div>
+              </div>
+              <div class="dest-meta">
+                <span class="dest-duration"><i class="far fa-clock"></i> 9 nights</span>
+                <span class="dest-rating"><span class="stars">★★★★★</span> 4.8</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="dest-card" data-cat="adventure family">
+          <div class="dest-img">
+            <img src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=600&q=80" alt="Safari Kenya" loading="lazy" />
+            <span class="dest-tag">Exclusive</span>
+            <button class="dest-wishlist"><i class="far fa-heart"></i></button>
+          </div>
+          <div class="dest-body">
+            <div class="dest-location"><i class="fas fa-map-marker-alt"></i> Kenya, Africa</div>
+            <h3 class="dest-name">African Safari Adventure</h3>
+            <p class="dest-desc">Witness the Great Migration and encounter the Big Five in their natural habitat. An experience that changes you forever.</p>
+            <div class="dest-footer">
+              <div class="dest-price">
+                <div class="from">From</div>
+                <div class="amount">$4,299</div>
+                <div class="per">/person</div>
+              </div>
+              <div class="dest-meta">
+                <span class="dest-duration"><i class="far fa-clock"></i> 10 nights</span>
+                <span class="dest-rating"><span class="stars">★★★★★</span> 5.0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="dest-card" data-cat="beach family">
+          <div class="dest-img">
+            <img src="https://images.unsplash.com/photo-1571366343168-631c5bcca7a4?w=600&q=80" alt="Santorini" loading="lazy" />
+            <button class="dest-wishlist"><i class="far fa-heart"></i></button>
+          </div>
+          <div class="dest-body">
+            <div class="dest-location"><i class="fas fa-map-marker-alt"></i> Greece, Europe</div>
+            <h3 class="dest-name">Santorini Sunsets</h3>
+            <p class="dest-desc">Iconic white-and-blue architecture, volcanic beaches, world-class wine, and some of the most romantic sunsets on earth.</p>
+            <div class="dest-footer">
+              <div class="dest-price">
+                <div class="from">From</div>
+                <div class="amount">$2,599</div>
+                <div class="per">/person</div>
+              </div>
+              <div class="dest-meta">
+                <span class="dest-duration"><i class="far fa-clock"></i> 7 nights</span>
+                <span class="dest-rating"><span class="stars">★★★★★</span> 4.9</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="text-align:center; margin-top:3rem;">
+        <a href="packages.html" class="btn btn-outline-navy">
+          View All Destinations & Packages <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       MEET OUR AGENTS (PREVIEW)
+  ══════════════════════════════════════════════════════ -->
+  <section id="agents" style="padding: 7rem 0; background: var(--cream);">
+    <div class="container">
+      <div class="section-header centered">
+        <span class="section-label">Expert Guidance</span>
+        <h2 class="section-title">Meet Our <span>Travel Specialists</span></h2>
+        <p class="section-sub">
+          Our passionate team of travel experts have explored the world and are dedicated to crafting your perfect journey.
+        </p>
+      </div>
+
+      <div class="agents-grid">
+
+        <div class="agent-card">
+          <div class="agent-cover"></div>
+          <div class="agent-avatar">
+            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&q=80" alt="Sophia Laurent" loading="lazy" />
+          </div>
+          <div class="agent-body">
+            <h3 class="agent-name">Sophia Laurent</h3>
+            <p class="agent-role">Luxury Travel Specialist</p>
+            <p class="agent-bio">With 12 years curating high-end European and Asian itineraries, Sophia brings unparalleled expertise to every journey.</p>
+            <div class="agent-tags">
+              <span class="agent-tag">Europe</span>
+              <span class="agent-tag">Asia</span>
+              <span class="agent-tag">Luxury</span>
+            </div>
+            <div class="agent-stats">
+              <div class="agent-stat"><div class="val">340+</div><div class="lbl">Trips</div></div>
+              <div class="agent-stat"><div class="val">4.9★</div><div class="lbl">Rating</div></div>
+              <div class="agent-stat"><div class="val">12yr</div><div class="lbl">Exp.</div></div>
+            </div>
+            <a href="booking.html" class="btn btn-ocean" style="width:100%; justify-content:center;">Book with Sophia</a>
+          </div>
+        </div>
+
+        <div class="agent-card">
+          <div class="agent-cover"></div>
+          <div class="agent-avatar">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80" alt="Marcus Reid" loading="lazy" />
+          </div>
+          <div class="agent-body">
+            <h3 class="agent-name">Marcus Reid</h3>
+            <p class="agent-role">Adventure Travel Expert</p>
+            <p class="agent-bio">A certified wilderness guide and avid explorer, Marcus specializes in thrilling African safaris and trekking expeditions.</p>
+            <div class="agent-tags">
+              <span class="agent-tag">Africa</span>
+              <span class="agent-tag">Trekking</span>
+              <span class="agent-tag">Safari</span>
+            </div>
+            <div class="agent-stats">
+              <div class="agent-stat"><div class="val">290+</div><div class="lbl">Trips</div></div>
+              <div class="agent-stat"><div class="val">5.0★</div><div class="lbl">Rating</div></div>
+              <div class="agent-stat"><div class="val">10yr</div><div class="lbl">Exp.</div></div>
+            </div>
+            <a href="booking.html" class="btn btn-ocean" style="width:100%; justify-content:center;">Book with Marcus</a>
+          </div>
+        </div>
+
+        <div class="agent-card">
+          <div class="agent-cover"></div>
+          <div class="agent-avatar">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&q=80" alt="Aiko Tanaka" loading="lazy" />
+          </div>
+          <div class="agent-body">
+            <h3 class="agent-name">Aiko Tanaka</h3>
+            <p class="agent-role">Asia Pacific Specialist</p>
+            <p class="agent-bio">Born in Osaka and raised across Southeast Asia, Aiko crafts immersive cultural experiences that few others can match.</p>
+            <div class="agent-tags">
+              <span class="agent-tag">Japan</span>
+              <span class="agent-tag">SE Asia</span>
+              <span class="agent-tag">Culture</span>
+            </div>
+            <div class="agent-stats">
+              <div class="agent-stat"><div class="val">410+</div><div class="lbl">Trips</div></div>
+              <div class="agent-stat"><div class="val">4.9★</div><div class="lbl">Rating</div></div>
+              <div class="agent-stat"><div class="val">14yr</div><div class="lbl">Exp.</div></div>
+            </div>
+            <a href="booking.html" class="btn btn-ocean" style="width:100%; justify-content:center;">Book with Aiko</a>
+          </div>
+        </div>
+
+        <div class="agent-card">
+          <div class="agent-cover"></div>
+          <div class="agent-avatar">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80" alt="Daniel Moreno" loading="lazy" />
+          </div>
+          <div class="agent-body">
+            <h3 class="agent-name">Daniel Moreno</h3>
+            <p class="agent-role">Family & Americas Expert</p>
+            <p class="agent-bio">Daniel has a gift for designing stress-free family adventures across North and South America, from Costa Rica to Patagonia.</p>
+            <div class="agent-tags">
+              <span class="agent-tag">Americas</span>
+              <span class="agent-tag">Family</span>
+              <span class="agent-tag">Eco</span>
+            </div>
+            <div class="agent-stats">
+              <div class="agent-stat"><div class="val">275+</div><div class="lbl">Trips</div></div>
+              <div class="agent-stat"><div class="val">4.8★</div><div class="lbl">Rating</div></div>
+              <div class="agent-stat"><div class="val">9yr</div><div class="lbl">Exp.</div></div>
+            </div>
+            <a href="booking.html" class="btn btn-ocean" style="width:100%; justify-content:center;">Book with Daniel</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="text-align:center; margin-top:3rem;">
+        <a href="agents.html" class="btn btn-outline-navy">
+          View All Travel Agents <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       TESTIMONIALS
+  ══════════════════════════════════════════════════════ -->
+  <section id="testimonials">
+    <div class="container">
+      <div class="section-header centered" style="margin-bottom:3rem;">
+        <span class="section-label">What Our Clients Say</span>
+        <h2 class="section-title" style="color:var(--white);">Stories from <span>Happy Travelers</span></h2>
+      </div>
+
+      <div class="testimonials-grid">
+
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-quote">"</div>
+          <p class="testi-text">
+            Sophia planned the most breathtaking two-week European tour for our anniversary. Every hotel, every restaurant, every excursion was perfect. We didn't have to worry about a single detail.
+          </p>
+          <div class="testi-author">
+            <div class="testi-avatar">
+              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="Client" loading="lazy" />
+            </div>
+            <div>
+              <div class="testi-name">Jennifer & Tom Wallace</div>
+              <div class="testi-trip">✈ Paris, Tuscany & Amalfi Coast</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-quote">"</div>
+          <p class="testi-text">
+            The Kenya safari Marcus arranged was absolutely life-changing. Seeing a lion pride at sunrise across the Maasai Mara — I'll carry that memory forever. Worth every penny and then some.
+          </p>
+          <div class="testi-author">
+            <div class="testi-avatar">
+              <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80" alt="Client" loading="lazy" />
+            </div>
+            <div>
+              <div class="testi-name">Robert Chen</div>
+              <div class="testi-trip">✈ Maasai Mara Safari, Kenya</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-quote">"</div>
+          <p class="testi-text">
+            We took our whole family to Bali — four kids, two grandparents, and myself — and Aiko made sure everyone had the time of their lives. The private villa was incredible. Highly recommend!
+          </p>
+          <div class="testi-author">
+            <div class="testi-avatar">
+              <img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=100&q=80" alt="Client" loading="lazy" />
+            </div>
+            <div>
+              <div class="testi-name">Priya Sharma</div>
+              <div class="testi-trip">✈ Family Retreat, Bali</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-quote">"</div>
+          <p class="testi-text">
+            From booking to return flight, WanderLux was with us every step. When our first hotel had an issue, they had us moved to an upgrade within the hour. That's world-class service.
+          </p>
+          <div class="testi-author">
+            <div class="testi-avatar">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="Client" loading="lazy" />
+            </div>
+            <div>
+              <div class="testi-name">Marcus & Lisa Freeman</div>
+              <div class="testi-trip">✈ Maldives Luxury Escape</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-quote">"</div>
+          <p class="testi-text">
+            Japan was on my bucket list for 20 years. Aiko made it happen beyond my wildest dreams — cherry blossoms in Kyoto, ramen in Sapporo, and the most pristine ryokan I could imagine.
+          </p>
+          <div class="testi-author">
+            <div class="testi-avatar">
+              <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&q=80" alt="Client" loading="lazy" />
+            </div>
+            <div>
+              <div class="testi-name">Catherine Dubois</div>
+              <div class="testi-trip">✈ Cherry Blossom Japan Tour</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-quote">"</div>
+          <p class="testi-text">
+            Daniel planned an incredible two-week Costa Rica eco-adventure for our family. Zip-lining, surfing lessons, sea turtle tours — my kids still talk about it every single day.
+          </p>
+          <div class="testi-author">
+            <div class="testi-avatar">
+              <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&q=80" alt="Client" loading="lazy" />
+            </div>
+            <div>
+              <div class="testi-name">James & Karen O'Brien</div>
+              <div class="testi-trip">✈ Costa Rica Family Adventure</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       CTA BANNER
+  ══════════════════════════════════════════════════════ -->
+  <div class="cta-banner">
+    <div class="container">
+      <h2>Ready to Start Your Adventure?</h2>
+      <p>Talk to one of our specialists today and let us design your dream journey from scratch — completely free of charge.</p>
+      <div class="btn-row">
+        <a href="booking.html" class="btn btn-primary">
+          <i class="fas fa-paper-plane"></i> Start Planning
+        </a>
+        <a href="agents.html" class="btn btn-outline-white">
+          <i class="fas fa-comments"></i> Chat with an Agent
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════════════════ -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-icon">✈</div>
+            <div class="logo-text">WanderLux <span>Travel Agency</span></div>
+          </a>
+          <p>Crafting extraordinary journeys for discerning travelers since 2009. Your dream trip is just one conversation away.</p>
+          <div class="footer-socials">
+            <a href="#" class="footer-social"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="footer-social"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="footer-social"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="footer-social"><i class="fab fa-pinterest-p"></i></a>
+            <a href="#" class="footer-social"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul class="footer-links">
+            <li><a href="packages.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> All Destinations</a></li>
+            <li><a href="packages.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Travel Packages</a></li>
+            <li><a href="agents.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Our Travel Agents</a></li>
+            <li><a href="packing-guide.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Packing Guide</a></li>
+            <li><a href="booking.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Book a Trip</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="#about"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> About Us</a></li>
+            <li><a href="#testimonials"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Testimonials</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Careers</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Privacy Policy</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Terms of Service</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Get in Touch</h4>
+          <div class="footer-contact-item">
+            <div class="ci"><i class="fas fa-map-marker-alt"></i></div>
+            <span>1240 Lakeview Blvd, Suite 400<br>San Francisco, CA 94102</span>
+          </div>
+          <div class="footer-contact-item">
+            <div class="ci"><i class="fas fa-phone"></i></div>
+            <span>+1 (800) 926-3371</span>
+          </div>
+          <div class="footer-contact-item">
+            <div class="ci"><i class="fas fa-envelope"></i></div>
+            <span>hello@wanderlux.travel</span>
+          </div>
+          <div style="margin-top:1.25rem;">
+            <h4 style="margin-bottom:.75rem;">Newsletter</h4>
+            <div class="footer-newsletter">
+              <input type="email" placeholder="Enter your email…" />
+              <button class="btn btn-primary" style="width:100%; justify-content:center;">
+                <i class="fas fa-paper-plane"></i> Subscribe
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2024 WanderLux Travel Agency. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Cookies</a>
+          <a href="#">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
