@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ — WanderLux Travel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .faq-hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #1e3c6e 60%, var(--ocean) 100%);
+      padding: 7rem 0 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .faq-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1488085061387-422e29b40080?w=1800&q=40') center/cover;
+      opacity: .07;
+    }
+    .faq-hero .container { position: relative; z-index: 2; }
+    .faq-hero h1 { font-family: var(--font-head); font-size: clamp(2rem, 5vw, 3rem); color: var(--white); margin-bottom: .75rem; }
+    .faq-hero p { color: rgba(255,255,255,.75); font-size: 1.05rem; max-width: 560px; }
+
+    /* Search */
+    .faq-search {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      padding: 1.5rem 2rem;
+      margin-top: -2.5rem;
+      position: relative;
+      z-index: 10;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .faq-search i { color: var(--gray-400); font-size: 1.1rem; }
+    .faq-search input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      color: var(--text);
+      font-family: var(--font-body);
+    }
+    .faq-search input::placeholder { color: var(--gray-400); }
+
+    /* Category tabs */
+    .faq-cats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem;
+      margin: 3rem 0 2rem;
+    }
+
+    /* Accordion */
+    .faq-group { margin-bottom: 3rem; }
+    .faq-group-title {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      font-family: var(--font-head);
+      font-size: 1.35rem;
+      color: var(--navy);
+      margin-bottom: 1.25rem;
+      padding-bottom: .75rem;
+      border-bottom: 2px solid var(--gray-200);
+    }
+    .faq-group-icon {
+      width: 42px;
+      height: 42px;
+      background: rgba(26,111,168,.1);
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+      color: var(--ocean);
+      flex-shrink: 0;
+    }
+
+    .accordion-item {
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      margin-bottom: .75rem;
+      overflow: hidden;
+      transition: box-shadow var(--transition);
+    }
+    .accordion-item:hover { box-shadow: var(--shadow-sm); }
+    .accordion-item.open { box-shadow: var(--shadow-sm); border-color: var(--ocean); }
+
+    .accordion-trigger {
+      width: 100%;
+      background: var(--white);
+      border: none;
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      cursor: pointer;
+      text-align: left;
+      font-family: var(--font-body);
+      transition: background var(--transition);
+    }
+    .accordion-trigger:hover { background: var(--gray-100); }
+    .accordion-item.open .accordion-trigger { background: rgba(26,111,168,.04); }
+
+    .accordion-q {
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.4;
+    }
+    .accordion-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--gray-200);
+      display: grid;
+      place-items: center;
+      font-size: .7rem;
+      color: var(--navy);
+      flex-shrink: 0;
+      transition: var(--transition);
+    }
+    .accordion-item.open .accordion-icon {
+      background: var(--ocean);
+      color: var(--white);
+      transform: rotate(180deg);
+    }
+
+    .accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s cubic-bezier(.4,0,.2,1);
+    }
+    .accordion-item.open .accordion-body { max-height: 800px; }
+
+    .accordion-content {
+      padding: 0 1.5rem 1.5rem;
+      font-size: .92rem;
+      color: var(--gray-600);
+      line-height: 1.8;
+      border-top: 1px solid var(--gray-200);
+      padding-top: 1.25rem;
+    }
+    .accordion-content p { margin-bottom: .75rem; }
+    .accordion-content p:last-child { margin-bottom: 0; }
+    .accordion-content ul { padding-left: 1.25rem; }
+    .accordion-content ul li { margin-bottom: .4rem; }
+    .accordion-content a { color: var(--ocean); text-decoration: underline; }
+    .accordion-content .highlight {
+      background: rgba(201,168,76,.1);
+      border-left: 3px solid var(--gold);
+      padding: .75rem 1rem;
+      border-radius: 0 6px 6px 0;
+      margin-top: .75rem;
+      font-size: .875rem;
+    }
+
+    /* Contact cards */
+    .contact-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .contact-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+      transition: var(--transition);
+    }
+    .contact-card:hover {
+      box-shadow: var(--shadow);
+      border-color: var(--ocean);
+      transform: translateY(-3px);
+    }
+    .contact-card .cc-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(26,111,168,.1);
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+      color: var(--ocean);
+      margin: 0 auto 1rem;
+    }
+    .contact-card h3 { font-family: var(--font-head); font-size: 1.1rem; color: var(--navy); margin-bottom: .4rem; }
+    .contact-card p { font-size: .875rem; color: var(--gray-600); margin-bottom: 1.25rem; line-height: 1.6; }
+
+    /* No results */
+    #noResults { display: none; text-align: center; padding: 3rem; color: var(--gray-400); }
+
+    @media (max-width: 768px) {
+      .faq-search { flex-direction: column; align-items: stretch; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar" class="scrolled">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+          <div class="logo-icon">✈</div>
+          <div class="logo-text">WanderLux <span>Travel Agency</span></div>
+        </a>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="packages.html">Packages & Destinations</a></li>
+          <li><a href="agents.html">Our Agents</a></li>
+          <li><a href="packing-guide.html">Packing Guide</a></li>
+          <li><a href="booking.html">Book Now</a></li>
+        </ul>
+        <div class="nav-cta">
+          <span class="nav-phone"><i class="fas fa-phone-alt"></i> +1 (800) 926-3371</span>
+          <a href="booking.html" class="btn btn-primary">Get a Quote</a>
+        </div>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="faq-hero">
+    <div class="container">
+      <span class="section-label">Help Center</span>
+      <h1>Frequently Asked Questions</h1>
+      <p>Everything you need to know about booking, traveling, and working with WanderLux. Can't find your answer? Our team is always here.</p>
+    </div>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="container">
+    <div class="faq-search">
+      <i class="fas fa-search"></i>
+      <input type="text" id="faqSearchInput" placeholder="Search questions… e.g. 'cancellation', 'visa', 'payment'" oninput="filterFAQ(this.value)" />
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="page-content">
+    <div class="container">
+
+      <!-- Category quick-links -->
+      <div class="faq-cats">
+        <button class="filter-btn active" onclick="scrollToGroup('booking')"><i class="fas fa-calendar-check"></i> Booking Process</button>
+        <button class="filter-btn" onclick="scrollToGroup('pricing')"><i class="fas fa-tag"></i> Pricing & Payment</button>
+        <button class="filter-btn" onclick="scrollToGroup('cancel')"><i class="fas fa-times-circle"></i> Cancellations</button>
+        <button class="filter-btn" onclick="scrollToGroup('visas')"><i class="fas fa-passport"></i> Visas & Entry</button>
+        <button class="filter-btn" onclick="scrollToGroup('agents')"><i class="fas fa-user-tie"></i> Our Agents</button>
+        <button class="filter-btn" onclick="scrollToGroup('insurance')"><i class="fas fa-shield-alt"></i> Insurance</button>
+        <button class="filter-btn" onclick="scrollToGroup('tips')"><i class="fas fa-lightbulb"></i> Travel Tips</button>
+      </div>
+
+      <div id="noResults">
+        <div style="font-size:3rem;margin-bottom:1rem;">🔍</div>
+        <h3 style="color:var(--navy);margin-bottom:.5rem;">No results found</h3>
+        <p>Try different keywords or <a href="#contact-section" style="color:var(--ocean);">contact our team</a> directly.</p>
+      </div>
+
+      <!-- ══════════════════════════════════
+           BOOKING PROCESS
+      ══════════════════════════════════ -->
+      <div class="faq-group" id="group-booking">
+        <div class="faq-group-title">
+          <div class="faq-group-icon"><i class="fas fa-calendar-check"></i></div>
+          Booking Process
+        </div>
+
+        <div class="accordion-item" data-search="how does booking work process enquiry">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">How does the booking process work?</span>
+            <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <p>Our process is simple and stress-free. Here's how it works:</p>
+              <ul>
+                <li><strong>Step 1 — Submit your enquiry:</strong> Use our <a href="booking.html">online booking form</a>, call us, or chat live. Tell us your destination, dates, budget, and preferences.</li>
+                <li><strong>Step 2 — Meet your agent:</strong> We'll assign the most suitable travel specialist within 24 hours. They'll reach out for a free consultation call (no obligation).</li>
+                <li><strong>Step 3 — Receive your bespoke proposal:</strong> Your agent prepares a tailored itinerary with flights, hotels, transfers, and activities — along with transparent pricing.</li>
+                <li><strong>Step 4 — Refine and confirm:</strong> Adjust anything until it's perfect. No rush. When you're happy, confirm with a deposit.</li>
+                <li><strong>Step 5 — We handle everything:</strong> From booking to departure day, we manage every detail. You just pack your bags.</li>
+              </ul>
+              <div class="highlight">💡 There's never a fee just for getting a quote. Our consultation is completely free with no obligation to book.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item" data-search="how far in advance should I book early last minute">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">How far in advance should I book my trip?</span>
+            <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <p>It depends on your destination and the type of trip:</p>
+              <ul>
+                <li><strong>Safari & remote lodges:</strong> 9–12 months in advance (especially for peak season: July–October)</li>
+                <li><strong>Peak season travel</strong> (Christmas, Easter, school holidays): 6–9 months</li>
+                <li><strong>Popular beach destinations</strong> (Maldives, Santorini): 4–6 months</li>
+                <li><strong>Europe city breaks:</strong> 2–4 months</li>
+                <li><strong>Last-minute trips:</strong> We can often find excellent availability within 4–8 weeks, especially for flexible travelers</li>
+              </ul>
+              <div class="highlight">💡 Early booking typically means better prices and greater choice of accommodation. That said, we also have access to exclusive last-minute deals not available to the public.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item" data-search="can I customize bespoke tailor itinerary change">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">Can I fully customize my itinerary?</span>
+            <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <p>Absolutely. Every trip we create is built around you from scratch. We don't sell fixed packages — we use them as starting points and then tailor everything to your preferences.</p>
+              <p>You can customize: dates, duration, hotels (we have partnerships with over 2,000 properties), activities, dining experiences, transportation, pace of travel, and budget allocation.</p>
+              <p>Just tell your agent what you love, what you'd rather avoid, and what matters most — they'll do the rest.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item" data-search="group bookings corporate events incentive">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">Do you handle group and corporate bookings?</span>
+            <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <p>Yes — and it's one of our specialties. We regularly arrange:</p>
+              <ul>
+                <li>Family reunions and milestone celebrations (10–50 guests)</li>
+                <li>Corporate retreats and incentive travel</li>
+                <li>Wedding and honeymoon destination packages</li>
+                <li>Group adventure tours (hiking clubs, yoga groups, photography tours)</li>
+                <li>Conference and event add-on leisure itineraries</li>
+              </ul>
+              <p>Group bookings often unlock exclusive rates and private experiences. Contact us at <a href="mailto:groups@wanderlux.travel">groups@wanderlux.travel</a> or call us to discuss.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════
+           PRICING & PAYMENT
+      ══════════════════════════════════ -->
+      <div class="faq-group" id="group-pricing">
+        <div class="faq-group-title">
+          <div class="faq-group-icon"><i class="fas fa-tag"></i></div>
+          Pricing & Payment
+        </div>
+
+        <div class="accordion-item" data-search="price includes whats included flights hotels">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">What's included in the listed prices?</span>
+            <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <p>All listed prices are <strong>per person</strong> and typically include the following core elements (package-dependent):</p>
+              <ul>
+                <li>✅ Return flights (economy class unless stated)</li>
+                <li>✅ Airport transfers at origin and destination</li>
+                <li>✅ Hotel accommodation for listed number of nights</li>
+                <li>✅ Meals as stated (B&B / Half-board / All-inclusive)</li>
+                <li>✅ All listed tours and excursions</li>
+              </ul>
+              <p>Prices typically <strong>exclude:</strong> travel insurance, gratuities, personal spending, optional activities, and visa fees. Your agent will clearly outline every cost before you commit.</p>
+              <div class="highlight">💡 We believe in complete transparency. There are never hidden fees or surprise charges at WanderLux.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item" data-search="deposit payment how much when pay installments">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">How much deposit is required and when is the balance due?</span>
+            <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <p>Our standard payment structure is:</p>
+              <ul>
+                <li><strong>Deposit (25%):</strong> Due at time of booking confirmation to secure your reservation</li>
+                <li><strong>Second payment (50%):</strong> Due 60 days before departure</li>
+                <li><strong>Final balance (25%):</strong> Due 30 days before departure</li>
+              </ul>
+              <p>For bookings made within 30 days of departure, the full amount is payable at time of booking.</p>
+              <p>We accept: Visa, Mastercard, American Express, bank transfer, and PayPal. All payments are processed through PCI-DSS compliant, SSL-encrypted systems.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item" data-search="price match guarantee cheaper found">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">Do you offer a price match guarantee?</span>
+            <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <p>Yes. If you find an identical package (same flights, same hotel, same dates, same inclusions) at a lower price within 48 hours of booking with us, we'll match it — or refund the difference.</p>
+              <p>Our exclusive supplier relationships and industry rates mean we're typically already offering the best available price. But if you do find something cheaper, we want to know — we'll always make it right.</p>
+              <div class="highlight">💡 Many of our exclusive resort and airline rates are negotiated at industry level and are not available to the general public through booking engines like Expedia or Booking.com.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item" data-search="currency multi currency USD EUR GBP pay">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">Can I pay in my local currency?</span>
+            <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <p>Yes. We accept payments in USD, GBP, EUR, AUD, CAD, and SGD. When you enquire, simply let your agent know your preferred currency and they'll quote in that currency with current exchange rates locked in at the time of deposit.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════
+           CANCELLATIONS & REFUNDS
+      ══════════════════════════════════ -->
+      <div class="faq-group" id="group-cancel">
+        <div class="faq-group-title">
+          <div class="faq-group-icon"><i class="fas fa-times-circle"></i></div>
+          Cancellations & Refunds
+        </div>
+
+        <div class="accordion-item" data-search="cancel refund policy change mind">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">What is your cancellation policy?</span>
+            <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <p>Our standard cancellation schedule (from departure date):</p>
+              <ul>
+                <li><strong>90+ days before departure:</strong> Full deposit refund, minus a $150 administrative fee</li>
+                <li><strong>60–89 days:</strong> 50% refund of total booking value</li>
+                <li><strong>30–59 days:</strong> 25% refund of total booking value</li>
+                <li><strong>Under 30 days:</strong> Non-refundable (we strongly recommend travel insurance to cover this)</li>
+              </ul>
+              <p>Please note that some suppliers (particularly in peak season or for specialty accommodations) may apply their own stricter cancellation terms, which your agent will disclose upfront.</p>
+              <div class="highlight">💡 Comprehensive travel insurance covers cancellation for most covered reasons (medical emergencies, redundancy, bereavement). We strongly recommend purchasing this at the time of booking.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item" data-search="change date amend modify rebook">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">Can I change my travel dates after booking?</span>
+            <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <p>In many cases, yes — date changes are possible, subject to availability and supplier terms. The earlier you notify us, the more options we have. A date-change fee of $75 per person applies, plus any difference in pricing between your original and new dates.</p>
+              <p>If your trip is affected by circumstances outside your control (natural disaster, political unrest, airline cancellation), we will always work to rebook you at no additional charge wherever possible.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item" data-search="WanderLux cancel trip weather force majeure">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">What happens if WanderLux cancels my trip?</span>
+            <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <p>In the extremely rare event that WanderLux must cancel your trip (this has not happened in our 15-year history for non-force majeure reasons), you will receive:</p>
+              <ul>
+                <li>A full 100% refund of all monies paid, OR</li>
+                <li>A full credit to rebook any trip of equal value, plus a complimentary upgrade</li>
+              </ul>
+              <p>All bookings are ATOL protected, meaning your money is safe even in the event of supplier failure.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════
+           VISAS & ENTRY
+      ══════════════════════════════════ -->
+      <div class="faq-group" id="group-visas">
+        <div class="faq-group-title">
+          <div class="faq-group-icon"><i class="fas fa-passport"></i></div>
+          Visas & Entry Requirements
+        </div>
+
+        <div class="accordion-item" data-search="visa do I need visa requirement entry">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">Do I need a visa? How do I find out?</span>
+            <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <p>Visa requirements depend on your passport nationality and your destination. Your WanderLux agent will check and advise on exact requirements at the time of booking. Some common examples:</p>
+              <ul>
+                <li><strong>Maldives:</strong> Visa on arrival (free) for all nationalities — 30 days</li>
+                <li><strong>Thailand:</strong> Visa-free for most Western passports (30–60 days)</li>
+                <li><strong>Japan:</strong> Visa-free for most Western passports (90 days)</li>
+                <li><strong>Kenya:</strong> e-Visa required (apply online, ~$51 USD)</li>
+                <li><strong>India:</strong> e-Visa required (apply online, $25–$80 depending on nationality)</li>
+                <li><strong>Schengen Zone (Europe):</strong> Visa-free for US/UK/Australian passports (90 days)</li>
+              </ul>
+              <div class="highlight">💡 Always ensure your passport is valid for at least 6 months beyond your return date. If not, renew it before booking.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item" data-search="vaccination health requirements entry covid yellow fever">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">Are there any vaccination or health requirements?</span>
+            <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <p>Some destinations require proof of vaccination as a condition of entry:</p>
+              <ul>
+                <li><strong>Yellow Fever Certificate:</strong> Required for entry into many African countries (Kenya, Tanzania, Uganda, Rwanda, etc.) if you've transited through a Yellow Fever zone</li>
+                <li><strong>Malaria prophylaxis:</strong> Strongly recommended (not required for entry) for Sub-Saharan Africa, Southeast Asia, and parts of South America</li>
+                <li><strong>General recommendations:</strong> We advise all travelers to be up to date on Hepatitis A/B, Typhoid, Tetanus, and routine vaccinations</li>
+              </ul>
+              <p>Visit your doctor or travel health clinic at least 6–8 weeks before departure. Your WanderLux agent will provide destination-specific health advisories with every itinerary.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item" data-search="travel advisory safety security safe destination">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">How do you handle government travel advisories and destination safety?</span>
+            <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <p>We monitor all destinations daily against US State Department, UK Foreign Office, and Australian DFAT travel advisories. We do not book travel to destinations rated "Level 4: Do Not Travel."</p>
+              <p>If an advisory is issued for your booked destination after you've confirmed, we will always contact you, assess the situation, and offer alternatives or a full refund if the destination becomes unsafe.</p>
+              <p>Your safety is non-negotiable. We have a 24/7 emergency line for clients who are already traveling (+1 800 926-3371, press 9).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════
+           OUR AGENTS
+      ══════════════════════════════════ -->
+      <div class="faq-group" id="group-agents">
+        <div class="faq-group-title">
+          <div class="faq-group-icon"><i class="fas fa-user-tie"></i></div>
+          Our Travel Agents
+        </div>
+
+        <div class="accordion-item" data-search="how assigned agent specialist match">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">How is my travel agent assigned to me?</span>
+            <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <p>We match you based on your destination and trip type. For example, if you want a safari, you'll be connected with Marcus Reid (our Africa expert). If it's Japan, Aiko Tanaka.</p>
+              <p>If you have a preferred agent in mind, you can request them on the booking form. If your preferred specialist is fully booked, we'll connect you with someone equally qualified.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item" data-search="agent fee charge consultation free">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">Is there a fee for the agent consultation?</span>
+            <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <p>No. All consultations, itinerary planning, and proposals are completely <strong>free of charge</strong> with no obligation to book. We earn our fee through supplier commissions when you do book — so there is never a direct planning or service charge to you.</p>
+              <div class="highlight">💡 This is one of the most underappreciated advantages of using a travel agent. You get expert, personalized planning for free. A comparable concierge service outside of travel can cost $200–$500/hour.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item" data-search="24/7 support emergency abroad in destination">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">What support do I get while I'm traveling?</span>
+            <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <p>Every WanderLux client has access to our 24/7 emergency support line for the duration of their trip. Support includes:</p>
+              <ul>
+                <li>Flight disruption management (rebooking, lounge access, compensation claims)</li>
+                <li>Hotel issues (upgrades, alternative accommodation)</li>
+                <li>Medical emergencies (hospital coordination, insurance liaising)</li>
+                <li>Lost documents (embassy contacts, emergency passport guidance)</li>
+                <li>General queries and local recommendations</li>
+              </ul>
+              <p>Emergency line: <strong>+1 (800) 926-3371</strong> — press 9 for priority in-destination support.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════
+           TRAVEL INSURANCE
+      ══════════════════════════════════ -->
+      <div class="faq-group" id="group-insurance">
+        <div class="faq-group-title">
+          <div class="faq-group-icon"><i class="fas fa-shield-alt"></i></div>
+          Travel Insurance
+        </div>
+
+        <div class="accordion-item" data-search="travel insurance need why important cover">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">Do I need travel insurance?</span>
+            <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <p>We <strong>strongly recommend</strong> it — and for some destinations, it's mandatory. Without insurance, you're exposed to significant financial risk from:</p>
+              <ul>
+                <li>Medical emergencies abroad (a single hospital stay can cost $50,000+)</li>
+                <li>Cancellation costs if you're unable to travel</li>
+                <li>Curtailment (cutting a trip short)</li>
+                <li>Luggage loss or theft</li>
+                <li>Flight delays and missed connections</li>
+              </ul>
+              <div class="highlight">💡 We offer a comprehensive travel insurance add-on from $149/person that covers all of the above. We also accept policies purchased independently — just send us the details.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item" data-search="atol iata protected money safe accredited">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">Are my money and bookings financially protected?</span>
+            <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <p>Yes, completely. WanderLux holds the following financial protection credentials:</p>
+              <ul>
+                <li><strong>ATOL (Air Travel Organiser's Licence):</strong> Protects all flights and packages against supplier failure</li>
+                <li><strong>IATA Accredited:</strong> Certified for direct airline ticket issuance</li>
+                <li><strong>ASTA Member:</strong> American Society of Travel Advisors</li>
+                <li><strong>CLIA Certified:</strong> Cruise Lines International Association</li>
+              </ul>
+              <p>All client funds are held in a protected client account and never commingled with operating funds. Your money is safe.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════
+           TRAVEL TIPS
+      ══════════════════════════════════ -->
+      <div class="faq-group" id="group-tips">
+        <div class="faq-group-title">
+          <div class="faq-group-icon"><i class="fas fa-lightbulb"></i></div>
+          Travel Tips & Best Practices
+        </div>
+
+        <div class="accordion-item" data-search="best time visit peak season avoid crowds cheapest">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">When is the best time to visit popular destinations?</span>
+            <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <p>Here are quick guides for our most-requested destinations:</p>
+              <ul>
+                <li><strong>Maldives:</strong> Nov–April (dry season, calm seas) — avoid May–October (monsoon season)</li>
+                <li><strong>Bali:</strong> May–September (dry season) — July–August can be crowded, June/September offer the best balance</li>
+                <li><strong>Japan:</strong> March–April (cherry blossom) or October–November (autumn foliage) — avoid Golden Week (late April/early May)</li>
+                <li><strong>Kenya Safari:</strong> July–October (Great Migration) or January–February (calving season)</li>
+                <li><strong>Iceland:</strong> June–August (midnight sun + puffins) or November–February (Northern Lights)</li>
+                <li><strong>Santorini:</strong> May–June or September–October — avoid July–August peak when it's extremely crowded and expensive</li>
+                <li><strong>Paris:</strong> April–June (spring) or September–October (autumn) — avoid August (locals leave, tourists flood in)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item" data-search="packing tips luggage carry on checked bag">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">Any general packing tips?</span>
+            <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <p>Our agents' top packing tips:</p>
+              <ul>
+                <li>Roll clothes instead of folding — saves 30% more space</li>
+                <li>Use packing cubes to stay organized and find things instantly</li>
+                <li>Pack a change of clothes and one day's medication in your carry-on (in case checked luggage is delayed)</li>
+                <li>Photograph your luggage contents before departure for insurance claims</li>
+                <li>Take digital copies of all documents and email them to yourself</li>
+                <li>For safari: 15kg max on light aircraft — soft-sided bags only</li>
+              </ul>
+              <p>→ Visit our comprehensive <a href="packing-guide.html">Packing Guide</a> for destination-specific checklists.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item" data-search="jet lag overcome tips tired fatigue long haul flight">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">How do I minimize jet lag on long-haul trips?</span>
+            <span class="accordion-icon"><i class="fas fa-chevron-down"></i></span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <p>Jet lag is manageable with the right strategy:</p>
+              <ul>
+                <li><strong>Shift your sleep schedule</strong> 2–3 days before departure — move bedtime 1 hour toward your destination time zone each night</li>
+                <li><strong>Stay hydrated</strong> — cabin air is extremely dry. Drink 200ml of water per hour of flight</li>
+                <li><strong>Avoid alcohol on the flight</strong> — it dehydrates you and disrupts sleep quality</li>
+                <li><strong>Take melatonin</strong> (0.5–3mg) 30 minutes before your target bedtime in the new time zone</li>
+                <li><strong>Get sunlight immediately on arrival</strong> — natural light is the most powerful circadian rhythm reset</li>
+                <li><strong>Stay awake until local bedtime</strong> on your first day — resist the nap</li>
+              </ul>
+              <div class="highlight">💡 For eastward travel (typically harder), avoid flights that arrive in the morning. If possible, choose afternoon arrivals so you only need to stay up a few more hours.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTACT SECTION -->
+      <div id="contact-section" style="padding-top:2rem;">
+        <div style="text-align:center;margin-bottom:2.5rem;">
+          <span class="section-label">Still Have Questions?</span>
+          <h2 class="section-title">We're Here to <span>Help</span></h2>
+          <p class="section-sub" style="margin:0 auto;">Our team is available Monday–Friday 8am–8pm, Saturday–Sunday 10am–5pm (EST)</p>
+        </div>
+        <div class="contact-cards">
+          <div class="contact-card">
+            <div class="cc-icon"><i class="fas fa-phone"></i></div>
+            <h3>Call Us</h3>
+            <p>Speak directly with a travel specialist who can answer any question in real time.</p>
+            <a href="tel:+18009263371" class="btn btn-primary" style="width:100%;justify-content:center;"><i class="fas fa-phone"></i> +1 (800) 926-3371</a>
+          </div>
+          <div class="contact-card">
+            <div class="cc-icon"><i class="fas fa-comments"></i></div>
+            <h3>Live Chat</h3>
+            <p>Chat with us online for quick answers. Usually under 2 minutes to connect.</p>
+            <button class="btn btn-ocean" style="width:100%;justify-content:center;" onclick="document.getElementById('chatToggle').click()">
+              <i class="fas fa-comment-dots"></i> Open Live Chat
+            </button>
+          </div>
+          <div class="contact-card">
+            <div class="cc-icon"><i class="fas fa-envelope"></i></div>
+            <h3>Email Us</h3>
+            <p>For detailed enquiries. We reply to all emails within 4 business hours.</p>
+            <a href="mailto:hello@wanderlux.travel" class="btn btn-outline-navy" style="width:100%;justify-content:center;"><i class="fas fa-envelope"></i> hello@wanderlux.travel</a>
+          </div>
+          <div class="contact-card">
+            <div class="cc-icon"><i class="fas fa-magic"></i></div>
+            <h3>Take the Quiz</h3>
+            <p>Not sure where to start? Our travel quiz will match you with the perfect destination.</p>
+            <a href="travel-quiz.html" class="btn btn-outline-navy" style="width:100%;justify-content:center;"><i class="fas fa-star"></i> Start Quiz</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-icon">✈</div>
+            <div class="logo-text">WanderLux <span>Travel Agency</span></div>
+          </a>
+          <p>Crafting extraordinary journeys for discerning travelers since 2009.</p>
+          <div class="footer-socials">
+            <a href="#" class="footer-social"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="footer-social"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="footer-social"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="footer-social"><i class="fab fa-pinterest-p"></i></a>
+          </div>
+        </div>
+        <div class="footer-col"><h4>Explore</h4>
+          <ul class="footer-links">
+            <li><a href="packages.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> All Destinations</a></li>
+            <li><a href="agents.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Our Agents</a></li>
+            <li><a href="travel-quiz.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Travel Quiz</a></li>
+            <li><a href="booking.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Book a Trip</a></li>
+          </ul>
+        </div>
+        <div class="footer-col"><h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="index.html#about"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> About Us</a></li>
+            <li><a href="faq.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> FAQ</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-col"><h4>Contact</h4>
+          <div class="footer-contact-item"><div class="ci"><i class="fas fa-phone"></i></div><span>+1 (800) 926-3371</span></div>
+          <div class="footer-contact-item"><div class="ci"><i class="fas fa-envelope"></i></div><span>hello@wanderlux.travel</span></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 WanderLux Travel Agency. All rights reserved.</p>
+        <div class="footer-bottom-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    function toggleAccordion(trigger) {
+      const item = trigger.closest('.accordion-item');
+      const isOpen = item.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('open'));
+      // Toggle current
+      if (!isOpen) item.classList.add('open');
+    }
+
+    function scrollToGroup(id) {
+      const el = document.getElementById('group-' + id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.querySelectorAll('.faq-cats .filter-btn').forEach(b => b.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+    }
+
+    function filterFAQ(query) {
+      const q = query.toLowerCase().trim();
+      const items = document.querySelectorAll('.accordion-item');
+      let visibleCount = 0;
+
+      document.querySelectorAll('.faq-group').forEach(g => {
+        let groupVisible = false;
+        g.querySelectorAll('.accordion-item').forEach(item => {
+          const searchData = (item.dataset.search || '') + ' ' +
+            (item.querySelector('.accordion-q')?.textContent || '') + ' ' +
+            (item.querySelector('.accordion-content')?.textContent || '');
+          const match = !q || searchData.toLowerCase().includes(q);
+          item.style.display = match ? '' : 'none';
+          if (match) { groupVisible = true; visibleCount++; }
+        });
+        g.style.display = groupVisible ? '' : 'none';
+      });
+
+      document.getElementById('noResults').style.display = visibleCount === 0 ? 'block' : 'none';
+
+      // Auto-open first result
+      if (q && visibleCount > 0) {
+        const firstVisible = document.querySelector('.accordion-item:not([style*="none"])');
+        if (firstVisible) firstVisible.classList.add('open');
+      }
+    }
+  </script>
+</body>
+</html>
