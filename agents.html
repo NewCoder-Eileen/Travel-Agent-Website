@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Travel Agents — WanderLux Travel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .agents-page-hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 50%, #0d3b6e 100%);
+      padding: 7rem 0 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .agents-page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1800&q=40') center/cover;
+      opacity: .08;
+    }
+    .agents-page-hero .container { position: relative; z-index: 2; }
+    .agents-page-hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      color: var(--white);
+      margin-bottom: .75rem;
+    }
+    .agents-page-hero p {
+      color: rgba(255,255,255,.75);
+      font-size: 1.1rem;
+      max-width: 560px;
+    }
+    .agent-card-full {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-200);
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      transition: var(--transition);
+    }
+    .agent-card-full:hover {
+      box-shadow: var(--shadow-lg);
+      border-color: transparent;
+    }
+    .agent-card-img {
+      position: relative;
+      overflow: hidden;
+    }
+    .agent-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .agent-card-img .availability {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: #27ae60;
+      color: var(--white);
+      font-size: .72rem;
+      font-weight: 700;
+      padding: .3rem .75rem;
+      border-radius: 50px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .agent-card-content {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .agent-card-content .agent-name {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      color: var(--navy);
+      margin-bottom: .2rem;
+      text-align: left;
+    }
+    .agent-card-content .agent-role {
+      text-align: left;
+      margin-bottom: 1rem;
+    }
+    .agent-bio-full {
+      font-size: .92rem;
+      color: var(--gray-600);
+      line-height: 1.75;
+      margin-bottom: 1.25rem;
+      flex: 1;
+    }
+    .agent-details {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      background: var(--gray-100);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .agent-detail .key {
+      font-size: .72rem;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: .2rem;
+    }
+    .agent-detail .val {
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .agent-specialties {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-bottom: 1.5rem;
+    }
+    .agent-specialty {
+      display: flex;
+      align-items: center;
+      gap: .35rem;
+      background: rgba(26,111,168,.08);
+      color: var(--ocean);
+      font-size: .8rem;
+      font-weight: 600;
+      padding: .35rem .85rem;
+      border-radius: 50px;
+    }
+    .agent-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .agents-full-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .agent-languages {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .85rem;
+      color: var(--gray-600);
+      margin-bottom: 1rem;
+    }
+    .agent-languages i { color: var(--gold); }
+    @media (max-width: 768px) {
+      .agent-card-full { grid-template-columns: 1fr; }
+      .agent-card-img { height: 240px; }
+      .agent-details { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar" class="scrolled">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+          <div class="logo-icon">✈</div>
+          <div class="logo-text">WanderLux <span>Travel Agency</span></div>
+        </a>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="packages.html">Packages & Destinations</a></li>
+          <li><a href="agents.html" class="active">Our Agents</a></li>
+          <li><a href="packing-guide.html">Packing Guide</a></li>
+          <li><a href="booking.html">Book Now</a></li>
+        </ul>
+        <div class="nav-cta">
+          <span class="nav-phone"><i class="fas fa-phone-alt"></i> +1 (800) 926-3371</span>
+          <a href="booking.html" class="btn btn-primary">Get a Quote</a>
+        </div>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="agents-page-hero">
+    <div class="container">
+      <span class="section-label">The WanderLux Team</span>
+      <h1>Meet Our Expert<br />Travel Specialists</h1>
+      <p>With decades of combined experience and passports full of stamps, our agents have walked the paths they recommend — ready to craft your perfect journey.</p>
+      <div style="display:flex; gap:2.5rem; margin-top:2.5rem; flex-wrap:wrap;">
+        <div style="color:var(--white);">
+          <div style="font-family:var(--font-head);font-size:2rem;font-weight:700;color:var(--gold);">8</div>
+          <div style="font-size:.8rem;opacity:.7;text-transform:uppercase;letter-spacing:.08em;">Expert Agents</div>
+        </div>
+        <div style="color:var(--white);">
+          <div style="font-family:var(--font-head);font-size:2rem;font-weight:700;color:var(--gold);">2,500+</div>
+          <div style="font-size:.8rem;opacity:.7;text-transform:uppercase;letter-spacing:.08em;">Trips Planned</div>
+        </div>
+        <div style="color:var(--white);">
+          <div style="font-family:var(--font-head);font-size:2rem;font-weight:700;color:var(--gold);">4.9★</div>
+          <div style="font-size:.8rem;opacity:.7;text-transform:uppercase;letter-spacing:.08em;">Avg. Rating</div>
+        </div>
+        <div style="color:var(--white);">
+          <div style="font-family:var(--font-head);font-size:2rem;font-weight:700;color:var(--gold);">80+</div>
+          <div style="font-size:.8rem;opacity:.7;text-transform:uppercase;letter-spacing:.08em;">Countries Covered</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AGENTS CONTENT -->
+  <div class="page-content">
+    <div class="container">
+
+      <!-- Filter bar -->
+      <div class="dest-filters" style="margin-bottom:3rem;">
+        <button class="filter-btn active">All Agents</button>
+        <button class="filter-btn">🌊 Beach & Islands</button>
+        <button class="filter-btn">🏛 Culture & History</button>
+        <button class="filter-btn">🧗 Adventure</button>
+        <button class="filter-btn">💎 Luxury</button>
+        <button class="filter-btn">👨‍👩‍👧 Family</button>
+        <button class="filter-btn">🌍 Africa</button>
+        <button class="filter-btn">🌏 Asia</button>
+      </div>
+
+      <div class="agents-full-grid">
+
+        <!-- Agent 1: Sophia -->
+        <div class="agent-card-full">
+          <div class="agent-card-img">
+            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&q=80" alt="Sophia Laurent" loading="lazy" />
+            <span class="availability">● Available Now</span>
+          </div>
+          <div class="agent-card-content">
+            <h3 class="agent-name">Sophia Laurent</h3>
+            <p class="agent-role">Senior Luxury Travel Specialist</p>
+            <p class="agent-bio-full">
+              With 12 years at WanderLux, Sophia is our most decorated specialist in high-end European and Asian travel. Born in Lyon, France, she has lived in Paris, Tokyo, and Singapore, and holds certifications from the Society of International Travel Professionals. Sophia has an extraordinary gift for uncovering hidden gems — private vineyard dinners in Burgundy, off-the-beaten-path ryokans in rural Japan, and VIP cultural experiences most travelers never discover.
+            </p>
+            <div class="agent-languages">
+              <i class="fas fa-language"></i>
+              <span><strong>Languages:</strong> English, French, Italian, Japanese</span>
+            </div>
+            <div class="agent-details">
+              <div class="agent-detail"><div class="key">Experience</div><div class="val">12 Years</div></div>
+              <div class="agent-detail"><div class="key">Trips Planned</div><div class="val">340+</div></div>
+              <div class="agent-detail"><div class="key">Client Rating</div><div class="val">4.9 ★</div></div>
+            </div>
+            <div class="agent-specialties">
+              <span class="agent-specialty"><i class="fas fa-landmark"></i> Europe</span>
+              <span class="agent-specialty"><i class="fas fa-torii-gate"></i> Japan</span>
+              <span class="agent-specialty"><i class="fas fa-gem"></i> Luxury</span>
+              <span class="agent-specialty"><i class="fas fa-ring"></i> Honeymoons</span>
+              <span class="agent-specialty"><i class="fas fa-wine-glass"></i> Food & Wine</span>
+            </div>
+            <div class="agent-actions">
+              <a href="booking.html" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book with Sophia</a>
+              <div class="agent-socials">
+                <button class="social-btn"><i class="fab fa-linkedin-in"></i></button>
+                <button class="social-btn"><i class="fab fa-instagram"></i></button>
+                <button class="social-btn"><i class="fas fa-envelope"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agent 2: Marcus -->
+        <div class="agent-card-full">
+          <div class="agent-card-img">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&q=80" alt="Marcus Reid" loading="lazy" />
+            <span class="availability">● Available Now</span>
+          </div>
+          <div class="agent-card-content">
+            <h3 class="agent-name">Marcus Reid</h3>
+            <p class="agent-role">Adventure & Safari Expert</p>
+            <p class="agent-bio-full">
+              A former wilderness guide turned travel specialist, Marcus brings unmatched firsthand knowledge to every African safari and extreme adventure itinerary. He has personally guided expeditions across 24 African countries and holds a Level 3 Safari Guide certification from the Field Guides Association of Southern Africa (FGASA). Whether you're tracking the Big Five in the Okavango Delta or scaling Kilimanjaro, Marcus knows exactly how to make it extraordinary — and safe.
+            </p>
+            <div class="agent-languages">
+              <i class="fas fa-language"></i>
+              <span><strong>Languages:</strong> English, Swahili, Afrikaans</span>
+            </div>
+            <div class="agent-details">
+              <div class="agent-detail"><div class="key">Experience</div><div class="val">10 Years</div></div>
+              <div class="agent-detail"><div class="key">Trips Planned</div><div class="val">290+</div></div>
+              <div class="agent-detail"><div class="key">Client Rating</div><div class="val">5.0 ★</div></div>
+            </div>
+            <div class="agent-specialties">
+              <span class="agent-specialty"><i class="fas fa-binoculars"></i> Safari</span>
+              <span class="agent-specialty"><i class="fas fa-mountain"></i> Trekking</span>
+              <span class="agent-specialty"><i class="fas fa-globe-africa"></i> Africa</span>
+              <span class="agent-specialty"><i class="fas fa-camera"></i> Photo Tours</span>
+              <span class="agent-specialty"><i class="fas fa-leaf"></i> Eco Travel</span>
+            </div>
+            <div class="agent-actions">
+              <a href="booking.html" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book with Marcus</a>
+              <div class="agent-socials">
+                <button class="social-btn"><i class="fab fa-linkedin-in"></i></button>
+                <button class="social-btn"><i class="fab fa-instagram"></i></button>
+                <button class="social-btn"><i class="fas fa-envelope"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agent 3: Aiko -->
+        <div class="agent-card-full">
+          <div class="agent-card-img">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&q=80" alt="Aiko Tanaka" loading="lazy" />
+            <span class="availability">● Available Now</span>
+          </div>
+          <div class="agent-card-content">
+            <h3 class="agent-name">Aiko Tanaka</h3>
+            <p class="agent-role">Asia Pacific & Cultural Specialist</p>
+            <p class="agent-bio-full">
+              Born in Osaka and having lived across Southeast Asia — Bali, Bangkok, and Hội An — Aiko brings an unparalleled cultural perspective to every itinerary. With 14 years of experience and over 410 trips planned, she specializes in crafting deeply immersive journeys that go beyond tourist trails. Aiko maintains close relationships with local guides, chefs, and artisans, allowing her to create access to experiences you simply cannot find online or in any guidebook.
+            </p>
+            <div class="agent-languages">
+              <i class="fas fa-language"></i>
+              <span><strong>Languages:</strong> English, Japanese, Bahasa Indonesian, Thai, Mandarin</span>
+            </div>
+            <div class="agent-details">
+              <div class="agent-detail"><div class="key">Experience</div><div class="val">14 Years</div></div>
+              <div class="agent-detail"><div class="key">Trips Planned</div><div class="val">410+</div></div>
+              <div class="agent-detail"><div class="key">Client Rating</div><div class="val">4.9 ★</div></div>
+            </div>
+            <div class="agent-specialties">
+              <span class="agent-specialty"><i class="fas fa-torii-gate"></i> Japan</span>
+              <span class="agent-specialty"><i class="fas fa-globe-asia"></i> SE Asia</span>
+              <span class="agent-specialty"><i class="fas fa-yin-yang"></i> Culture</span>
+              <span class="agent-specialty"><i class="fas fa-utensils"></i> Culinary</span>
+              <span class="agent-specialty"><i class="fas fa-om"></i> Wellness</span>
+            </div>
+            <div class="agent-actions">
+              <a href="booking.html" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book with Aiko</a>
+              <div class="agent-socials">
+                <button class="social-btn"><i class="fab fa-linkedin-in"></i></button>
+                <button class="social-btn"><i class="fab fa-instagram"></i></button>
+                <button class="social-btn"><i class="fas fa-envelope"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agent 4: Daniel -->
+        <div class="agent-card-full">
+          <div class="agent-card-img">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&q=80" alt="Daniel Moreno" loading="lazy" />
+            <span class="availability">● Available Now</span>
+          </div>
+          <div class="agent-card-content">
+            <h3 class="agent-name">Daniel Moreno</h3>
+            <p class="agent-role">Family Travel & Americas Specialist</p>
+            <p class="agent-bio-full">
+              A father of three, Daniel understands intuitively what families need from a vacation — joy, wonder, ease, and zero stress. Specializing in North and South America, he has mapped out kid-friendly hiking routes in Patagonia, family surf camps in Costa Rica, and wildlife encounters in the Galápagos. Daniel is especially beloved for his meticulous planning documents that ensure parents always feel organized and kids are always engaged.
+            </p>
+            <div class="agent-languages">
+              <i class="fas fa-language"></i>
+              <span><strong>Languages:</strong> English, Spanish, Portuguese</span>
+            </div>
+            <div class="agent-details">
+              <div class="agent-detail"><div class="key">Experience</div><div class="val">9 Years</div></div>
+              <div class="agent-detail"><div class="key">Trips Planned</div><div class="val">275+</div></div>
+              <div class="agent-detail"><div class="key">Client Rating</div><div class="val">4.8 ★</div></div>
+            </div>
+            <div class="agent-specialties">
+              <span class="agent-specialty"><i class="fas fa-child"></i> Family</span>
+              <span class="agent-specialty"><i class="fas fa-globe-americas"></i> Americas</span>
+              <span class="agent-specialty"><i class="fas fa-leaf"></i> Eco Travel</span>
+              <span class="agent-specialty"><i class="fas fa-frog"></i> Wildlife</span>
+              <span class="agent-specialty"><i class="fas fa-water"></i> Adventure</span>
+            </div>
+            <div class="agent-actions">
+              <a href="booking.html" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book with Daniel</a>
+              <div class="agent-socials">
+                <button class="social-btn"><i class="fab fa-linkedin-in"></i></button>
+                <button class="social-btn"><i class="fab fa-instagram"></i></button>
+                <button class="social-btn"><i class="fas fa-envelope"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agent 5: Priya -->
+        <div class="agent-card-full">
+          <div class="agent-card-img">
+            <img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=500&q=80" alt="Priya Mehta" loading="lazy" />
+            <span class="availability" style="background:#e67e22;">● Limited Availability</span>
+          </div>
+          <div class="agent-card-content">
+            <h3 class="agent-name">Priya Mehta</h3>
+            <p class="agent-role">India & South Asia Specialist</p>
+            <p class="agent-bio-full">
+              Priya has spent her career bringing the subcontinent to life for travelers. From the golden deserts of Rajasthan to the backwaters of Kerala, from the Himalayan foothills of Darjeeling to the temples of Hampi, Priya crafts journeys that reveal India's incomprehensible beauty and diversity. She is also a certified yoga instructor, leading popular wellness retreats to Rishikesh and Mysore.
+            </p>
+            <div class="agent-languages">
+              <i class="fas fa-language"></i>
+              <span><strong>Languages:</strong> English, Hindi, Gujarati, Tamil</span>
+            </div>
+            <div class="agent-details">
+              <div class="agent-detail"><div class="key">Experience</div><div class="val">11 Years</div></div>
+              <div class="agent-detail"><div class="key">Trips Planned</div><div class="val">380+</div></div>
+              <div class="agent-detail"><div class="key">Client Rating</div><div class="val">4.9 ★</div></div>
+            </div>
+            <div class="agent-specialties">
+              <span class="agent-specialty"><i class="fas fa-dharmachakra"></i> India</span>
+              <span class="agent-specialty"><i class="fas fa-om"></i> Wellness</span>
+              <span class="agent-specialty"><i class="fas fa-spa"></i> Yoga Retreats</span>
+              <span class="agent-specialty"><i class="fas fa-paint-brush"></i> Art & Culture</span>
+              <span class="agent-specialty"><i class="fas fa-camera"></i> Photography</span>
+            </div>
+            <div class="agent-actions">
+              <a href="booking.html" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book with Priya</a>
+              <div class="agent-socials">
+                <button class="social-btn"><i class="fab fa-linkedin-in"></i></button>
+                <button class="social-btn"><i class="fab fa-instagram"></i></button>
+                <button class="social-btn"><i class="fas fa-envelope"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agent 6: James -->
+        <div class="agent-card-full">
+          <div class="agent-card-img">
+            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=500&q=80" alt="James Okafor" loading="lazy" />
+            <span class="availability">● Available Now</span>
+          </div>
+          <div class="agent-card-content">
+            <h3 class="agent-name">James Okafor</h3>
+            <p class="agent-role">Caribbean & Cruise Specialist</p>
+            <p class="agent-bio-full">
+              James grew up in Jamaica and knows the Caribbean like the back of his hand. From the perfect St. Lucia honeymoon hideaway to the ultimate Turks & Caicos family villa, he curates island experiences that are the stuff of dreams. He also specializes in luxury cruise itineraries — from the Mediterranean to the Norwegian fjords — and holds certified cruise counselor status with CLIA.
+            </p>
+            <div class="agent-languages">
+              <i class="fas fa-language"></i>
+              <span><strong>Languages:</strong> English, French Creole, Spanish</span>
+            </div>
+            <div class="agent-details">
+              <div class="agent-detail"><div class="key">Experience</div><div class="val">8 Years</div></div>
+              <div class="agent-detail"><div class="key">Trips Planned</div><div class="val">220+</div></div>
+              <div class="agent-detail"><div class="key">Client Rating</div><div class="val">4.8 ★</div></div>
+            </div>
+            <div class="agent-specialties">
+              <span class="agent-specialty"><i class="fas fa-umbrella-beach"></i> Caribbean</span>
+              <span class="agent-specialty"><i class="fas fa-ship"></i> Cruises</span>
+              <span class="agent-specialty"><i class="fas fa-ring"></i> Honeymoons</span>
+              <span class="agent-specialty"><i class="fas fa-cocktail"></i> All-Inclusive</span>
+            </div>
+            <div class="agent-actions">
+              <a href="booking.html" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book with James</a>
+              <div class="agent-socials">
+                <button class="social-btn"><i class="fab fa-linkedin-in"></i></button>
+                <button class="social-btn"><i class="fab fa-instagram"></i></button>
+                <button class="social-btn"><i class="fas fa-envelope"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agent 7: Elena -->
+        <div class="agent-card-full">
+          <div class="agent-card-img">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&q=80" alt="Elena Vasquez" loading="lazy" />
+            <span class="availability">● Available Now</span>
+          </div>
+          <div class="agent-card-content">
+            <h3 class="agent-name">Elena Vasquez</h3>
+            <p class="agent-role">Europe & Cruise Rail Specialist</p>
+            <p class="agent-bio-full">
+              Elena has an encyclopedic knowledge of European rail networks, boutique hotels, and off-the-beaten-path cultural experiences. She has personally visited every EU country multiple times and specializes in designing seamless multi-country European tours — including legendary rail journeys aboard the Venice Simplon-Orient-Express and the Glacier Express through the Swiss Alps.
+            </p>
+            <div class="agent-languages">
+              <i class="fas fa-language"></i>
+              <span><strong>Languages:</strong> English, Spanish, Portuguese, Italian, German</span>
+            </div>
+            <div class="agent-details">
+              <div class="agent-detail"><div class="key">Experience</div><div class="val">13 Years</div></div>
+              <div class="agent-detail"><div class="key">Trips Planned</div><div class="val">460+</div></div>
+              <div class="agent-detail"><div class="key">Client Rating</div><div class="val">5.0 ★</div></div>
+            </div>
+            <div class="agent-specialties">
+              <span class="agent-specialty"><i class="fas fa-train"></i> Rail Journeys</span>
+              <span class="agent-specialty"><i class="fas fa-landmark"></i> Europe</span>
+              <span class="agent-specialty"><i class="fas fa-wine-glass"></i> Wine Tours</span>
+              <span class="agent-specialty"><i class="fas fa-paint-brush"></i> Art History</span>
+            </div>
+            <div class="agent-actions">
+              <a href="booking.html" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book with Elena</a>
+              <div class="agent-socials">
+                <button class="social-btn"><i class="fab fa-linkedin-in"></i></button>
+                <button class="social-btn"><i class="fab fa-instagram"></i></button>
+                <button class="social-btn"><i class="fas fa-envelope"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agent 8: Yusuf -->
+        <div class="agent-card-full">
+          <div class="agent-card-img">
+            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=500&q=80" alt="Yusuf Al-Rashid" loading="lazy" />
+            <span class="availability" style="background:#e67e22;">● Limited Availability</span>
+          </div>
+          <div class="agent-card-content">
+            <h3 class="agent-name">Yusuf Al-Rashid</h3>
+            <p class="agent-role">Middle East & Luxury Concierge</p>
+            <p class="agent-bio-full">
+              Yusuf specializes in the extraordinary luxury experiences of the Middle East and beyond — private desert camps in the Wadi Rum, ultra-luxury hotel stays in Dubai, ancient city tours of Jordan and Oman, and tailor-made concierge itineraries for VIP clients who expect nothing short of perfection. He also coordinates high-end corporate retreats and group incentive travel.
+            </p>
+            <div class="agent-languages">
+              <i class="fas fa-language"></i>
+              <span><strong>Languages:</strong> English, Arabic, French</span>
+            </div>
+            <div class="agent-details">
+              <div class="agent-detail"><div class="key">Experience</div><div class="val">7 Years</div></div>
+              <div class="agent-detail"><div class="key">Trips Planned</div><div class="val">185+</div></div>
+              <div class="agent-detail"><div class="key">Client Rating</div><div class="val">4.9 ★</div></div>
+            </div>
+            <div class="agent-specialties">
+              <span class="agent-specialty"><i class="fas fa-mosque"></i> Middle East</span>
+              <span class="agent-specialty"><i class="fas fa-gem"></i> Ultra-Luxury</span>
+              <span class="agent-specialty"><i class="fas fa-concierge-bell"></i> Concierge</span>
+              <span class="agent-specialty"><i class="fas fa-briefcase"></i> Corporate</span>
+            </div>
+            <div class="agent-actions">
+              <a href="booking.html" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book with Yusuf</a>
+              <div class="agent-socials">
+                <button class="social-btn"><i class="fab fa-linkedin-in"></i></button>
+                <button class="social-btn"><i class="fab fa-instagram"></i></button>
+                <button class="social-btn"><i class="fas fa-envelope"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-banner">
+    <div class="container">
+      <h2>Not Sure Which Agent Is Right for You?</h2>
+      <p>Tell us where you want to go and we'll match you with the perfect specialist — free of charge, no commitment required.</p>
+      <div class="btn-row">
+        <a href="booking.html" class="btn btn-primary"><i class="fas fa-magic"></i> Find My Perfect Agent</a>
+        <a href="packages.html" class="btn btn-outline-white"><i class="fas fa-compass"></i> Browse Packages</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-icon">✈</div>
+            <div class="logo-text">WanderLux <span>Travel Agency</span></div>
+          </a>
+          <p>Crafting extraordinary journeys for discerning travelers since 2009.</p>
+          <div class="footer-socials">
+            <a href="#" class="footer-social"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="footer-social"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="footer-social"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="footer-social"><i class="fab fa-pinterest-p"></i></a>
+          </div>
+        </div>
+        <div class="footer-col"><h4>Explore</h4>
+          <ul class="footer-links">
+            <li><a href="packages.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> All Destinations</a></li>
+            <li><a href="agents.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Our Agents</a></li>
+            <li><a href="packing-guide.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Packing Guide</a></li>
+            <li><a href="booking.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Book a Trip</a></li>
+          </ul>
+        </div>
+        <div class="footer-col"><h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="index.html#about"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> About Us</a></li>
+            <li><a href="index.html#testimonials"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Testimonials</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-col"><h4>Contact</h4>
+          <div class="footer-contact-item"><div class="ci"><i class="fas fa-phone"></i></div><span>+1 (800) 926-3371</span></div>
+          <div class="footer-contact-item"><div class="ci"><i class="fas fa-envelope"></i></div><span>hello@wanderlux.travel</span></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 WanderLux Travel Agency. All rights reserved.</p>
+        <div class="footer-bottom-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
