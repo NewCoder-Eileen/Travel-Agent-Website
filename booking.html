@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Your Trip — WanderLux Travel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .package-select-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .package-option {
+      border: 2px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      padding: .9rem 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+    .package-option:hover { border-color: var(--ocean); background: rgba(26,111,168,.03); }
+    .package-option.selected { border-color: var(--ocean); background: rgba(26,111,168,.07); }
+    .package-option input { accent-color: var(--ocean); }
+    .package-option-label { font-size: .88rem; font-weight: 600; color: var(--navy); }
+    .package-option-price { font-size: .78rem; color: var(--gold); font-weight: 700; margin-top: .1rem; }
+
+    .traveler-card {
+      background: var(--gray-100);
+      border-radius: var(--radius-sm);
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      border: 1px solid var(--gray-200);
+    }
+    .traveler-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      font-size: .9rem;
+    }
+    .remove-traveler {
+      background: none;
+      border: 1px solid var(--gray-200);
+      color: var(--gray-400);
+      border-radius: 6px;
+      padding: .25rem .6rem;
+      font-size: .75rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .remove-traveler:hover { background: #fee; color: #e74c3c; border-color: #e74c3c; }
+
+    .add-traveler-btn {
+      background: none;
+      border: 2px dashed var(--gray-200);
+      color: var(--ocean);
+      font-weight: 600;
+      font-size: .9rem;
+      padding: .75rem;
+      border-radius: var(--radius-sm);
+      width: 100%;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+    }
+    .add-traveler-btn:hover { border-color: var(--ocean); background: rgba(26,111,168,.04); }
+
+    .addon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    .addon-item {
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: .75rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .addon-item:hover { border-color: var(--ocean); }
+    .addon-item.selected { border-color: var(--ocean); background: rgba(26,111,168,.05); }
+    .addon-item input { accent-color: var(--ocean); margin-top: 3px; flex-shrink: 0; }
+    .addon-name { font-weight: 700; font-size: .9rem; color: var(--navy); }
+    .addon-desc { font-size: .8rem; color: var(--gray-600); margin-top: .2rem; }
+    .addon-price { font-size: .85rem; font-weight: 700; color: var(--gold); margin-top: .4rem; }
+
+    .submit-btn-wrapper { padding: 1.5rem 2rem; background: var(--gray-100); border-top: 1px solid var(--gray-200); }
+
+    .trust-badges {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    .trust-badge {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      font-size: .8rem;
+      color: var(--gray-600);
+    }
+    .trust-badge i { color: #27ae60; }
+
+    .confirmation-message {
+      display: none;
+      background: linear-gradient(135deg, #27ae60, #1e8449);
+      color: var(--white);
+      border-radius: var(--radius);
+      padding: 3rem;
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .confirmation-message h2 { font-family: var(--font-head); font-size: 2rem; margin-bottom: 1rem; }
+    .confirmation-message p { opacity: .9; font-size: 1.05rem; max-width: 500px; margin: 0 auto 1.5rem; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar" class="scrolled">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+          <div class="logo-icon">✈</div>
+          <div class="logo-text">WanderLux <span>Travel Agency</span></div>
+        </a>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="packages.html">Packages & Destinations</a></li>
+          <li><a href="agents.html">Our Agents</a></li>
+          <li><a href="packing-guide.html">Packing Guide</a></li>
+          <li><a href="booking.html" class="active">Book Now</a></li>
+        </ul>
+        <div class="nav-cta">
+          <span class="nav-phone"><i class="fas fa-phone-alt"></i> +1 (800) 926-3371</span>
+          <a href="booking.html" class="btn btn-primary">Get a Quote</a>
+        </div>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="booking-hero" style="padding-top:7rem;">
+    <div class="container">
+      <span class="section-label">Start Your Journey</span>
+      <h1>Book Your Dream Trip</h1>
+      <p>Complete your enquiry below and one of our travel specialists will reach out within 24 hours with a personalized proposal — completely free of charge.</p>
+    </div>
+  </div>
+
+  <!-- PROGRESS STEPS -->
+  <div class="container">
+    <div class="booking-steps" id="bookingSteps">
+      <div class="step active" data-step="1">
+        <div class="step-num">1</div>
+        <div class="step-label">Trip Details</div>
+      </div>
+      <div class="step" data-step="2">
+        <div class="step-num">2</div>
+        <div class="step-label">Travelers</div>
+      </div>
+      <div class="step" data-step="3">
+        <div class="step-num">3</div>
+        <div class="step-label">Add-ons</div>
+      </div>
+      <div class="step" data-step="4">
+        <div class="step-num">4</div>
+        <div class="step-label">Contact</div>
+      </div>
+      <div class="step" data-step="5">
+        <div class="step-num">5</div>
+        <div class="step-label">Confirm</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOOKING CONTENT -->
+  <div class="page-content">
+    <div class="container">
+      <div class="booking-layout">
+
+        <!-- MAIN FORM -->
+        <div>
+          <form id="bookingForm" novalidate>
+
+            <!-- ── STEP 1: TRIP DETAILS ── -->
+            <div class="booking-form-card" id="step-1">
+              <div class="form-section-header">
+                <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+                <div><h3>Step 1: Trip Details</h3></div>
+              </div>
+              <div class="form-body">
+
+                <div style="margin-bottom:1.5rem;">
+                  <label style="display:block;font-size:.82rem;font-weight:700;color:var(--navy);margin-bottom:.75rem;letter-spacing:.03em;">
+                    Choose a Package <span style="color:#e74c3c;">*</span>
+                  </label>
+                  <div class="package-select-grid">
+                    <div class="package-option selected" onclick="selectPackage(this, 'Maldives Overwater Bungalow', 3499)">
+                      <input type="radio" name="package" checked />
+                      <div><div class="package-option-label">🇲🇻 Maldives Escape</div><div class="package-option-price">From $3,499/pp</div></div>
+                    </div>
+                    <div class="package-option" onclick="selectPackage(this, 'Paris Art & Romance', 2199)">
+                      <input type="radio" name="package" />
+                      <div><div class="package-option-label">🇫🇷 Paris Romance</div><div class="package-option-price">From $2,199/pp</div></div>
+                    </div>
+                    <div class="package-option" onclick="selectPackage(this, 'Bali Spirit Journey', 1799)">
+                      <input type="radio" name="package" />
+                      <div><div class="package-option-label">🇮🇩 Bali Spirit</div><div class="package-option-price">From $1,799/pp</div></div>
+                    </div>
+                    <div class="package-option" onclick="selectPackage(this, 'Japan Cherry Blossom', 2899)">
+                      <input type="radio" name="package" />
+                      <div><div class="package-option-label">🇯🇵 Japan Tour</div><div class="package-option-price">From $2,899/pp</div></div>
+                    </div>
+                    <div class="package-option" onclick="selectPackage(this, 'Africa Safari', 4299)">
+                      <input type="radio" name="package" />
+                      <div><div class="package-option-label">🇰🇪 Africa Safari</div><div class="package-option-price">From $4,299/pp</div></div>
+                    </div>
+                    <div class="package-option" onclick="selectPackage(this, 'Costa Rica Adventure', 2499)">
+                      <input type="radio" name="package" />
+                      <div><div class="package-option-label">🇨🇷 Costa Rica</div><div class="package-option-price">From $2,499/pp</div></div>
+                    </div>
+                    <div class="package-option" onclick="selectPackage(this, 'Santorini Sunsets', 2599)">
+                      <input type="radio" name="package" />
+                      <div><div class="package-option-label">🇬🇷 Santorini</div><div class="package-option-price">From $2,599/pp</div></div>
+                    </div>
+                    <div class="package-option" onclick="selectPackage(this, 'Custom / Other', 0)">
+                      <input type="radio" name="package" />
+                      <div><div class="package-option-label">✍️ Custom Trip</div><div class="package-option-price">Bespoke pricing</div></div>
+                    </div>
+                  </div>
+                </div>
+
+                <hr class="form-divider" />
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Departure Date <span class="req">*</span></label>
+                    <input type="date" id="departureDate" required />
+                  </div>
+                  <div class="form-group">
+                    <label>Return Date <span class="req">*</span></label>
+                    <input type="date" id="returnDate" required />
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Departure City / Airport <span class="req">*</span></label>
+                    <input type="text" placeholder="e.g. New York (JFK)" />
+                  </div>
+                  <div class="form-group">
+                    <label>Trip Type</label>
+                    <select>
+                      <option>Leisure / Holiday</option>
+                      <option>Honeymoon / Anniversary</option>
+                      <option>Family Trip</option>
+                      <option>Adventure Travel</option>
+                      <option>Business & Leisure</option>
+                      <option>Group Travel</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Preferred Hotel Class</label>
+                    <select>
+                      <option>4-Star (Standard)</option>
+                      <option>5-Star (Premium)</option>
+                      <option>Boutique / Unique Stay</option>
+                      <option>Overwater / Villa</option>
+                      <option>No preference</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Preferred Agent</label>
+                    <select>
+                      <option>No preference — assign best match</option>
+                      <option>Sophia Laurent (Luxury, Europe, Asia)</option>
+                      <option>Marcus Reid (Safari, Adventure)</option>
+                      <option>Aiko Tanaka (Asia Pacific)</option>
+                      <option>Daniel Moreno (Family, Americas)</option>
+                      <option>Priya Mehta (India, Wellness)</option>
+                      <option>James Okafor (Caribbean, Cruises)</option>
+                      <option>Elena Vasquez (Europe Rail)</option>
+                      <option>Yusuf Al-Rashid (Middle East, Luxury)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-row full">
+                  <div class="form-group">
+                    <label>Special Destination Notes or Custom Requests</label>
+                    <textarea placeholder="Tell us about any specific destinations, experiences, or activities you'd love to include…"></textarea>
+                  </div>
+                </div>
+
+                <button type="button" class="btn btn-primary" onclick="nextStep(2)">
+                  Continue to Travelers <i class="fas fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- ── STEP 2: TRAVELERS ── -->
+            <div class="booking-form-card" id="step-2" style="display:none; margin-top:1.5rem;">
+              <div class="form-section-header">
+                <div class="icon"><i class="fas fa-users"></i></div>
+                <div><h3>Step 2: Traveler Details</h3></div>
+              </div>
+              <div class="form-body">
+
+                <!-- Traveler 1 (Lead) -->
+                <div class="traveler-card">
+                  <div class="traveler-card-header">
+                    <span>👤 Traveler 1 — Lead Booker</span>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label>Title</label>
+                      <select><option>Mr.</option><option>Mrs.</option><option>Ms.</option><option>Dr.</option><option>Prof.</option></select>
+                    </div>
+                    <div class="form-group">
+                      <label>Date of Birth <span class="req">*</span></label>
+                      <input type="date" required />
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label>First Name <span class="req">*</span></label>
+                      <input type="text" placeholder="First name" required />
+                    </div>
+                    <div class="form-group">
+                      <label>Last Name <span class="req">*</span></label>
+                      <input type="text" placeholder="Last name" required />
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label>Nationality</label>
+                      <select>
+                        <option>American</option><option>British</option><option>Canadian</option><option>Australian</option>
+                        <option>French</option><option>German</option><option>Other</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Passport Number</label>
+                      <input type="text" placeholder="e.g. P123456789" />
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label>Passport Expiry Date</label>
+                      <input type="date" />
+                    </div>
+                    <div class="form-group">
+                      <label>Dietary Requirements</label>
+                      <select>
+                        <option>None</option><option>Vegetarian</option><option>Vegan</option><option>Gluten-Free</option>
+                        <option>Halal</option><option>Kosher</option><option>Nut Allergy</option><option>Other</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Additional travelers placeholder -->
+                <div id="additionalTravelers"></div>
+
+                <button type="button" class="add-traveler-btn" onclick="addTraveler()">
+                  <i class="fas fa-plus"></i> Add Another Traveler
+                </button>
+
+                <hr class="form-divider" />
+
+                <div style="display:flex; gap:1rem; margin-top:1rem;">
+                  <button type="button" class="btn btn-outline-navy" onclick="nextStep(1)">
+                    <i class="fas fa-arrow-left"></i> Back
+                  </button>
+                  <button type="button" class="btn btn-primary" onclick="nextStep(3)">
+                    Continue to Add-ons <i class="fas fa-arrow-right"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── STEP 3: ADD-ONS ── -->
+            <div class="booking-form-card" id="step-3" style="display:none; margin-top:1.5rem;">
+              <div class="form-section-header">
+                <div class="icon"><i class="fas fa-plus-circle"></i></div>
+                <div><h3>Step 3: Enhance Your Journey</h3></div>
+              </div>
+              <div class="form-body">
+                <p style="color:var(--gray-600);font-size:.9rem;margin-bottom:1.5rem;">Select any extras to make your trip truly extraordinary. All add-ons are priced per person.</p>
+
+                <div class="addon-grid">
+                  <label class="addon-item" id="addon-insurance">
+                    <input type="checkbox" onchange="updateAddons(this, 'Travel Insurance', 149)" />
+                    <div>
+                      <div class="addon-name">🛡 Comprehensive Travel Insurance</div>
+                      <div class="addon-desc">Full medical, cancellation, luggage & delay coverage. Highly recommended.</div>
+                      <div class="addon-price">+$149 / person</div>
+                    </div>
+                  </label>
+                  <label class="addon-item" id="addon-transfer">
+                    <input type="checkbox" onchange="updateAddons(this, 'Airport Transfers', 89)" />
+                    <div>
+                      <div class="addon-name">🚐 Private Airport Transfers</div>
+                      <div class="addon-desc">Luxury vehicle pick-up & drop-off at all airports and hotels.</div>
+                      <div class="addon-price">+$89 / person</div>
+                    </div>
+                  </label>
+                  <label class="addon-item" id="addon-guide">
+                    <input type="checkbox" onchange="updateAddons(this, 'Private Local Guide', 199)" />
+                    <div>
+                      <div class="addon-name">🧑‍🦮 Private Local Guide (3 days)</div>
+                      <div class="addon-desc">An expert local guide dedicated entirely to your group for 3 days.</div>
+                      <div class="addon-price">+$199 / person</div>
+                    </div>
+                  </label>
+                  <label class="addon-item" id="addon-photo">
+                    <input type="checkbox" onchange="updateAddons(this, 'Professional Photography', 299)" />
+                    <div>
+                      <div class="addon-name">📸 Professional Photography Session</div>
+                      <div class="addon-desc">A 2-hour shoot with a local professional photographer. Digital album included.</div>
+                      <div class="addon-price">+$299 / session</div>
+                    </div>
+                  </label>
+                  <label class="addon-item" id="addon-spa">
+                    <input type="checkbox" onchange="updateAddons(this, 'Spa Package', 179)" />
+                    <div>
+                      <div class="addon-name">💆 Luxury Spa Package</div>
+                      <div class="addon-desc">2 x 60-minute treatments including massage, facial, and sauna access.</div>
+                      <div class="addon-price">+$179 / person</div>
+                    </div>
+                  </label>
+                  <label class="addon-item" id="addon-dining">
+                    <input type="checkbox" onchange="updateAddons(this, 'Fine Dining Experience', 229)" />
+                    <div>
+                      <div class="addon-name">🍽 Exclusive Fine Dining Evening</div>
+                      <div class="addon-desc">Michelin-starred or top-rated local restaurant experience with curated wine pairing.</div>
+                      <div class="addon-price">+$229 / person</div>
+                    </div>
+                  </label>
+                  <label class="addon-item" id="addon-balloon">
+                    <input type="checkbox" onchange="updateAddons(this, 'Hot Air Balloon Ride', 349)" />
+                    <div>
+                      <div class="addon-name">🎈 Sunrise Hot Air Balloon</div>
+                      <div class="addon-desc">A once-in-a-lifetime sunrise balloon ride over iconic landscapes.</div>
+                      <div class="addon-price">+$349 / person</div>
+                    </div>
+                  </label>
+                  <label class="addon-item" id="addon-checklist">
+                    <input type="checkbox" onchange="updateAddons(this, 'Packing Kit Box', 79)" />
+                    <div>
+                      <div class="addon-name">🧳 WanderLux Packing Kit Box</div>
+                      <div class="addon-desc">Curated travel essentials kit delivered before departure. Includes adapters, organizers & more.</div>
+                      <div class="addon-price">+$79 / person</div>
+                    </div>
+                  </label>
+                </div>
+
+                <hr class="form-divider" />
+
+                <div style="display:flex; gap:1rem; margin-top:1rem;">
+                  <button type="button" class="btn btn-outline-navy" onclick="nextStep(2)">
+                    <i class="fas fa-arrow-left"></i> Back
+                  </button>
+                  <button type="button" class="btn btn-primary" onclick="nextStep(4)">
+                    Continue to Contact Info <i class="fas fa-arrow-right"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── STEP 4: CONTACT ── -->
+            <div class="booking-form-card" id="step-4" style="display:none; margin-top:1.5rem;">
+              <div class="form-section-header">
+                <div class="icon"><i class="fas fa-envelope"></i></div>
+                <div><h3>Step 4: Your Contact Details</h3></div>
+              </div>
+              <div class="form-body">
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Email Address <span class="req">*</span></label>
+                    <input type="email" placeholder="your@email.com" required />
+                  </div>
+                  <div class="form-group">
+                    <label>Phone Number <span class="req">*</span></label>
+                    <input type="tel" placeholder="+1 (555) 000-0000" required />
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Country of Residence</label>
+                    <select>
+                      <option>United States</option><option>United Kingdom</option><option>Canada</option>
+                      <option>Australia</option><option>France</option><option>Germany</option><option>Other</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Best Time to Contact</label>
+                    <select>
+                      <option>Morning (9am–12pm)</option>
+                      <option>Afternoon (12pm–5pm)</option>
+                      <option>Evening (5pm–8pm)</option>
+                      <option>Any time</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Approx. Total Budget (USD)</label>
+                    <select>
+                      <option>$2,000 – $4,000</option>
+                      <option>$4,000 – $8,000</option>
+                      <option>$8,000 – $15,000</option>
+                      <option>$15,000 – $30,000</option>
+                      <option>$30,000+</option>
+                      <option>Flexible / No limit</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>How Did You Hear About Us?</label>
+                    <select>
+                      <option>Google / Search</option>
+                      <option>Instagram</option>
+                      <option>Friend or family referral</option>
+                      <option>Travel magazine / blog</option>
+                      <option>Returning client</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-row full">
+                  <div class="form-group">
+                    <label>Additional Notes or Questions</label>
+                    <textarea placeholder="Any other requirements, questions, or information you'd like us to know…"></textarea>
+                  </div>
+                </div>
+
+                <div style="display:flex; align-items:flex-start; gap:.75rem; margin-bottom:1.5rem; padding:1rem; background:var(--gray-100); border-radius:var(--radius-sm);">
+                  <input type="checkbox" id="consent" style="width:17px;height:17px;margin-top:2px;accent-color:var(--ocean);" />
+                  <label for="consent" style="font-size:.85rem;color:var(--gray-600); cursor:pointer;">
+                    I agree to WanderLux's <a href="#" style="color:var(--ocean);">Privacy Policy</a> and
+                    <a href="#" style="color:var(--ocean);">Terms of Service</a>, and consent to being contacted
+                    by a travel specialist regarding my enquiry.
+                  </label>
+                </div>
+
+                <div style="display:flex; gap:1rem;">
+                  <button type="button" class="btn btn-outline-navy" onclick="nextStep(3)">
+                    <i class="fas fa-arrow-left"></i> Back
+                  </button>
+                  <button type="button" class="btn btn-primary" onclick="nextStep(5)">
+                    Review & Submit <i class="fas fa-arrow-right"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── STEP 5: REVIEW & SUBMIT ── -->
+            <div class="booking-form-card" id="step-5" style="display:none; margin-top:1.5rem;">
+              <div class="form-section-header">
+                <div class="icon"><i class="fas fa-check-circle"></i></div>
+                <div><h3>Step 5: Review Your Enquiry</h3></div>
+              </div>
+              <div class="form-body">
+                <p style="color:var(--gray-600);margin-bottom:1.5rem;font-size:.9rem;">
+                  Please review the details below. One of our travel specialists will reach out within
+                  <strong>24 business hours</strong> with a personalized proposal.
+                </p>
+
+                <div style="background:var(--gray-100); border-radius:var(--radius-sm); padding:1.25rem; margin-bottom:1.5rem;">
+                  <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                    <div><div style="font-size:.72rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.25rem;">Selected Package</div>
+                    <div style="font-weight:700;color:var(--navy);" id="review-package">Maldives Overwater Bungalow</div></div>
+                    <div><div style="font-size:.72rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.25rem;">Estimated Price</div>
+                    <div style="font-weight:700;color:var(--navy);" id="review-price">$3,499 / person</div></div>
+                    <div><div style="font-size:.72rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.25rem;">Number of Travelers</div>
+                    <div style="font-weight:700;color:var(--navy);" id="review-travelers">1 person</div></div>
+                    <div><div style="font-size:.72rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.25rem;">Selected Add-ons</div>
+                    <div style="font-weight:700;color:var(--navy);" id="review-addons">None selected</div></div>
+                  </div>
+                </div>
+
+                <div style="background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);border-radius:var(--radius-sm);padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:.88rem;color:var(--gray-800);">
+                  <strong style="color:var(--navy);">⚠️ Important:</strong> This is an <em>enquiry</em>, not a final booking. No payment is taken at this stage. Your assigned WanderLux specialist will prepare a tailored proposal, confirm availability, and walk you through all costs before any commitment is required.
+                </div>
+
+                <div style="display:flex; gap:1rem;">
+                  <button type="button" class="btn btn-outline-navy" onclick="nextStep(4)">
+                    <i class="fas fa-arrow-left"></i> Back
+                  </button>
+                  <button type="submit" class="btn btn-primary" style="font-size:1rem; padding:.9rem 2.5rem;" onclick="submitBooking(event)">
+                    <i class="fas fa-paper-plane"></i> Submit Enquiry
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- CONFIRMATION -->
+            <div class="confirmation-message" id="confirmationMessage">
+              <div style="font-size:4rem; margin-bottom:1rem;">🎉</div>
+              <h2>Enquiry Submitted!</h2>
+              <p>Thank you! Your travel enquiry has been received. One of our specialists will be in touch within 24 business hours with your personalized itinerary proposal.</p>
+              <p style="font-size:.9rem; opacity:.8;">Check your inbox (and spam folder) for a confirmation email from hello@wanderlux.travel</p>
+              <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-top:1.5rem;">
+                <a href="index.html" class="btn btn-outline-white">Return Home</a>
+                <a href="packages.html" class="btn" style="background:rgba(255,255,255,.2);color:var(--white);border:2px solid rgba(255,255,255,.4);">Browse More Packages</a>
+              </div>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- SIDEBAR SUMMARY -->
+        <div>
+          <div class="booking-summary">
+            <div class="summary-img">
+              <img id="summaryImg" src="https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=700&q=80" alt="Selected package" loading="lazy" />
+            </div>
+            <div class="summary-body">
+              <h3 class="summary-title" id="summaryTitle">Maldives Overwater Bungalow Escape</h3>
+              <div class="summary-line"><span class="key">Package Price</span><span class="val" id="summaryPrice">$3,499/pp</span></div>
+              <div class="summary-line"><span class="key">Duration</span><span class="val" id="summaryDuration">7 nights</span></div>
+              <div class="summary-line"><span class="key">Travelers</span><span class="val" id="summaryTravelers">1 person</span></div>
+              <div class="summary-line"><span class="key">Add-ons</span><span class="val" id="summaryAddons">$0</span></div>
+              <div class="summary-total">
+                <span class="total-label">Estimated Total</span>
+                <span class="total-amount" id="summaryTotal">$3,499</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trust Badges -->
+          <div style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:1.5rem;margin-top:1.5rem;">
+            <h4 style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--gray-400);margin-bottom:1rem;">Why Book with WanderLux?</h4>
+            <div class="trust-badges">
+              <div class="trust-badge"><i class="fas fa-check-circle"></i> No booking fees</div>
+              <div class="trust-badge"><i class="fas fa-check-circle"></i> Price match guarantee</div>
+              <div class="trust-badge"><i class="fas fa-check-circle"></i> Free cancellation within 48hr</div>
+              <div class="trust-badge"><i class="fas fa-check-circle"></i> 24/7 emergency support</div>
+              <div class="trust-badge"><i class="fas fa-check-circle"></i> 12,000+ happy travelers</div>
+              <div class="trust-badge"><i class="fas fa-check-circle"></i> ATOL & IATA protected</div>
+            </div>
+          </div>
+
+          <!-- Contact box -->
+          <div style="background:var(--navy);border-radius:var(--radius);padding:1.5rem;margin-top:1.5rem;text-align:center;color:var(--white);">
+            <div style="font-size:2rem;margin-bottom:.5rem;">💬</div>
+            <h4 style="font-family:var(--font-head);font-size:1.1rem;margin-bottom:.5rem;">Prefer to talk?</h4>
+            <p style="font-size:.85rem;opacity:.75;margin-bottom:1rem;">Our agents are available Mon–Fri 8am–8pm EST and Sat–Sun 10am–5pm EST.</p>
+            <a href="tel:+18009263371" class="btn btn-primary" style="width:100%;justify-content:center;">
+              <i class="fas fa-phone"></i> +1 (800) 926-3371
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-icon">✈</div>
+            <div class="logo-text">WanderLux <span>Travel Agency</span></div>
+          </a>
+          <p>Crafting extraordinary journeys for discerning travelers since 2009.</p>
+          <div class="footer-socials">
+            <a href="#" class="footer-social"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="footer-social"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="footer-social"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="footer-social"><i class="fab fa-pinterest-p"></i></a>
+          </div>
+        </div>
+        <div class="footer-col"><h4>Explore</h4>
+          <ul class="footer-links">
+            <li><a href="packages.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> All Destinations</a></li>
+            <li><a href="agents.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Our Agents</a></li>
+            <li><a href="packing-guide.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Packing Guide</a></li>
+          </ul>
+        </div>
+        <div class="footer-col"><h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="index.html#about"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> About Us</a></li>
+            <li><a href="index.html#testimonials"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Testimonials</a></li>
+          </ul>
+        </div>
+        <div class="footer-col"><h4>Contact</h4>
+          <div class="footer-contact-item"><div class="ci"><i class="fas fa-phone"></i></div><span>+1 (800) 926-3371</span></div>
+          <div class="footer-contact-item"><div class="ci"><i class="fas fa-envelope"></i></div><span>hello@wanderlux.travel</span></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 WanderLux Travel Agency. All rights reserved.</p>
+        <div class="footer-bottom-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // ── Booking page logic ──────────────────────────────────
+    let currentStep = 1;
+    let selectedPackagePrice = 3499;
+    let addonTotal = 0;
+    let travelerCount = 1;
+
+    const packageImages = {
+      'Maldives Overwater Bungalow': 'https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=700&q=80',
+      'Paris Art & Romance': 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=700&q=80',
+      'Bali Spirit Journey': 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=700&q=80',
+      'Japan Cherry Blossom': 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=700&q=80',
+      'Africa Safari': 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=700&q=80',
+      'Costa Rica Adventure': 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=700&q=80',
+      'Santorini Sunsets': 'https://images.unsplash.com/photo-1571366343168-631c5bcca7a4?w=700&q=80',
+      'Custom / Other': 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=700&q=80',
+    };
+
+    function selectPackage(el, name, price) {
+      document.querySelectorAll('.package-option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedPackagePrice = price;
+      document.getElementById('summaryTitle').textContent = name + ' Package';
+      document.getElementById('summaryPrice').textContent = price > 0 ? `$${price.toLocaleString()}/pp` : 'Custom Quote';
+      document.getElementById('review-package').textContent = name;
+      document.getElementById('review-price').textContent = price > 0 ? `$${price.toLocaleString()}/pp` : 'Custom Quote';
+      if (packageImages[name]) document.getElementById('summaryImg').src = packageImages[name];
+      updateTotal();
+    }
+
+    function updateTotal() {
+      const total = (selectedPackagePrice + addonTotal) * travelerCount;
+      document.getElementById('summaryTotal').textContent = selectedPackagePrice > 0
+        ? '$' + total.toLocaleString() : 'Custom Quote';
+    }
+
+    function updateAddons(checkbox, name, price) {
+      const parent = checkbox.closest('.addon-item');
+      if (checkbox.checked) {
+        addonTotal += price;
+        parent.classList.add('selected');
+      } else {
+        addonTotal -= price;
+        parent.classList.remove('selected');
+      }
+      document.getElementById('summaryAddons').textContent = addonTotal > 0 ? '+$' + addonTotal.toLocaleString() : '$0';
+      const addedNames = [...document.querySelectorAll('.addon-item input:checked')].map(cb => cb.closest('.addon-item').querySelector('.addon-name').textContent.split(' ').slice(1).join(' ')).join(', ');
+      document.getElementById('review-addons').textContent = addedNames || 'None selected';
+      updateTotal();
+    }
+
+    function nextStep(step) {
+      document.getElementById(`step-${currentStep}`).style.display = 'none';
+      const target = document.getElementById(`step-${step}`);
+      if (target) {
+        target.style.display = 'block';
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      // Update step indicators
+      document.querySelectorAll('.step').forEach(s => {
+        const n = parseInt(s.dataset.step);
+        s.classList.remove('active', 'done');
+        if (n < step) s.classList.add('done');
+        if (n === step) s.classList.add('active');
+      });
+      currentStep = step;
+    }
+
+    let extraTravelers = 0;
+    function addTraveler() {
+      extraTravelers++;
+      travelerCount++;
+      const container = document.getElementById('additionalTravelers');
+      const card = document.createElement('div');
+      card.className = 'traveler-card';
+      card.id = `traveler-${extraTravelers}`;
+      card.innerHTML = `
+        <div class="traveler-card-header">
+          <span>👤 Traveler ${travelerCount}</span>
+          <button type="button" class="remove-traveler" onclick="removeTraveler(${extraTravelers})">Remove</button>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>First Name</label><input type="text" placeholder="First name" /></div>
+          <div class="form-group"><label>Last Name</label><input type="text" placeholder="Last name" /></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Date of Birth</label><input type="date" /></div>
+          <div class="form-group"><label>Dietary Requirements</label>
+            <select><option>None</option><option>Vegetarian</option><option>Vegan</option><option>Gluten-Free</option><option>Halal</option><option>Kosher</option></select>
+          </div>
+        </div>`;
+      container.appendChild(card);
+      document.getElementById('summaryTravelers').textContent = travelerCount + ' people';
+      document.getElementById('review-travelers').textContent = travelerCount + ' people';
+      updateTotal();
+    }
+
+    function removeTraveler(id) {
+      document.getElementById(`traveler-${id}`).remove();
+      travelerCount--;
+      document.getElementById('summaryTravelers').textContent = travelerCount === 1 ? '1 person' : travelerCount + ' people';
+      document.getElementById('review-travelers').textContent = travelerCount === 1 ? '1 person' : travelerCount + ' people';
+      updateTotal();
+    }
+
+    function submitBooking(e) {
+      e.preventDefault();
+      document.getElementById('step-5').style.display = 'none';
+      document.getElementById('confirmationMessage').style.display = 'block';
+      document.getElementById('confirmationMessage').scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
