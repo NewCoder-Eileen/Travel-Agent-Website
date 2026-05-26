@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Travel Style Quiz — WanderLux Travel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── Quiz Page Styles ─────────────────────────────────── */
+    .quiz-hero {
+      background: linear-gradient(135deg, #1a0533 0%, #2d0a6e 50%, #0d3b6e 100%);
+      padding: 7rem 0 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .quiz-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1503220317375-aaad61436b1b?w=1800&q=40') center/cover;
+      opacity: .1;
+    }
+    .quiz-hero .container { position: relative; z-index: 2; }
+    .quiz-hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--white);
+      margin-bottom: .75rem;
+    }
+    .quiz-hero p {
+      color: rgba(255,255,255,.75);
+      font-size: 1.1rem;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* Progress bar */
+    .quiz-progress-bar {
+      background: var(--white);
+      box-shadow: var(--shadow);
+      padding: 1.25rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .quiz-progress-inner {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .progress-track {
+      flex: 1;
+      height: 8px;
+      background: var(--gray-200);
+      border-radius: 50px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--ocean), var(--gold));
+      border-radius: 50px;
+      transition: width .5s cubic-bezier(.4,0,.2,1);
+    }
+    .progress-label {
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--navy);
+      white-space: nowrap;
+    }
+
+    /* Quiz wrapper */
+    .quiz-wrapper {
+      max-width: 760px;
+      margin: 3rem auto;
+      padding: 0 1rem;
+    }
+
+    /* Question card */
+    .question-card {
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--gray-200);
+      overflow: hidden;
+      animation: slideIn .4s cubic-bezier(.4,0,.2,1);
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(40px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes slideOut {
+      from { opacity: 1; transform: translateX(0); }
+      to   { opacity: 0; transform: translateX(-40px); }
+    }
+
+    .question-header {
+      background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+      padding: 2rem 2.5rem;
+      color: var(--white);
+    }
+    .question-num {
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .5rem;
+    }
+    .question-text {
+      font-family: var(--font-head);
+      font-size: clamp(1.25rem, 3vw, 1.65rem);
+      line-height: 1.3;
+    }
+    .question-icon { font-size: 2.5rem; margin-bottom: .75rem; }
+
+    .question-body { padding: 2rem 2.5rem; }
+
+    .answers-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .answers-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+    .answers-grid.single { grid-template-columns: 1fr; }
+
+    .answer-btn {
+      background: var(--white);
+      border: 2px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.25rem;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: .85rem;
+      font-family: var(--font-body);
+    }
+    .answer-btn:hover {
+      border-color: var(--ocean);
+      background: rgba(26,111,168,.04);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+    .answer-btn.selected {
+      border-color: var(--ocean);
+      background: rgba(26,111,168,.08);
+    }
+    .answer-emoji { font-size: 1.8rem; flex-shrink: 0; }
+    .answer-label { font-size: .9rem; font-weight: 600; color: var(--navy); line-height: 1.3; }
+    .answer-sub { font-size: .78rem; color: var(--gray-400); margin-top: .15rem; }
+
+    .question-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2.5rem;
+      border-top: 1px solid var(--gray-200);
+      background: var(--gray-100);
+    }
+
+    /* Results */
+    .results-section {
+      display: none;
+      animation: slideIn .5s ease;
+    }
+
+    .results-hero-card {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--ocean) 100%);
+      border-radius: 20px;
+      padding: 3rem;
+      text-align: center;
+      color: var(--white);
+      margin-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .results-hero-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at top right, rgba(201,168,76,.15) 0%, transparent 60%);
+    }
+    .results-hero-card .container { position: relative; z-index: 2; }
+    .result-badge {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--navy);
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .4rem 1.2rem;
+      border-radius: 50px;
+      margin-bottom: 1.25rem;
+    }
+    .result-type-emoji { font-size: 4rem; margin-bottom: 1rem; }
+    .result-type {
+      font-family: var(--font-head);
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: .75rem;
+    }
+    .result-desc {
+      font-size: 1.05rem;
+      opacity: .85;
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .results-traits {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.75rem;
+    }
+    .trait-pill {
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.25);
+      color: var(--white);
+      font-size: .82rem;
+      font-weight: 600;
+      padding: .4rem 1rem;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+
+    .matched-packages-title {
+      font-family: var(--font-head);
+      font-size: 1.75rem;
+      color: var(--navy);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .match-card {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--gray-200);
+      transition: var(--transition);
+    }
+    .match-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+
+    .match-img { overflow: hidden; aspect-ratio: unset; }
+    .match-img img { width: 100%; height: 100%; object-fit: cover; }
+
+    .match-body { padding: 1.75rem; display: flex; flex-direction: column; }
+    .match-score {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      background: rgba(39,174,96,.1);
+      color: #27ae60;
+      font-size: .78rem;
+      font-weight: 700;
+      padding: .3rem .85rem;
+      border-radius: 50px;
+      margin-bottom: 1rem;
+      width: fit-content;
+    }
+    .match-country { font-size: .78rem; color: var(--gold); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; margin-bottom: .3rem; }
+    .match-title { font-family: var(--font-head); font-size: 1.3rem; color: var(--navy); margin-bottom: .6rem; }
+    .match-desc { font-size: .88rem; color: var(--gray-600); line-height: 1.65; flex: 1; margin-bottom: 1.25rem; }
+    .match-footer { display: flex; align-items: center; justify-content: space-between; }
+    .match-price .from { font-size: .72rem; color: var(--gray-400); text-transform: uppercase; }
+    .match-price .amount { font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; color: var(--navy); }
+
+    .results-actions {
+      text-align: center;
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--gray-200);
+      margin-top: 2rem;
+    }
+
+    /* Share bar */
+    .share-bar {
+      background: var(--gray-100);
+      border-radius: var(--radius);
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+    .share-bar h4 { font-size: .9rem; font-weight: 700; color: var(--navy); }
+    .share-buttons { display: flex; gap: .65rem; }
+    .share-btn {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      padding: .5rem 1rem;
+      border-radius: 50px;
+      font-size: .8rem;
+      font-weight: 600;
+      border: 1.5px solid var(--gray-200);
+      background: var(--white);
+      color: var(--gray-600);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .share-btn:hover { background: var(--navy); color: var(--white); border-color: var(--navy); }
+
+    @media (max-width: 640px) {
+      .answers-grid { grid-template-columns: 1fr; }
+      .answers-grid.three { grid-template-columns: 1fr 1fr; }
+      .match-card { grid-template-columns: 1fr; }
+      .match-img { height: 200px; }
+      .question-header, .question-body, .question-nav { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar" class="scrolled">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+          <div class="logo-icon">✈</div>
+          <div class="logo-text">WanderLux <span>Travel Agency</span></div>
+        </a>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="packages.html">Packages & Destinations</a></li>
+          <li><a href="agents.html">Our Agents</a></li>
+          <li><a href="packing-guide.html">Packing Guide</a></li>
+          <li><a href="booking.html">Book Now</a></li>
+        </ul>
+        <div class="nav-cta">
+          <span class="nav-phone"><i class="fas fa-phone-alt"></i> +1 (800) 926-3371</span>
+          <a href="booking.html" class="btn btn-primary">Get a Quote</a>
+        </div>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="quiz-hero">
+    <div class="container">
+      <div class="hero-badge" style="margin:0 auto 1.25rem; width:fit-content;">
+        <i class="fas fa-magic"></i> AI-Powered Matching
+      </div>
+      <h1>Discover Your Perfect Trip</h1>
+      <p>Answer 7 quick questions and we'll match you with the ideal destinations and packages for your unique travel style.</p>
+      <div style="display:flex;justify-content:center;gap:2rem;margin-top:2rem;flex-wrap:wrap;">
+        <span style="color:rgba(255,255,255,.7);font-size:.88rem;"><i class="fas fa-clock" style="color:var(--gold);margin-right:.4rem;"></i> Takes ~2 minutes</span>
+        <span style="color:rgba(255,255,255,.7);font-size:.88rem;"><i class="fas fa-check-circle" style="color:var(--gold);margin-right:.4rem;"></i> Personalized results</span>
+        <span style="color:rgba(255,255,255,.7);font-size:.88rem;"><i class="fas fa-lock" style="color:var(--gold);margin-right:.4rem;"></i> No login required</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROGRESS BAR -->
+  <div class="quiz-progress-bar" id="quizProgressBar" style="display:none;">
+    <div class="quiz-progress-inner">
+      <span class="progress-label" id="progressLabel">Question 1 of 7</span>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill" style="width:14.28%"></div>
+      </div>
+      <span class="progress-label" id="progressPct">14%</span>
+    </div>
+  </div>
+
+  <!-- START SCREEN -->
+  <div id="startScreen" class="quiz-wrapper">
+    <div class="question-card" style="text-align:center;">
+      <div style="padding:3rem 2.5rem;">
+        <div style="font-size:4rem; margin-bottom:1.5rem;">🌍</div>
+        <h2 style="font-family:var(--font-head);font-size:2rem;color:var(--navy);margin-bottom:1rem;">Ready to find your dream trip?</h2>
+        <p style="color:var(--gray-600);font-size:1rem;max-width:460px;margin:0 auto 2rem;line-height:1.75;">
+          Our travel style quiz analyses your preferences across 7 key dimensions and matches you with perfectly suited packages from our collection.
+        </p>
+        <div style="display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;margin-bottom:2.5rem;">
+          <div style="text-align:center;">
+            <div style="font-size:1.75rem;font-weight:700;font-family:var(--font-head);color:var(--navy);">7</div>
+            <div style="font-size:.78rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:.06em;">Questions</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:1.75rem;font-weight:700;font-family:var(--font-head);color:var(--navy);">2 min</div>
+            <div style="font-size:.78rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:.06em;">To complete</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:1.75rem;font-weight:700;font-family:var(--font-head);color:var(--navy);">8</div>
+            <div style="font-size:.78rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:.06em;">Travel profiles</div>
+          </div>
+        </div>
+        <button class="btn btn-primary" style="font-size:1.05rem;padding:1rem 2.5rem;" onclick="startQuiz()">
+          <i class="fas fa-magic"></i> Start the Quiz
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ QUESTIONS -->
+  <div id="quizSection" class="quiz-wrapper" style="display:none;">
+    <div id="questionCard" class="question-card"></div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="resultsSection" class="quiz-wrapper" style="display:none;">
+    <div id="resultHeroCard" class="results-hero-card"></div>
+    <h2 class="matched-packages-title">Your Matched Packages</h2>
+    <div id="matchedPackages"></div>
+    <div class="share-bar">
+      <div>
+        <h4>✨ Love your results?</h4>
+        <p style="font-size:.82rem;color:var(--gray-600);margin-top:.2rem;">Share your travel style with friends!</p>
+      </div>
+      <div class="share-buttons">
+        <button class="share-btn" onclick="shareResult()"><i class="fas fa-share-alt"></i> Share</button>
+        <button class="share-btn" onclick="retakeQuiz()"><i class="fas fa-redo"></i> Retake Quiz</button>
+      </div>
+    </div>
+    <div class="results-actions">
+      <h3 style="font-family:var(--font-head);color:var(--navy);margin-bottom:.75rem;">Ready to make it happen?</h3>
+      <p style="color:var(--gray-600);margin-bottom:1.75rem;max-width:420px;margin-left:auto;margin-right:auto;font-size:.95rem;">Share your results with one of our specialists and they'll craft a bespoke itinerary around your style.</p>
+      <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;">
+        <a href="booking.html" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Book Based on My Results</a>
+        <a href="agents.html" class="btn btn-outline-navy"><i class="fas fa-comments"></i> Talk to a Specialist</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-icon">✈</div>
+            <div class="logo-text">WanderLux <span>Travel Agency</span></div>
+          </a>
+          <p>Crafting extraordinary journeys for discerning travelers since 2009.</p>
+          <div class="footer-socials">
+            <a href="#" class="footer-social"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="footer-social"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="footer-social"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="footer-social"><i class="fab fa-pinterest-p"></i></a>
+          </div>
+        </div>
+        <div class="footer-col"><h4>Explore</h4>
+          <ul class="footer-links">
+            <li><a href="packages.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> All Destinations</a></li>
+            <li><a href="agents.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Our Agents</a></li>
+            <li><a href="packing-guide.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Packing Guide</a></li>
+            <li><a href="booking.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Book a Trip</a></li>
+          </ul>
+        </div>
+        <div class="footer-col"><h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="index.html#about"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> About Us</a></li>
+            <li><a href="faq.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-col"><h4>Contact</h4>
+          <div class="footer-contact-item"><div class="ci"><i class="fas fa-phone"></i></div><span>+1 (800) 926-3371</span></div>
+          <div class="footer-contact-item"><div class="ci"><i class="fas fa-envelope"></i></div><span>hello@wanderlux.travel</span></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 WanderLux Travel Agency. All rights reserved.</p>
+        <div class="footer-bottom-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+  // ══════════════════════════════════════════════════════════
+  //  QUIZ ENGINE
+  // ══════════════════════════════════════════════════════════
+
+  const questions = [
+    {
+      q: "How would you describe your ideal holiday vibe?",
+      icon: "🌅",
+      answers: [
+        { emoji: "🌊", label: "Pure relaxation", sub: "Sun, sea, and zero obligations", tags: ["beach","luxury"] },
+        { emoji: "🏛", label: "Culture & history", sub: "Museums, ruins, local traditions", tags: ["culture","city"] },
+        { emoji: "🧗", label: "Adrenaline & adventure", sub: "Push yourself, discover the wild", tags: ["adventure"] },
+        { emoji: "🍷", label: "Food, wine & romance", sub: "Indulge every sense", tags: ["luxury","romance","culture"] },
+      ]
+    },
+    {
+      q: "Who are you traveling with?",
+      icon: "👥",
+      answers: [
+        { emoji: "🧍", label: "Solo explorer", sub: "My own schedule, my own pace", tags: ["adventure","culture"] },
+        { emoji: "💑", label: "Partner / spouse", sub: "Romantic getaway for two", tags: ["romance","luxury","beach"] },
+        { emoji: "👨‍👩‍👧‍👦", label: "Family with kids", sub: "Something for everyone", tags: ["family","beach"] },
+        { emoji: "👯", label: "Friends group", sub: "Making memories together", tags: ["adventure","beach","culture"] },
+      ]
+    },
+    {
+      q: "What climate makes you happiest?",
+      icon: "🌤",
+      answers: [
+        { emoji: "☀️", label: "Hot & tropical", sub: "30°C+, palm trees, clear water", tags: ["beach","luxury"] },
+        { emoji: "🍂", label: "Mild & temperate", sub: "Perfect walking weather", tags: ["culture","city","romance"] },
+        { emoji: "❄️", label: "Cold & dramatic", sub: "Snow, fjords, northern lights", tags: ["adventure","winter"] },
+        { emoji: "🦁", label: "Warm & wild", sub: "Savanna, jungle, wide open spaces", tags: ["adventure","safari"] },
+      ]
+    },
+    {
+      q: "How long is your ideal trip?",
+      icon: "📅",
+      answers: [
+        { emoji: "⚡", label: "Long weekend (3–4 days)", sub: "Short and sharp", tags: ["city","culture"] },
+        { emoji: "🗓", label: "One week", sub: "The classic getaway", tags: ["beach","romance","luxury"] },
+        { emoji: "✈️", label: "Two weeks", sub: "Proper holiday mode", tags: ["culture","adventure","safari"] },
+        { emoji: "🌍", label: "Three weeks or more", sub: "Real immersion and exploration", tags: ["adventure","culture","safari"] },
+      ]
+    },
+    {
+      q: "What activity excites you most?",
+      icon: "🎯",
+      answers: [
+        { emoji: "🤿", label: "Water sports & snorkeling", sub: "Beneath the waves", tags: ["beach","luxury"] },
+        { emoji: "🏔", label: "Hiking & trekking", sub: "Boots on trails", tags: ["adventure","winter"] },
+        { emoji: "🎭", label: "Arts, theatre & cuisine", sub: "High culture & fine food", tags: ["culture","city","romance"] },
+        { emoji: "🐘", label: "Wildlife & safaris", sub: "Raw nature encounters", tags: ["adventure","safari","family"] },
+      ]
+    },
+    {
+      q: "What's your budget per person?",
+      icon: "💰",
+      answers: [
+        { emoji: "💚", label: "Under $2,000", sub: "Value for money focus", tags: ["beach","city"] },
+        { emoji: "💛", label: "$2,000 – $5,000", sub: "Mid-range with splurges", tags: ["culture","adventure","family"] },
+        { emoji: "🧡", label: "$5,000 – $10,000", sub: "Premium experiences", tags: ["luxury","safari","romance"] },
+        { emoji: "💜", label: "$10,000+", sub: "Money is no object", tags: ["luxury","romance"] },
+      ]
+    },
+    {
+      q: "Which image speaks to your soul?",
+      icon: "📸",
+      answers: [
+        { emoji: "🏝", label: "An overwater villa at sunset", sub: "Crystalline lagoon beneath you", tags: ["beach","luxury","romance"] },
+        { emoji: "🗼", label: "A Parisian café at dawn", sub: "Croissant, espresso, cobblestones", tags: ["culture","city","romance"] },
+        { emoji: "🦓", label: "Elephants at a watering hole", sub: "Untouched, wild Africa", tags: ["adventure","safari"] },
+        { emoji: "🌸", label: "Cherry blossoms in Kyoto", sub: "Ancient temples, soft pink light", tags: ["culture","adventure"] },
+      ]
+    },
+  ];
+
+  // Travel profiles
+  const profiles = {
+    luxury: {
+      emoji: "💎",
+      type: "The Luxury Connoisseur",
+      desc: "You travel for indulgence, beauty, and impeccable service. Overwater villas, Michelin dining, private beaches — you believe the journey itself should be extraordinary. You don't just visit places; you inhabit them at the finest possible level.",
+      traits: ["✨ Five-star everything", "🥂 Fine wine & cuisine", "🛎 Butler service", "🌅 Iconic sunsets", "🛁 Spa rituals"],
+      packages: ["maldives","seychelles","paris"]
+    },
+    beach: {
+      emoji: "🏖",
+      type: "The Beach Wanderer",
+      desc: "Sun, sand, and saltwater are your natural habitat. Whether it's Bali's surf breaks or the Maldives' glass-clear lagoons, you're happiest with your toes in warm sand and nothing to do but soak it all in.",
+      traits: ["☀️ Endless sunshine", "🌊 Water adventures", "🍹 Beachside cocktails", "🤿 Coral reefs", "🐚 Long lazy days"],
+      packages: ["maldives","bali","santorini"]
+    },
+    adventure: {
+      emoji: "🧗",
+      type: "The Bold Adventurer",
+      desc: "You crave the wild. Summits, jungles, glaciers, and open savannas — anywhere that puts you outside your comfort zone and deep inside the natural world. You come back from trips not just rested, but transformed.",
+      traits: ["🏔 Mountain peaks", "🦁 Wildlife encounters", "🌿 Off the beaten path", "🧭 Guided expeditions", "📸 Epic landscapes"],
+      packages: ["safari","patagonia","nepal"]
+    },
+    safari: {
+      emoji: "🦁",
+      type: "The Safari Soul",
+      desc: "The raw, unfiltered wild calls to you. You dream of game drives at golden hour, stars over the Serengeti, and waking to the sound of lions. No experience moves you more deeply than encountering nature at its most powerful.",
+      traits: ["🐘 Big Five encounters", "🌅 Golden hour drives", "⛺ Luxury tented camps", "📷 Wildlife photography", "🌍 Vast open plains"],
+      packages: ["safari","botswana","rwanda"]
+    },
+    culture: {
+      emoji: "🏛",
+      type: "The Cultural Explorer",
+      desc: "Museums, ancient ruins, local markets, and genuine human connection — you travel to understand the world more deeply. You eat where locals eat, learn a few words of the language, and always come home with stories worth telling.",
+      traits: ["🎨 World-class museums", "🍜 Authentic cuisine", "🗣 Local connections", "🏺 Ancient history", "📚 Rich storytelling"],
+      packages: ["japan","morocco","rome"]
+    },
+    romance: {
+      emoji: "💑",
+      type: "The Romantic Escaper",
+      desc: "Every detail matters when love is the reason you're traveling. Cliffside dinners, sunset boat trips, private pools, and walks through ancient cobblestone streets — you craft memories that last a lifetime.",
+      traits: ["🌹 Intimate hideaways", "🍾 Champagne moments", "🛶 Sunset cruises", "🕯 Candlelit dinners", "💌 Unforgettable memories"],
+      packages: ["santorini","paris","maldives"]
+    },
+    family: {
+      emoji: "👨‍👩‍👧",
+      type: "The Family Adventure Maker",
+      desc: "You're the architect of lifelong memories for the people you love most. You want something magical for every age group — wonder for the kids, relaxation for the adults, and stories that'll be told for decades.",
+      traits: ["🎠 Kids' activities", "🏊 Family pools", "🦜 Wildlife spotting", "🎒 Educational adventures", "🏡 Space to breathe"],
+      packages: ["hawaii","costarica","iceland"]
+    },
+    city: {
+      emoji: "🏙",
+      type: "The Urban Sophisticate",
+      desc: "Galleries, restaurants, architecture, rooftop bars — you come alive in cities. You know that the best travel isn't about escaping civilization; it's about diving headfirst into the world's most magnificent ones.",
+      traits: ["🍽 Fine dining scenes", "🎶 Live music & arts", "🏪 Hidden boutiques", "🌃 Skyline views", "☕ Perfect coffee"],
+      packages: ["paris","japan","amsterdam"]
+    }
+  };
+
+  const packageData = {
+    maldives: {
+      score: "98% Match", country: "🇲🇻 Maldives, Indian Ocean",
+      title: "Maldives Overwater Bungalow Escape",
+      desc: "Seven nights in a spectacular overwater villa with glass floors, a private infinity pool, and direct lagoon access. All meals and water sports included.",
+      price: "$3,499", duration: "7 nights",
+      img: "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=700&q=80",
+      link: "booking.html"
+    },
+    paris: {
+      score: "95% Match", country: "🇫🇷 Paris, France",
+      title: "Paris Art, Food & Romance",
+      desc: "Private Louvre tour, Michelin-starred dinner, champagne at the Eiffel Tower, and a day trip to the Palace of Versailles.",
+      price: "$2,199", duration: "6 nights",
+      img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=700&q=80",
+      link: "booking.html"
+    },
+    bali: {
+      score: "94% Match", country: "🇮🇩 Bali, Indonesia",
+      title: "Bali Spirit & Adventure Journey",
+      desc: "Sunrise hike on Mount Batur, temple ceremonies in Ubud, surf lessons in Seminyak, and traditional Balinese cooking classes.",
+      price: "$1,799", duration: "8 nights",
+      img: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=700&q=80",
+      link: "booking.html"
+    },
+    japan: {
+      score: "96% Match", country: "🇯🇵 Tokyo & Kyoto, Japan",
+      title: "Japan Cherry Blossom Grand Tour",
+      desc: "Bullet train journeys, tea ceremonies, ryokan stays, sakura viewing in Kyoto and the electrifying neon nights of Tokyo.",
+      price: "$2,899", duration: "9 nights",
+      img: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=700&q=80",
+      link: "booking.html"
+    },
+    safari: {
+      score: "97% Match", country: "🇰🇪 Kenya & Tanzania",
+      title: "East Africa Safari & Big Five",
+      desc: "Witness the Great Migration and encounter lions, elephants, leopards, rhinos, and buffalo with expert-guided game drives.",
+      price: "$4,299", duration: "10 nights",
+      img: "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=700&q=80",
+      link: "booking.html"
+    },
+    santorini: {
+      score: "93% Match", country: "🇬🇷 Santorini, Greece",
+      title: "Santorini Sunset & Wine Tour",
+      desc: "White-washed villages perched on volcanic cliffs, world-class wines, and the legendary Oia sunset from your clifftop terrace suite.",
+      price: "$2,599", duration: "7 nights",
+      img: "https://images.unsplash.com/photo-1571366343168-631c5bcca7a4?w=700&q=80",
+      link: "booking.html"
+    },
+    patagonia: {
+      score: "95% Match", country: "🇦🇷🇨🇱 Patagonia",
+      title: "Patagonia: End of the World Trek",
+      desc: "Hike the legendary Torres del Paine circuit, cruise among glaciers, and explore the raw, untouched wilderness of the world's southern frontier.",
+      price: "$3,599", duration: "12 nights",
+      img: "https://images.unsplash.com/photo-1531794612983-eb66a24dd2e5?w=700&q=80",
+      link: "booking.html"
+    },
+    morocco: {
+      score: "92% Match", country: "🇲🇦 Morocco",
+      title: "Morocco Spice Route Adventure",
+      desc: "Ancient medinas, a Sahara desert camp under the stars, camel trekking at dawn, and a night in a luxury riad.",
+      price: "$1,999", duration: "8 nights",
+      img: "https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=700&q=80",
+      link: "booking.html"
+    },
+    hawaii: {
+      score: "94% Match", country: "🇺🇸 Hawaii, USA",
+      title: "Hawaii Multi-Island Family Fun",
+      desc: "Snorkel with sea turtles in Maui, explore volcanoes on the Big Island, and relax on Oahu's iconic Waikiki Beach.",
+      price: "$2,999", duration: "10 nights",
+      img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=700&q=80",
+      link: "booking.html"
+    },
+    costarica: {
+      score: "93% Match", country: "🇨🇷 Costa Rica",
+      title: "Costa Rica Eco-Adventure",
+      desc: "Zip-line through cloud forests, surf on Pacific beaches, and witness sea turtle nesting on the Caribbean coast.",
+      price: "$2,499", duration: "10 nights",
+      img: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=700&q=80",
+      link: "booking.html"
+    },
+    iceland: {
+      score: "91% Match", country: "🇮🇸 Iceland",
+      title: "Iceland Northern Lights & Geysers",
+      desc: "Chase the Aurora Borealis, soak in the Blue Lagoon, explore ice caves and waterfalls, and spot puffins and arctic foxes.",
+      price: "$2,699", duration: "7 nights",
+      img: "https://images.unsplash.com/photo-1495562569060-2eec283d3391?w=700&q=80",
+      link: "booking.html"
+    },
+    nepal: {
+      score: "96% Match", country: "🇳🇵 Nepal, Himalayas",
+      title: "Everest Base Camp Trek",
+      desc: "Follow in the footsteps of Tenzing and Hillary on the world's most iconic trek, past Buddhist monasteries and Sherpa villages.",
+      price: "$2,799", duration: "14 nights",
+      img: "https://images.unsplash.com/photo-1523731407965-2430cd12f5e4?w=700&q=80",
+      link: "booking.html"
+    },
+    seychelles: {
+      score: "97% Match", country: "🇸🇨 Seychelles",
+      title: "Seychelles Private Island Retreat",
+      desc: "Powder-white beaches, granite boulders, and turquoise seas. A secluded island resort with a dedicated butler and private beach.",
+      price: "$4,899", duration: "9 nights",
+      img: "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=700&q=80",
+      link: "booking.html"
+    },
+    rome: {
+      score: "92% Match", country: "🇮🇹 Rome & Amalfi, Italy",
+      title: "Italian Dolce Vita Experience",
+      desc: "The Colosseum at dawn, a private yacht along the Amalfi Coast, limoncello tours, and the world's finest pasta — Italy at its most indulgent.",
+      price: "$3,199", duration: "10 nights",
+      img: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=700&q=80",
+      link: "booking.html"
+    },
+    amsterdam: {
+      score: "90% Match", country: "🇳🇱 Amsterdam & Bruges",
+      title: "Benelux Cities Cultural Tour",
+      desc: "Bike along Amsterdam's canals, indulge in Belgian chocolate and waffles, and visit world-class art museums.",
+      price: "$2,299", duration: "7 nights",
+      img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80",
+      link: "booking.html"
+    },
+    botswana: {
+      score: "96% Match", country: "🇧🇼 Botswana, Africa",
+      title: "Okavango Delta Safari",
+      desc: "Navigate the world's largest inland delta by mokoro canoe and discover lions, hippos, and wild dogs in an undisturbed paradise.",
+      price: "$5,299", duration: "9 nights",
+      img: "https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=700&q=80",
+      link: "booking.html"
+    },
+    rwanda: {
+      score: "95% Match", country: "🇷🇼 Rwanda, Africa",
+      title: "Rwanda Gorilla Trekking",
+      desc: "Trek through volcanic rainforest to sit with a family of mountain gorillas — the most profound wildlife encounter on earth.",
+      price: "$4,799", duration: "7 nights",
+      img: "https://images.unsplash.com/photo-1591179916722-c1c7a0b3a69c?w=700&q=80",
+      link: "booking.html"
+    },
+  };
+
+  // ── State ───────────────────────────────────────────────
+  let currentQ = 0;
+  let scores = {};
+  let selectedAnswers = [];
+
+  function startQuiz() {
+    document.getElementById('startScreen').style.display = 'none';
+    document.getElementById('quizSection').style.display = 'block';
+    document.getElementById('quizProgressBar').style.display = 'block';
+    renderQuestion();
+  }
+
+  function renderQuestion() {
+    const q = questions[currentQ];
+    const card = document.getElementById('questionCard');
+    const pct = Math.round(((currentQ + 1) / questions.length) * 100);
+
+    document.getElementById('progressLabel').textContent = `Question ${currentQ + 1} of ${questions.length}`;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressPct').textContent = pct + '%';
+
+    const gridClass = q.answers.length === 3 ? 'three' : q.answers.length === 1 ? 'single' : '';
+
+    card.innerHTML = `
+      <div class="question-header">
+        <div class="question-num">Question ${currentQ + 1} of ${questions.length}</div>
+        <div class="question-icon">${q.icon}</div>
+        <div class="question-text">${q.q}</div>
+      </div>
+      <div class="question-body">
+        <div class="answers-grid ${gridClass}">
+          ${q.answers.map((a, i) => `
+            <button class="answer-btn" data-index="${i}" onclick="selectAnswer(${i})">
+              <span class="answer-emoji">${a.emoji}</span>
+              <div>
+                <div class="answer-label">${a.label}</div>
+                <div class="answer-sub">${a.sub}</div>
+              </div>
+            </button>
+          `).join('')}
+        </div>
+      </div>
+      <div class="question-nav">
+        <button class="btn btn-outline-navy" onclick="prevQuestion()" ${currentQ === 0 ? 'disabled style="opacity:.4;cursor:not-allowed;"' : ''}>
+          <i class="fas fa-arrow-left"></i> Back
+        </button>
+        <span style="font-size:.82rem;color:var(--gray-400);">Select an answer to continue</span>
+        <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled style="opacity:.4;cursor:not-allowed;">
+          ${currentQ === questions.length - 1 ? 'See Results <i class="fas fa-star"></i>' : 'Next <i class="fas fa-arrow-right"></i>'}
+        </button>
+      </div>`;
+
+    card.style.animation = 'none';
+    card.offsetHeight; // reflow
+    card.style.animation = 'slideIn .4s cubic-bezier(.4,0,.2,1)';
+  }
+
+  function selectAnswer(idx) {
+    selectedAnswers[currentQ] = idx;
+    document.querySelectorAll('.answer-btn').forEach((btn, i) => {
+      btn.classList.toggle('selected', i === idx);
+    });
+    const nextBtn = document.getElementById('nextBtn');
+    nextBtn.disabled = false;
+    nextBtn.style.opacity = '1';
+    nextBtn.style.cursor = 'pointer';
+  }
+
+  function nextQuestion() {
+    if (selectedAnswers[currentQ] === undefined) return;
+
+    // Add scores
+    const answer = questions[currentQ].answers[selectedAnswers[currentQ]];
+    answer.tags.forEach(tag => {
+      scores[tag] = (scores[tag] || 0) + 1;
+    });
+
+    if (currentQ < questions.length - 1) {
+      currentQ++;
+      renderQuestion();
+      // Restore previous selection if backtracked
+      if (selectedAnswers[currentQ] !== undefined) {
+        setTimeout(() => selectAnswer(selectedAnswers[currentQ]), 50);
+      }
+    } else {
+      showResults();
+    }
+  }
+
+  function prevQuestion() {
+    if (currentQ > 0) {
+      // Remove score for current
+      if (selectedAnswers[currentQ] !== undefined) {
+        const answer = questions[currentQ].answers[selectedAnswers[currentQ]];
+        answer.tags.forEach(tag => {
+          scores[tag] = Math.max(0, (scores[tag] || 0) - 1);
+        });
+      }
+      currentQ--;
+      renderQuestion();
+      if (selectedAnswers[currentQ] !== undefined) {
+        setTimeout(() => selectAnswer(selectedAnswers[currentQ]), 50);
+      }
+    }
+  }
+
+  function showResults() {
+    document.getElementById('quizSection').style.display = 'none';
+    document.getElementById('progressFill').style.width = '100%';
+    document.getElementById('progressLabel').textContent = 'Results Ready!';
+    document.getElementById('progressPct').textContent = '100%';
+
+    // Determine top profile
+    const topTag = Object.entries(scores).sort((a, b) => b[1] - a[1])[0]?.[0] || 'beach';
+    const profile = profiles[topTag] || profiles.beach;
+
+    // Render result hero
+    document.getElementById('resultHeroCard').innerHTML = `
+      <div style="position:relative;z-index:2;">
+        <div class="result-badge">Your Travel Profile</div>
+        <div class="result-type-emoji">${profile.emoji}</div>
+        <div class="result-type">${profile.type}</div>
+        <p class="result-desc">${profile.desc}</p>
+        <div class="results-traits">
+          ${profile.traits.map(t => `<span class="trait-pill">${t}</span>`).join('')}
+        </div>
+      </div>`;
+
+    // Render matched packages (top 3)
+    const pkgKeys = profile.packages.filter(k => packageData[k]);
+    const pkgHtml = pkgKeys.map(key => {
+      const p = packageData[key];
+      return `<div class="match-card">
+        <div class="match-img"><img src="${p.img}" alt="${p.title}" loading="lazy" /></div>
+        <div class="match-body">
+          <span class="match-score"><i class="fas fa-check-circle"></i> ${p.score}</span>
+          <div class="match-country">${p.country}</div>
+          <h3 class="match-title">${p.title}</h3>
+          <p class="match-desc">${p.desc}</p>
+          <div class="match-footer">
+            <div class="match-price">
+              <div class="from">From</div>
+              <div class="amount">${p.price}<span style="font-size:.75rem;color:var(--gray-400);font-family:var(--font-body);font-weight:400;">/pp</span></div>
+            </div>
+            <div style="display:flex;gap:.75rem;align-items:center;">
+              <span style="font-size:.82rem;color:var(--gray-600);"><i class="far fa-clock"></i> ${p.duration}</span>
+              <a href="${p.link}" class="btn btn-primary" style="padding:.65rem 1.25rem;font-size:.85rem;">Book Now</a>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+
+    document.getElementById('matchedPackages').innerHTML = pkgHtml;
+    document.getElementById('resultsSection').style.display = 'block';
+    document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+
+    // Save to localStorage
+    localStorage.setItem('wanderlux_travel_profile', JSON.stringify({ type: topTag, profile: profile.type }));
+  }
+
+  function retakeQuiz() {
+    currentQ = 0;
+    scores = {};
+    selectedAnswers = [];
+    document.getElementById('resultsSection').style.display = 'none';
+    document.getElementById('quizSection').style.display = 'block';
+    document.getElementById('progressFill').style.width = '14.28%';
+    renderQuestion();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function shareResult() {
+    const profile = localStorage.getItem('wanderlux_travel_profile');
+    if (profile) {
+      const p = JSON.parse(profile);
+      const text = `I'm ${p.profile}! 🌍 Discover your own travel style at WanderLux Travel.`;
+      if (navigator.share) {
+        navigator.share({ title: 'My WanderLux Travel Profile', text, url: window.location.href });
+      } else {
+        navigator.clipboard?.writeText(text + ' ' + window.location.href)
+          .then(() => alert('Result copied to clipboard! Share it with friends.'));
+      }
+    }
+  }
+  </script>
+</body>
+</html>
