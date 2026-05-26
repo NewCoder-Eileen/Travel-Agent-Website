@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Packages & Destinations — WanderLux Travel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar" class="scrolled">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+          <div class="logo-icon">✈</div>
+          <div class="logo-text">WanderLux <span>Travel Agency</span></div>
+        </a>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="packages.html" class="active">Packages & Destinations</a></li>
+          <li><a href="agents.html">Our Agents</a></li>
+          <li><a href="packing-guide.html">Packing Guide</a></li>
+          <li><a href="booking.html">Book Now</a></li>
+        </ul>
+        <div class="nav-cta">
+          <span class="nav-phone"><i class="fas fa-phone-alt"></i> +1 (800) 926-3371</span>
+          <a href="booking.html" class="btn btn-primary">Get a Quote</a>
+        </div>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="packages-hero" style="padding-top:7rem;">
+    <div class="container">
+      <div class="packages-hero-text">
+        <span class="section-label">Explore the World</span>
+        <h1>Travel Packages<br />&amp; Destinations</h1>
+        <p>From all-inclusive beach getaways to epic adventure expeditions — find the journey that speaks to your soul.</p>
+      </div>
+      <div style="display:flex; gap:2rem; flex-wrap:wrap;">
+        <div style="text-align:center; color:var(--white);">
+          <div style="font-family:var(--font-head);font-size:2.5rem;font-weight:700;color:var(--gold);">80+</div>
+          <div style="font-size:.8rem;opacity:.7;text-transform:uppercase;letter-spacing:.08em;">Destinations</div>
+        </div>
+        <div style="text-align:center; color:var(--white);">
+          <div style="font-family:var(--font-head);font-size:2.5rem;font-weight:700;color:var(--gold);">120+</div>
+          <div style="font-size:.8rem;opacity:.7;text-transform:uppercase;letter-spacing:.08em;">Packages</div>
+        </div>
+        <div style="text-align:center; color:var(--white);">
+          <div style="font-family:var(--font-head);font-size:2.5rem;font-weight:700;color:var(--gold);">12k+</div>
+          <div style="font-size:.8rem;opacity:.7;text-transform:uppercase;letter-spacing:.08em;">Happy Travelers</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PACKAGES CONTENT -->
+  <div class="page-content">
+    <div class="container">
+
+      <!-- Filters -->
+      <div style="display:flex; flex-wrap:wrap; gap:.75rem; margin-bottom:3rem; align-items:center; justify-content:space-between;">
+        <div class="dest-filters" style="margin-bottom:0;">
+          <button class="filter-btn active" data-filter="all">All Packages</button>
+          <button class="filter-btn" data-filter="beach">🏖 Beach</button>
+          <button class="filter-btn" data-filter="culture">🏛 Culture</button>
+          <button class="filter-btn" data-filter="adventure">🧗 Adventure</button>
+          <button class="filter-btn" data-filter="luxury">💎 Luxury</button>
+          <button class="filter-btn" data-filter="family">👨‍👩‍👧 Family</button>
+          <button class="filter-btn" data-filter="honeymoon">💑 Honeymoon</button>
+        </div>
+        <select style="border:1.5px solid var(--gray-200); border-radius:50px; padding:.5rem 1.2rem; font-size:.85rem; color:var(--gray-600); cursor:pointer;">
+          <option>Sort: Most Popular</option>
+          <option>Price: Low to High</option>
+          <option>Price: High to Low</option>
+          <option>Duration: Short to Long</option>
+          <option>Highest Rated</option>
+        </select>
+      </div>
+
+      <!-- ─── SECTION: BEACH & ISLAND ─── -->
+      <div style="margin-bottom:4rem;">
+        <h2 style="font-family:var(--font-head); color:var(--navy); font-size:1.75rem; margin-bottom:1.75rem; padding-bottom:.75rem; border-bottom:2px solid var(--gray-200);">
+          🏖 Beach & Island Getaways
+        </h2>
+        <div class="pkg-grid">
+
+          <div class="pkg-card" data-cat="beach luxury honeymoon">
+            <div class="pkg-img">
+              <img src="https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=700&q=80" alt="Maldives" loading="lazy" />
+              <span class="pkg-ribbon hot">Bestseller</span>
+            </div>
+            <div class="pkg-body">
+              <div class="pkg-country">🇲🇻 Maldives, Indian Ocean</div>
+              <h3 class="pkg-title">Maldives Overwater Bungalow Escape</h3>
+              <p class="pkg-desc">Seven nights in a spectacular overwater villa with glass floors, a private infinity pool, and direct lagoon access. All meals, snorkeling gear, and sunset cruises included.</p>
+              <div class="pkg-perks">
+                <span class="pkg-perk"><i class="fas fa-utensils"></i> All-Inclusive</span>
+                <span class="pkg-perk"><i class="fas fa-plane"></i> Flights Incl.</span>
+                <span class="pkg-perk"><i class="fas fa-swimmer"></i> Water Sports</span>
+                <span class="pkg-perk"><i class="fas fa-spa"></i> Spa Credit</span>
+              </div>
+              <div class="pkg-footer">
+                <div class="pkg-price"><div class="from">From</div><div class="amount">$3,499</div><div class="per">/person • 7 nights</div></div>
+                <a href="booking.html" class="btn btn-primary" style="padding:.65rem 1.25rem; font-size:.85rem;">Book Now</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="pkg-card" data-cat="beach culture">
+            <div class="pkg-img">
+              <img src="https://images.unsplash.com/photo-1571366343168-631c5bcca7a4?w=700&q=80" alt="Santorini" loading="lazy" />
+              <span class="pkg-ribbon new">New</span>
+            </div>
+            <div class="pkg-body">
+              <div class="pkg-country">🇬🇷 Santorini, Greece</div>
+              <h3 class="pkg-title">Santorini Sunset & Wine Tour</h3>
+              <p class="pkg-desc">Explore white-washed villages perched on volcanic cliffs, taste world-class Assyrtiko wines, and watch the famous Oia sunset from a clifftop terrace suite.</p>
+              <div class="pkg-perks">
+                <span class="pkg-perk"><i class="fas fa-wine-glass"></i> Wine Tours</span>
+                <span class="pkg-perk"><i class="fas fa-ship"></i> Catamaran Cruise</span>
+                <span class="pkg-perk"><i class="fas fa-hotel"></i> Cave Hotel</span>
+              </div>
+              <div class="pkg-footer">
+                <div class="pkg-price"><div class="from">From</div><div class="amount">$2,599</div><div class="per">/person • 7 nights</div></div>
+                <a href="booking.html" class="btn btn-primary" style="padding:.65rem 1.25rem; font-size:.85rem;">Book Now</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="pkg-card" data-cat="beach adventure">
+            <div class="pkg-img">
+              <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=700&q=80" alt="Bali" loading="lazy" />
+            </div>
+            <div class="pkg-body">
+              <div class="pkg-country">🇮🇩 Bali, Indonesia</div>
+              <h3 class="pkg-title">Bali Spirit & Adventure Journey</h3>
+              <p class="pkg-desc">Sunrise hike on Mount Batur, temple ceremonies in Ubud, surf lessons in Seminyak, and a traditional Balinese cooking class — the full island experience.</p>
+              <div class="pkg-perks">
+                <span class="pkg-perk"><i class="fas fa-mountain"></i> Volcano Hike</span>
+                <span class="pkg-perk"><i class="fas fa-om"></i> Yoga Retreat</span>
+                <span class="pkg-perk"><i class="fas fa-utensils"></i> Cooking Class</span>
+              </div>
+              <div class="pkg-footer">
+                <div class="pkg-price"><div class="from">From</div><div class="amount">$1,799</div><div class="per">/person • 8 nights</div></div>
+                <a href="booking.html" class="btn btn-primary" style="padding:.65rem 1.25rem; font-size:.85rem;">Book Now</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="pkg-card" data-cat="beach luxury honeymoon">
+            <div class="pkg-img">
+              <img src="https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=700&q=80" alt="Seychelles" loading="lazy" />
+              <span class="pkg-ribbon" style="background:var(--gold);color:var(--navy);">Luxury</span>
+            </div>
+            <div class="pkg-body">
+              <div class="pkg-country">🇸🇨 Seychelles, Indian Ocean</div>
+              <h3 class="pkg-title">Seychelles Private Island Retreat</h3>
+              <p class="pkg-desc">Powder-white beaches, granite boulders, and turquoise seas. Stay in a secluded island resort with a dedicated butler, private beach, and world-class dining.</p>
+              <div class="pkg-perks">
+                <span class="pkg-perk"><i class="fas fa-concierge-bell"></i> Butler Service</span>
+                <span class="pkg-perk"><i class="fas fa-fish"></i> Snorkeling</span>
+                <span class="pkg-perk"><i class="fas fa-plane"></i> Flights Incl.</span>
+              </div>
+              <div class="pkg-footer">
+                <div class="pkg-price"><div class="from">From</div><div class="amount">$4,899</div><div class="per">/person • 9 nights</div></div>
+                <a href="booking.html" class="btn btn-primary" style="padding:.65rem 1.25rem; font-size:.85rem;">Book Now</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ─── SECTION: CULTURE & HISTORY ─── -->
+      <div style="margin-bottom:4rem;">
+        <h2 style="font-family:var(--font-head); color:var(--navy); font-size:1.75rem; margin-bottom:1.75rem; padding-bottom:.75rem; border-bottom:2px solid var(--gray-200);">
+          🏛 Cultural & City Experiences
+        </h2>
+        <div class="pkg-grid">
+
+          <div class="pkg-card" data-cat="culture luxury">
+            <div class="pkg-img">
+              <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=700&q=80" alt="Paris" loading="lazy" />
+              <span class="pkg-ribbon hot">Popular</span>
+            </div>
+            <div class="pkg-body">
+              <div class="pkg-country">🇫🇷 Paris, France</div>
+              <h3 class="pkg-title">Paris Art, Food & Romance</h3>
+              <p class="pkg-desc">Private Louvre tour before opening hours, Michelin-starred dinner, champagne at the Eiffel Tower, and a day trip to Versailles — the quintessential Parisian dream.</p>
+              <div class="pkg-perks">
+                <span class="pkg-perk"><i class="fas fa-paint-brush"></i> Private Museum Tours</span>
+                <span class="pkg-perk"><i class="fas fa-utensils"></i> Fine Dining</span>
+                <span class="pkg-perk"><i class="fas fa-landmark"></i> Versailles</span>
+              </div>
+              <div class="pkg-footer">
+                <div class="pkg-price"><div class="from">From</div><div class="amount">$2,199</div><div class="per">/person • 6 nights</div></div>
+                <a href="booking.html" class="btn btn-primary" style="padding:.65rem 1.25rem; font-size:.85rem;">Book Now</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="pkg-card" data-cat="culture adventure">
+            <div class="pkg-img">
+              <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=700&q=80" alt="Tokyo" loading="lazy" />
+            </div>
+            <div class="pkg-body">
+              <div class="pkg-country">🇯🇵 Tokyo & Kyoto, Japan</div>
+              <h3 class="pkg-title">Japan Cherry Blossom Grand Tour</h3>
+              <p class="pkg-desc">Time your visit for sakura season and experience Japan at its most breathtaking — traditional ryokan stays, bullet train journeys, tea ceremonies, and neon-lit Tokyo nights.</p>
+              <div class="pkg-perks">
+                <span class="pkg-perk"><i class="fas fa-torii-gate"></i> Temple Tours</span>
+                <span class="pkg-perk"><i class="fas fa-train"></i> Bullet Train</span>
+                <span class="pkg-perk"><i class="fas fa-bed"></i> Ryokan Stay</span>
+              </div>
+              <div class="pkg-footer">
+                <div class="pkg-price"><div class="from">From</div><div class="amount">$2,899</div><div class="per">/person • 9 nights</div></div>
+                <a href="booking.html" class="btn btn-primary" style="padding:.65rem 1.25rem; font-size:.85rem;">Book Now</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="pkg-card" data-cat="culture adventure">
+            <div class="pkg-img">
+              <img src="https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=700&q=80" alt="Morocco" loading="lazy" />
+              <span class="pkg-ribbon new">New</span>
+            </div>
+            <div class="pkg-body">
+              <div class="pkg-country">🇲🇦 Morocco, North Africa</div>
+              <h3 class="pkg-title">Morocco Spice Route Adventure</h3>
+              <p class="pkg-desc">Wander the ancient medinas of Marrakech and Fes, camp under the stars in the Sahara, and spend a night in a luxury riad with rooftop views of the Atlas Mountains.</p>
+              <div class="pkg-perks">
+                <span class="pkg-perk"><i class="fas fa-campground"></i> Sahara Camp</span>
+                <span class="pkg-perk"><i class="fas fa-horse"></i> Camel Trek</span>
+                <span class="pkg-perk"><i class="fas fa-map"></i> Medina Tours</span>
+              </div>
+              <div class="pkg-footer">
+                <div class="pkg-price"><div class="from">From</div><div class="amount">$1,999</div><div class="per">/person • 8 nights</div></div>
+                <a href="booking.html" class="btn btn-primary" style="padding:.65rem 1.25rem; font-size:.85rem;">Book Now</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="pkg-card" data-cat="culture luxury">
+            <div class="pkg-img">
+              <img src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=700&q=80" alt="Rome" loading="lazy" />
+            </div>
+            <div class="pkg-body">
+              <div class="pkg-country">🇮🇹 Rome & Amalfi, Italy</div>
+              <h3 class="pkg-title">Italian Dolce Vita Experience</h3>
+              <p class="pkg-desc">From the Colosseum at dawn to a private yacht along the Amalfi Coast, this itinerary is Italy at its most indulgent — art, food, and breathtaking scenery.</p>
+              <div class="pkg-perks">
+                <span class="pkg-perk"><i class="fas fa-ship"></i> Private Yacht</span>
+                <span class="pkg-perk"><i class="fas fa-glass-cheers"></i> Limoncello Tour</span>
+                <span class="pkg-perk"><i class="fas fa-pizza-slice"></i> Cooking Class</span>
+              </div>
+              <div class="pkg-footer">
+                <div class="pkg-price"><div class="from">From</div><div class="amount">$3,199</div><div class="per">/person • 10 nights</div></div>
+                <a href="booking.html" class="btn btn-primary" style="padding:.65rem 1.25rem; font-size:.85rem;">Book Now</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ─── SECTION: ADVENTURE ─── -->
+      <div style="margin-bottom:4rem;">
+        <h2 style="font-family:var(--font-head); color:var(--navy); font-size:1.75rem; margin-bottom:1.75rem; padding-bottom:.75rem; border-bottom:2px solid var(--gray-200);">
+          🧗 Adventure & Wildlife Expeditions
+        </h2>
+        <div class="pkg-grid">
+
+          <div class="pkg-card" data-cat="adventure family">
+            <div class="pkg-img">
+              <img src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=700&q=80" alt="Kenya Safari" loading="lazy" />
+              <span class="pkg-ribbon hot">Top Rated</span>
+            </div>
+            <div class="pkg-body">
+              <div class="pkg-country">🇰🇪 Kenya & Tanzania, Africa</div>
+              <h3 class="pkg-title">East Africa Safari & Big Five</h3>
+              <p class="pkg-desc">Witness the Great Migration and encounter lions, elephants, leopards, rhinos, and buffalo on guided game drives across the Maasai Mara and Serengeti.</p>
+              <div class="pkg-perks">
+                <span class="pkg-perk"><i class="fas fa-binoculars"></i> Game Drives</span>
+                <span class="pkg-perk"><i class="fas fa-hot-tub"></i> Luxury Camps</span>
+                <span class="pkg-perk"><i class="fas fa-hot-air-balloon" style="font-size:.7rem"></i> Balloon Safari</span>
+              </div>
+              <div class="pkg-footer">
+                <div class="pkg-price"><div class="from">From</div><div class="amount">$4,299</div><div class="per">/person • 10 nights</div></div>
+                <a href="booking.html" class="btn btn-primary" style="padding:.65rem 1.25rem; font-size:.85rem;">Book Now</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="pkg-card" data-cat="adventure">
+            <div class="pkg-img">
+              <img src="https://images.unsplash.com/photo-1531794612983-eb66a24dd2e5?w=700&q=80" alt="Patagonia" loading="lazy" />
+            </div>
+            <div class="pkg-body">
+              <div class="pkg-country">🇦🇷🇨🇱 Patagonia, South America</div>
+              <h3 class="pkg-title">Patagonia: End of the World Trek</h3>
+              <p class="pkg-desc">Hike the legendary Torres del Paine circuit, cruise among glaciers, and experience the raw, untouched wilderness of the Earth's southernmost frontier.</p>
+              <div class="pkg-perks">
+                <span class="pkg-perk"><i class="fas fa-hiking"></i> W-Trek Circuit</span>
+                <span class="pkg-perk"><i class="fas fa-snowflake"></i> Glacier Cruise</span>
+                <span class="pkg-perk"><i class="fas fa-binoculars"></i> Wildlife Spotting</span>
+              </div>
+              <div class="pkg-footer">
+                <div class="pkg-price"><div class="from">From</div><div class="amount">$3,599</div><div class="per">/person • 12 nights</div></div>
+                <a href="booking.html" class="btn btn-primary" style="padding:.65rem 1.25rem; font-size:.85rem;">Book Now</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="pkg-card" data-cat="adventure family">
+            <div class="pkg-img">
+              <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=700&q=80" alt="Costa Rica" loading="lazy" />
+              <span class="pkg-ribbon new">New</span>
+            </div>
+            <div class="pkg-body">
+              <div class="pkg-country">🇨🇷 Costa Rica, Central America</div>
+              <h3 class="pkg-title">Costa Rica Eco-Adventure</h3>
+              <p class="pkg-desc">Zip-line through cloud forests, spot quetzals in Monteverde, surf on Pacific beaches, and witness sea turtle nesting on the Caribbean coast — all in one trip.</p>
+              <div class="pkg-perks">
+                <span class="pkg-perk"><i class="fas fa-tree"></i> Zip-lining</span>
+                <span class="pkg-perk"><i class="fas fa-frog"></i> Wildlife Tours</span>
+                <span class="pkg-perk"><i class="fas fa-water"></i> White Water Rafting</span>
+              </div>
+              <div class="pkg-footer">
+                <div class="pkg-price"><div class="from">From</div><div class="amount">$2,499</div><div class="per">/person • 10 nights</div></div>
+                <a href="booking.html" class="btn btn-primary" style="padding:.65rem 1.25rem; font-size:.85rem;">Book Now</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="pkg-card" data-cat="adventure culture">
+            <div class="pkg-img">
+              <img src="https://images.unsplash.com/photo-1523731407965-2430cd12f5e4?w=700&q=80" alt="Nepal" loading="lazy" />
+            </div>
+            <div class="pkg-body">
+              <div class="pkg-country">🇳🇵 Nepal, Himalayas</div>
+              <h3 class="pkg-title">Everest Base Camp Trek</h3>
+              <p class="pkg-desc">Follow in the footsteps of Tenzing and Hillary on the world's most iconic trek. Buddhist monasteries, Sherpa villages, and Himalayan peaks at every turn.</p>
+              <div class="pkg-perks">
+                <span class="pkg-perk"><i class="fas fa-mountain"></i> EBC Trek</span>
+                <span class="pkg-perk"><i class="fas fa-pray"></i> Monastery Visit</span>
+                <span class="pkg-perk"><i class="fas fa-helicopter"></i> Heli Option</span>
+              </div>
+              <div class="pkg-footer">
+                <div class="pkg-price"><div class="from">From</div><div class="amount">$2,799</div><div class="per">/person • 14 nights</div></div>
+                <a href="booking.html" class="btn btn-primary" style="padding:.65rem 1.25rem; font-size:.85rem;">Book Now</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ─── SECTION: FAMILY ─── -->
+      <div style="margin-bottom:4rem;">
+        <h2 style="font-family:var(--font-head); color:var(--navy); font-size:1.75rem; margin-bottom:1.75rem; padding-bottom:.75rem; border-bottom:2px solid var(--gray-200);">
+          👨‍👩‍👧 Family-Friendly Holidays
+        </h2>
+        <div class="pkg-grid">
+
+          <div class="pkg-card" data-cat="family beach">
+            <div class="pkg-img">
+              <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=700&q=80" alt="Hawaii" loading="lazy" />
+              <span class="pkg-ribbon hot">Family Fave</span>
+            </div>
+            <div class="pkg-body">
+              <div class="pkg-country">🇺🇸 Hawaii, USA</div>
+              <h3 class="pkg-title">Hawaii Multi-Island Family Fun</h3>
+              <p class="pkg-desc">Three islands, one incredible family vacation. Snorkel with sea turtles in Maui, explore volcanoes on the Big Island, and relax on Oahu's Waikiki Beach.</p>
+              <div class="pkg-perks">
+                <span class="pkg-perk"><i class="fas fa-swimmer"></i> Snorkeling</span>
+                <span class="pkg-perk"><i class="fas fa-fire"></i> Volcano Tour</span>
+                <span class="pkg-perk"><i class="fas fa-child"></i> Kids Activities</span>
+              </div>
+              <div class="pkg-footer">
+                <div class="pkg-price"><div class="from">From</div><div class="amount">$2,999</div><div class="per">/person • 10 nights</div></div>
+                <a href="booking.html" class="btn btn-primary" style="padding:.65rem 1.25rem; font-size:.85rem;">Book Now</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="pkg-card" data-cat="family culture">
+            <div class="pkg-img">
+              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80" alt="Amsterdam" loading="lazy" />
+            </div>
+            <div class="pkg-body">
+              <div class="pkg-country">🇳🇱 Amsterdam & Brussels, Europe</div>
+              <h3 class="pkg-title">Benelux Cities Family Tour</h3>
+              <p class="pkg-desc">Bike along Amsterdam's canals, indulge in Belgian chocolate and waffles, and visit the Tintin museum — a wonderfully educational and delicious European escape for all ages.</p>
+              <div class="pkg-perks">
+                <span class="pkg-perk"><i class="fas fa-bicycle"></i> Bike Tours</span>
+                <span class="pkg-perk"><i class="fas fa-ship"></i> Canal Cruise</span>
+                <span class="pkg-perk"><i class="fas fa-cookie"></i> Chocolate Tour</span>
+              </div>
+              <div class="pkg-footer">
+                <div class="pkg-price"><div class="from">From</div><div class="amount">$2,299</div><div class="per">/person • 7 nights</div></div>
+                <a href="booking.html" class="btn btn-primary" style="padding:.65rem 1.25rem; font-size:.85rem;">Book Now</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="pkg-card" data-cat="family adventure">
+            <div class="pkg-img">
+              <img src="https://images.unsplash.com/photo-1495562569060-2eec283d3391?w=700&q=80" alt="Iceland" loading="lazy" />
+              <span class="pkg-ribbon new">New</span>
+            </div>
+            <div class="pkg-body">
+              <div class="pkg-country">🇮🇸 Iceland, North Atlantic</div>
+              <h3 class="pkg-title">Iceland Northern Lights & Geysers</h3>
+              <p class="pkg-desc">Chase the Aurora Borealis, soak in the Blue Lagoon, explore ice caves and waterfalls, and spot puffins and arctic foxes — Iceland is endlessly magical for all ages.</p>
+              <div class="pkg-perks">
+                <span class="pkg-perk"><i class="fas fa-stars" style="font-size:.7rem;"></i> Northern Lights</span>
+                <span class="pkg-perk"><i class="fas fa-hot-tub"></i> Blue Lagoon</span>
+                <span class="pkg-perk"><i class="fas fa-tint"></i> Ice Cave Tour</span>
+              </div>
+              <div class="pkg-footer">
+                <div class="pkg-price"><div class="from">From</div><div class="amount">$2,699</div><div class="per">/person • 7 nights</div></div>
+                <a href="booking.html" class="btn btn-primary" style="padding:.65rem 1.25rem; font-size:.85rem;">Book Now</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-banner">
+    <div class="container">
+      <h2>Can't Find Your Perfect Trip?</h2>
+      <p>Our specialists can craft a completely bespoke itinerary tailored precisely to your dream, budget, and travel dates.</p>
+      <div class="btn-row">
+        <a href="booking.html" class="btn btn-primary"><i class="fas fa-magic"></i> Build Custom Trip</a>
+        <a href="agents.html" class="btn btn-outline-white"><i class="fas fa-comments"></i> Talk to an Agent</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-icon">✈</div>
+            <div class="logo-text">WanderLux <span>Travel Agency</span></div>
+          </a>
+          <p>Crafting extraordinary journeys for discerning travelers since 2009.</p>
+          <div class="footer-socials">
+            <a href="#" class="footer-social"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="footer-social"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="footer-social"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="footer-social"><i class="fab fa-pinterest-p"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul class="footer-links">
+            <li><a href="packages.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> All Destinations</a></li>
+            <li><a href="agents.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Our Agents</a></li>
+            <li><a href="packing-guide.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Packing Guide</a></li>
+            <li><a href="booking.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Book a Trip</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="index.html#about"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> About Us</a></li>
+            <li><a href="index.html#testimonials"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Testimonials</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <div class="footer-contact-item">
+            <div class="ci"><i class="fas fa-phone"></i></div>
+            <span>+1 (800) 926-3371</span>
+          </div>
+          <div class="footer-contact-item">
+            <div class="ci"><i class="fas fa-envelope"></i></div>
+            <span>hello@wanderlux.travel</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 WanderLux Travel Agency. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
