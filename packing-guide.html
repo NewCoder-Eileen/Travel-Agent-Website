@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Packing Guide — WanderLux Travel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar" class="scrolled">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+          <div class="logo-icon">✈</div>
+          <div class="logo-text">WanderLux <span>Travel Agency</span></div>
+        </a>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="packages.html">Packages & Destinations</a></li>
+          <li><a href="agents.html">Our Agents</a></li>
+          <li><a href="packing-guide.html" class="active">Packing Guide</a></li>
+          <li><a href="booking.html">Book Now</a></li>
+        </ul>
+        <div class="nav-cta">
+          <span class="nav-phone"><i class="fas fa-phone-alt"></i> +1 (800) 926-3371</span>
+          <a href="booking.html" class="btn btn-primary">Get a Quote</a>
+        </div>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="packing-hero" style="padding-top:7rem;">
+    <div class="container">
+      <span class="section-label">Expert Travel Tips</span>
+      <h1>The Ultimate Packing Guide</h1>
+      <p>Never forget an essential item again. Our travel specialists have compiled comprehensive packing checklists for every type of trip — with expert tips from years of experience on the road.</p>
+    </div>
+  </div>
+
+  <!-- PACKING CONTENT -->
+  <div class="page-content">
+    <div class="container">
+
+      <!-- Quick Stats -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.5rem; margin-bottom:3.5rem;">
+        <div style="background:var(--white); border:1px solid var(--gray-200); border-radius:var(--radius); padding:1.5rem; text-align:center; box-shadow:var(--shadow-sm);">
+          <div style="font-size:2rem; margin-bottom:.5rem;">🧳</div>
+          <div style="font-family:var(--font-head);font-size:1.5rem;font-weight:700;color:var(--navy);">6 Guides</div>
+          <div style="font-size:.85rem;color:var(--gray-400);">Trip Types Covered</div>
+        </div>
+        <div style="background:var(--white); border:1px solid var(--gray-200); border-radius:var(--radius); padding:1.5rem; text-align:center; box-shadow:var(--shadow-sm);">
+          <div style="font-size:2rem; margin-bottom:.5rem;">✅</div>
+          <div style="font-family:var(--font-head);font-size:1.5rem;font-weight:700;color:var(--navy);">200+ Items</div>
+          <div style="font-size:.85rem;color:var(--gray-400);">Across All Checklists</div>
+        </div>
+        <div style="background:var(--white); border:1px solid var(--gray-200); border-radius:var(--radius); padding:1.5rem; text-align:center; box-shadow:var(--shadow-sm);">
+          <div style="font-size:2rem; margin-bottom:.5rem;">💡</div>
+          <div style="font-family:var(--font-head);font-size:1.5rem;font-weight:700;color:var(--navy);">Expert Tips</div>
+          <div style="font-size:.85rem;color:var(--gray-400);">From Our Specialist Agents</div>
+        </div>
+        <div style="background:var(--white); border:1px solid var(--gray-200); border-radius:var(--radius); padding:1.5rem; text-align:center; box-shadow:var(--shadow-sm);">
+          <div style="font-size:2rem; margin-bottom:.5rem;">📱</div>
+          <div style="font-family:var(--font-head);font-size:1.5rem;font-weight:700;color:var(--navy);">Interactive</div>
+          <div style="font-size:.85rem;color:var(--gray-400);">Check Items as You Pack</div>
+        </div>
+      </div>
+
+      <!-- Tab Buttons -->
+      <div class="packing-tabs">
+        <button class="tab-btn active" data-tab="beach">🏖 Beach & Tropical</button>
+        <button class="tab-btn" data-tab="mountain">🏔 Mountain & Hiking</button>
+        <button class="tab-btn" data-tab="city">🏙 City Break</button>
+        <button class="tab-btn" data-tab="safari">🦁 Safari & Wildlife</button>
+        <button class="tab-btn" data-tab="winter">❄️ Winter Destinations</button>
+        <button class="tab-btn" data-tab="business">💼 Business Travel</button>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+           BEACH & TROPICAL
+      ═══════════════════════════════════════════ -->
+      <div class="packing-section active" id="tab-beach">
+        <div class="packing-intro">
+          <div class="icon">🏖</div>
+          <div>
+            <h2>Beach & Tropical Destinations</h2>
+            <p>Perfect for: Maldives, Bali, Thailand, Caribbean, Seychelles, Hawaii, Santorini</p>
+          </div>
+        </div>
+
+        <div class="checklist-grid">
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">👗</span> Clothing</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="b1"><label for="b1">Lightweight swimsuits (2–3)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="b2"><label for="b2">Rashguard / UV-protective top</label></div>
+              <div class="checklist-item"><input type="checkbox" id="b3"><label for="b3">Linen or cotton shirts (breathable)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="b4"><label for="b4">Shorts and light trousers</label></div>
+              <div class="checklist-item"><input type="checkbox" id="b5"><label for="b5">Sundress or sarong / cover-up</label></div>
+              <div class="checklist-item"><input type="checkbox" id="b6"><label for="b6">Light cardigan or wrap (A/C in restaurants)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="b7"><label for="b7">Smart casual outfit for dinners</label></div>
+              <div class="checklist-item"><input type="checkbox" id="b8"><label for="b8">Underwear (quick-dry)</label></div>
+            </div>
+          </div>
+
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">👟</span> Footwear</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="bf1"><label for="bf1">Flip flops / sandals</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bf2"><label for="bf2">Water shoes (reef protection)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bf3"><label for="bf3">Smart sandals for evenings</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bf4"><label for="bf4">Trainers / sneakers (optional)</label></div>
+            </div>
+          </div>
+
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">☀️</span> Sun & Beach Essentials</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="bs1"><label for="bs1">Broad-spectrum SPF 50+ sunscreen</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bs2"><label for="bs2">Reef-safe sunscreen (eco-conscious)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bs3"><label for="bs3">After-sun lotion / aloe vera</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bs4"><label for="bs4">Wide-brim hat or sun hat</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bs5"><label for="bs5">UV-400 sunglasses</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bs6"><label for="bs6">Beach towel (quick-dry microfiber)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bs7"><label for="bs7">Waterproof dry bag</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bs8"><label for="bs8">Snorkel mask & fins (or rent locally)</label></div>
+            </div>
+          </div>
+
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">💊</span> Health & Safety</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="bh1"><label for="bh1">Insect repellent (DEET or picaridin)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bh2"><label for="bh2">Anti-malaria tablets (if applicable)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bh3"><label for="bh3">Motion sickness tablets</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bh4"><label for="bh4">Rehydration sachets</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bh5"><label for="bh5">Water purification tablets / filter</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bh6"><label for="bh6">Basic first aid kit</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bh7"><label for="bh7">Travel health insurance card</label></div>
+            </div>
+          </div>
+
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">📱</span> Tech & Gadgets</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="bt1"><label for="bt1">Waterproof phone case</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bt2"><label for="bt2">Underwater camera / GoPro</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bt3"><label for="bt3">Universal power adapter</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bt4"><label for="bt4">Portable power bank</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bt5"><label for="bt5">E-reader (beach reading!)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bt6"><label for="bt6">Bluetooth waterproof speaker</label></div>
+            </div>
+          </div>
+
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">📄</span> Documents & Money</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="bd1"><label for="bd1">Passport (valid 6+ months)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bd2"><label for="bd2">Visa (if required)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bd3"><label for="bd3">Travel insurance documents</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bd4"><label for="bd4">Hotel booking confirmations</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bd5"><label for="bd5">Flight e-tickets (printed & digital)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bd6"><label for="bd6">Local currency + credit card</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bd7"><label for="bd7">Emergency contact list</label></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="packing-tip">
+          <strong>💡 Sophia's Pro Tip:</strong> For beach destinations, always pack a small waterproof dry bag for your electronics and documents. Tropical rains can arrive suddenly and your phone will thank you!
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+           MOUNTAIN & HIKING
+      ═══════════════════════════════════════════ -->
+      <div class="packing-section" id="tab-mountain">
+        <div class="packing-intro">
+          <div class="icon">🏔</div>
+          <div>
+            <h2>Mountain & Hiking Destinations</h2>
+            <p>Perfect for: Nepal, Patagonia, Iceland, Canadian Rockies, Swiss Alps, New Zealand</p>
+          </div>
+        </div>
+
+        <div class="checklist-grid">
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">🥾</span> Footwear & Lower Body</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="m1"><label for="m1">Waterproof hiking boots (broken in!)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="m2"><label for="m2">Camp sandals / flip flops</label></div>
+              <div class="checklist-item"><input type="checkbox" id="m3"><label for="m3">Moisture-wicking hiking socks (wool)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="m4"><label for="m4">Gaiters (for wet/muddy terrain)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="m5"><label for="m5">Hiking trousers (zip-off convertible)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="m6"><label for="m6">Thermal base layer bottoms</label></div>
+              <div class="checklist-item"><input type="checkbox" id="m7"><label for="m7">Waterproof over-trousers</label></div>
+            </div>
+          </div>
+
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">🧥</span> Tops & Layers (Layer System)</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="mt1"><label for="mt1">Moisture-wicking base layer (top)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mt2"><label for="mt2">Fleece mid-layer</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mt3"><label for="mt3">Down / insulated jacket (packable)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mt4"><label for="mt4">Waterproof shell jacket (Gore-Tex)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mt5"><label for="mt5">Warm hat / beanie</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mt6"><label for="mt6">Buff / neck gaiter</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mt7"><label for="mt7">Lightweight gloves</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mt8"><label for="mt8">Sun hat with brim</label></div>
+            </div>
+          </div>
+
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">🎒</span> Hiking Gear</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="mg1"><label for="mg1">Daypack (25–35L) with rain cover</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mg2"><label for="mg2">Trekking poles (collapsible)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mg3"><label for="mg3">Hydration bladder or water bottles (2L)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mg4"><label for="mg4">Water filter / purification tablets</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mg5"><label for="mg5">Trail map & compass / GPS device</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mg6"><label for="mg6">Headlamp + spare batteries</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mg7"><label for="mg7">Emergency whistle & mirror</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mg8"><label for="mg8">Sleeping bag liner (for hut stays)</label></div>
+            </div>
+          </div>
+
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">🍫</span> Food & Nutrition</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="mf1"><label for="mf1">High-energy trail mix & nuts</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mf2"><label for="mf2">Energy / protein bars</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mf3"><label for="mf3">Dried fruit</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mf4"><label for="mf4">Electrolyte powder / tablets</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mf5"><label for="mf5">Instant oatmeal or soup sachets</label></div>
+            </div>
+          </div>
+
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">💊</span> Health & First Aid</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="mh1"><label for="mh1">Comprehensive first aid kit</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mh2"><label for="mh2">Altitude sickness tablets (Diamox)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mh3"><label for="mh3">Blister plasters & moleskin</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mh4"><label for="mh4">Ibuprofen / pain relief</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mh5"><label for="mh5">Sunscreen SPF 50+</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mh6"><label for="mh6">Lip balm with SPF</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mh7"><label for="mh7">Knee support braces</label></div>
+            </div>
+          </div>
+
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">📱</span> Tech & Navigation</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="mte1"><label for="mte1">Satellite communicator (SPOT/Garmin)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mte2"><label for="mte2">Offline maps downloaded</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mte3"><label for="mte3">Camera with weather protection</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mte4"><label for="mte4">Solar charger / large power bank</label></div>
+              <div class="checklist-item"><input type="checkbox" id="mte5"><label for="mte5">Insulated flask for hot drinks</label></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="packing-tip">
+          <strong>💡 Marcus's Pro Tip:</strong> Always break in your hiking boots at home for at least 3–4 weeks before a major trek. Blisters on day one can ruin an entire expedition. Wool socks, not cotton — always.
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+           CITY BREAK
+      ═══════════════════════════════════════════ -->
+      <div class="packing-section" id="tab-city">
+        <div class="packing-intro">
+          <div class="icon">🏙</div>
+          <div>
+            <h2>City Break & Urban Exploration</h2>
+            <p>Perfect for: Paris, Tokyo, New York, London, Amsterdam, Rome, Barcelona, Singapore</p>
+          </div>
+        </div>
+
+        <div class="checklist-grid">
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">👔</span> Clothing</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="c1"><label for="c1">Smart-casual mix (7-day capsule wardrobe)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="c2"><label for="c2">One smart outfit for fine dining / theatre</label></div>
+              <div class="checklist-item"><input type="checkbox" id="c3"><label for="c3">Comfortable walking trousers / jeans</label></div>
+              <div class="checklist-item"><input type="checkbox" id="c4"><label for="c4">Versatile layering pieces</label></div>
+              <div class="checklist-item"><input type="checkbox" id="c5"><label for="c5">Lightweight, packable rain jacket</label></div>
+              <div class="checklist-item"><input type="checkbox" id="c6"><label for="c6">Scarf (temple visits, warmth, style)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="c7"><label for="c7">Workout clothes (if using hotel gym)</label></div>
+            </div>
+          </div>
+
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">👞</span> Footwear</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="cf1"><label for="cf1">Comfortable walking shoes (well worn-in)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="cf2"><label for="cf2">Smart shoes or heels for evenings</label></div>
+              <div class="checklist-item"><input type="checkbox" id="cf3"><label for="cf3">Foldable flats or sandals (backup)</label></div>
+            </div>
+          </div>
+
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">🗺</span> Sightseeing Essentials</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="cs1"><label for="cs1">Anti-theft crossbody bag / backpack</label></div>
+              <div class="checklist-item"><input type="checkbox" id="cs2"><label for="cs2">Compact city map / offline maps app</label></div>
+              <div class="checklist-item"><input type="checkbox" id="cs3"><label for="cs3">Pre-booked museum / attraction tickets</label></div>
+              <div class="checklist-item"><input type="checkbox" id="cs4"><label for="cs4">Metro / transit app downloaded</label></div>
+              <div class="checklist-item"><input type="checkbox" id="cs5"><label for="cs5">Portable umbrella</label></div>
+              <div class="checklist-item"><input type="checkbox" id="cs6"><label for="cs6">Reusable water bottle</label></div>
+              <div class="checklist-item"><input type="checkbox" id="cs7"><label for="cs7">Restaurant reservation list</label></div>
+            </div>
+          </div>
+
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">📱</span> Tech & Connectivity</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="ct1"><label for="ct1">Universal travel adapter</label></div>
+              <div class="checklist-item"><input type="checkbox" id="ct2"><label for="ct2">International SIM or eSIM set up</label></div>
+              <div class="checklist-item"><input type="checkbox" id="ct3"><label for="ct3">Portable charger / power bank</label></div>
+              <div class="checklist-item"><input type="checkbox" id="ct4"><label for="ct4">Noise-cancelling earphones</label></div>
+              <div class="checklist-item"><input type="checkbox" id="ct5"><label for="ct5">Translation app (Google Translate)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="ct6"><label for="ct6">Camera + lenses</label></div>
+            </div>
+          </div>
+
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">🛡</span> Safety & Security</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="csa1"><label for="csa1">Money belt / hidden pouch</label></div>
+              <div class="checklist-item"><input type="checkbox" id="csa2"><label for="csa2">Photocopy of passport (separate from original)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="csa3"><label for="csa3">Small cash in local currency</label></div>
+              <div class="checklist-item"><input type="checkbox" id="csa4"><label for="csa4">Backup credit card (different to main)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="csa5"><label for="csa5">Travel insurance details</label></div>
+              <div class="checklist-item"><input type="checkbox" id="csa6"><label for="csa6">Hotel address in local language</label></div>
+            </div>
+          </div>
+
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">🧴</span> Toiletries (travel-size)</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="cto1"><label for="cto1">Shampoo, conditioner, body wash</label></div>
+              <div class="checklist-item"><input type="checkbox" id="cto2"><label for="cto2">Toothbrush, toothpaste, floss</label></div>
+              <div class="checklist-item"><input type="checkbox" id="cto3"><label for="cto3">Deodorant</label></div>
+              <div class="checklist-item"><input type="checkbox" id="cto4"><label for="cto4">Moisturiser & lip balm</label></div>
+              <div class="checklist-item"><input type="checkbox" id="cto5"><label for="cto5">Razors / shavers</label></div>
+              <div class="checklist-item"><input type="checkbox" id="cto6"><label for="cto6">Feminine hygiene products</label></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="packing-tip">
+          <strong>💡 Elena's Pro Tip:</strong> For European city trips, use a capsule wardrobe philosophy — choose 7 items that all mix and match together. You'll pack a third less and still look stylish every day. Parisians always choose quality over quantity!
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+           SAFARI
+      ═══════════════════════════════════════════ -->
+      <div class="packing-section" id="tab-safari">
+        <div class="packing-intro">
+          <div class="icon">🦁</div>
+          <div>
+            <h2>Safari & Wildlife Destinations</h2>
+            <p>Perfect for: Kenya, Tanzania, Botswana, South Africa, Zimbabwe, Rwanda (gorilla trekking)</p>
+          </div>
+        </div>
+
+        <div class="checklist-grid">
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">👕</span> Safari Clothing (Neutral Tones ONLY)</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="sa1"><label for="sa1">Khaki / beige / olive long-sleeved shirts (3–4)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="sa2"><label for="sa2">Khaki trousers with zip-off option</label></div>
+              <div class="checklist-item"><input type="checkbox" id="sa3"><label for="sa3">Lightweight long-sleeved base layer</label></div>
+              <div class="checklist-item"><input type="checkbox" id="sa4"><label for="sa4">Warm fleece layer (cold mornings in the bush)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="sa5"><label for="sa5">Wide-brim hat (sun protection)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="sa6"><label for="sa6">Buff / neck gaiter</label></div>
+              <div class="checklist-item"><input type="checkbox" id="sa7"><label for="sa7">Light windproof jacket</label></div>
+              <div class="checklist-item"><input type="checkbox" id="sa8"><label for="sa8">Swimsuit (for lodge pools)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="sa9"><label for="sa9">⚠️ AVOID white, bright colours, dark blue (attracts tsetse flies)</label></div>
+            </div>
+          </div>
+
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">🔭</span> Game Drive Essentials</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="sg1"><label for="sg1">Binoculars (8x42 or 10x42)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="sg2"><label for="sg2">Camera with 300mm+ telephoto lens</label></div>
+              <div class="checklist-item"><input type="checkbox" id="sg3"><label for="sg3">Extra camera batteries & memory cards</label></div>
+              <div class="checklist-item"><input type="checkbox" id="sg4"><label for="sg4">Large power bank (camps often have limited power)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="sg5"><label for="sg5">Safari field guide / wildlife ID book</label></div>
+              <div class="checklist-item"><input type="checkbox" id="sg6"><label for="sg6">Headlamp (for pre-dawn departures)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="sg7"><label for="sg7">Zip-lock bags (dust & moisture protection for electronics)</label></div>
+            </div>
+          </div>
+
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">🦟</span> Health & Protection</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="sh1"><label for="sh1">DEET-based insect repellent (50%+)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="sh2"><label for="sh2">Anti-malaria medication (PRESCRIPTION REQUIRED)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="sh3"><label for="sh3">Yellow fever vaccination certificate</label></div>
+              <div class="checklist-item"><input type="checkbox" id="sh4"><label for="sh4">Permethrin clothing spray</label></div>
+              <div class="checklist-item"><input type="checkbox" id="sh5"><label for="sh5">Sunscreen SPF 50+</label></div>
+              <div class="checklist-item"><input type="checkbox" id="sh6"><label for="sh6">Comprehensive first aid kit</label></div>
+              <div class="checklist-item"><input type="checkbox" id="sh7"><label for="sh7">Rehydration sachets</label></div>
+              <div class="checklist-item"><input type="checkbox" id="sh8"><label for="sh8">Antiseptic wipes & hand sanitiser</label></div>
+            </div>
+          </div>
+
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">🧳</span> Luggage Notes</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="sl1"><label for="sl1">Soft-sided duffel bag (bush planes have strict limits)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="sl2"><label for="sl2">Max 15kg / 33lb luggage for light aircraft</label></div>
+              <div class="checklist-item"><input type="checkbox" id="sl3"><label for="sl3">Small backpack / daypack for game drives</label></div>
+              <div class="checklist-item"><input type="checkbox" id="sl4"><label for="sl4">Laundry bags (many camps offer laundry)</label></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="packing-tip">
+          <strong>💡 Marcus's Pro Tip:</strong> Most luxury safari camps offer same-day laundry service, so you really only need 3–4 days of clothing. The critical rules: neutral tones, no white, long sleeves for insect protection, and ALWAYS bring a fleece — dawn game drives in the Masai Mara can be surprisingly cold.
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+           WINTER
+      ═══════════════════════════════════════════ -->
+      <div class="packing-section" id="tab-winter">
+        <div class="packing-intro">
+          <div class="icon">❄️</div>
+          <div>
+            <h2>Winter & Cold-Weather Destinations</h2>
+            <p>Perfect for: Iceland, Norway, Canada, Japan (ski), Swiss Alps, Lapland, Alaska</p>
+          </div>
+        </div>
+
+        <div class="checklist-grid">
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">🧥</span> Cold-Weather Clothing</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="w1"><label for="w1">Thermal base layer set (top + bottoms)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="w2"><label for="w2">Heavyweight fleece or wool sweater</label></div>
+              <div class="checklist-item"><input type="checkbox" id="w3"><label for="w3">Down puffer jacket (900-fill recommended)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="w4"><label for="w4">Waterproof outer shell jacket</label></div>
+              <div class="checklist-item"><input type="checkbox" id="w5"><label for="w5">Insulated waterproof trousers</label></div>
+              <div class="checklist-item"><input type="checkbox" id="w6"><label for="w6">Wool or thermal socks (multiple pairs)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="w7"><label for="w7">Insulated winter boots (waterproof, -30°C rated for Arctic)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="w8"><label for="w8">Wool beanie / hat covering ears</label></div>
+              <div class="checklist-item"><input type="checkbox" id="w9"><label for="w9">Warm scarf or Buff</label></div>
+              <div class="checklist-item"><input type="checkbox" id="w10"><label for="w10">Waterproof insulated gloves / mittens</label></div>
+              <div class="checklist-item"><input type="checkbox" id="w11"><label for="w11">Balaclava (for extreme cold)</label></div>
+            </div>
+          </div>
+
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">🎿</span> Winter Activities</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="wa1"><label for="wa1">Ski goggles (if skiing/snowboarding)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="wa2"><label for="wa2">Hand & foot warmers (disposable)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="wa3"><label for="wa3">Traction cleats / ice grips for boots</label></div>
+              <div class="checklist-item"><input type="checkbox" id="wa4"><label for="wa4">Snowshoes (or rent locally)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="wa5"><label for="wa5">Neck gaiter</label></div>
+              <div class="checklist-item"><input type="checkbox" id="wa6"><label for="wa6">UV-400 sunglasses (snow glare)</label></div>
+            </div>
+          </div>
+
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">💡</span> Northern Lights Tips</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="nl1"><label for="nl1">Tripod for long-exposure photography</label></div>
+              <div class="checklist-item"><input type="checkbox" id="nl2"><label for="nl2">Camera with manual mode (wide aperture)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="nl3"><label for="nl3">Aurora forecast app downloaded</label></div>
+              <div class="checklist-item"><input type="checkbox" id="nl4"><label for="nl4">Extra batteries (cold drains them fast)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="nl5"><label for="nl5">Insulated thermos for hot drinks</label></div>
+              <div class="checklist-item"><input type="checkbox" id="nl6"><label for="nl6">Patience and a high KP index night! ⚡</label></div>
+            </div>
+          </div>
+
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">💊</span> Health & Comfort</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="wh1"><label for="wh1">Rich moisturiser for skin (wind & cold)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="wh2"><label for="wh2">SPF lip balm (UV + cold wind)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="wh3"><label for="wh3">Sunscreen (snow reflects 80% UV)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="wh4"><label for="wh4">Cold & flu medication</label></div>
+              <div class="checklist-item"><input type="checkbox" id="wh5"><label for="wh5">Vitamin C supplements</label></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="packing-tip">
+          <strong>💡 Agent Tip:</strong> The layering system is everything in cold destinations: moisture-wicking base, insulating mid-layer, and weatherproof outer shell. This lets you easily regulate temperature as you move between heated interiors and the cold outside. Never wear cotton as a base layer — it holds moisture and can cause hypothermia.
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+           BUSINESS TRAVEL
+      ═══════════════════════════════════════════ -->
+      <div class="packing-section" id="tab-business">
+        <div class="packing-intro">
+          <div class="icon">💼</div>
+          <div>
+            <h2>Business Travel</h2>
+            <p>Perfect for: Corporate trips, conferences, client meetings, incentive travel, international business</p>
+          </div>
+        </div>
+
+        <div class="checklist-grid">
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">👔</span> Professional Attire</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="bu1"><label for="bu1">Wrinkle-resistant dress shirts / blouses</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bu2"><label for="bu2">Quality suit or blazer (navy or charcoal)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bu3"><label for="bu3">Formal trousers or skirt</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bu4"><label for="bu4">Polished dress shoes (in shoe bag)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bu5"><label for="bu5">Ties / scarves / accessories</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bu6"><label for="bu6">Casual clothes for evenings</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bu7"><label for="bu7">Workout gear (hotel gyms are a lifesaver)</label></div>
+            </div>
+          </div>
+
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">💻</span> Tech & Office</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="bt1b"><label for="bt1b">Laptop + charger</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bt2b"><label for="bt2b">Universal travel adapter</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bt3b"><label for="bt3b">Portable monitor / tablet</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bt4b"><label for="bt4b">Mouse, keyboard (if needed)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bt5b"><label for="bt5b">USB-C hub / dongle</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bt6b"><label for="bt6b">Noise-cancelling headphones</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bt7b"><label for="bt7b">Business cards</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bt8b"><label for="bt8b">Presentation materials / USB drives</label></div>
+            </div>
+          </div>
+
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">🏨</span> Comfort & Productivity</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="bc1"><label for="bc1">Travel pillow & eye mask (long haul)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bc2"><label for="bc2">Compression socks (DVT prevention)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bc3"><label for="bc3">Melatonin for jet lag</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bc4"><label for="bc4">Premium carry-on (wheels spin 360°)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bc5"><label for="bc5">Garment bag (keeps suits wrinkle-free)</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bc6"><label for="bc6">Portable luggage scale</label></div>
+            </div>
+          </div>
+
+          <div class="checklist-category">
+            <div class="checklist-header"><span class="cat-icon">📄</span> Documents</div>
+            <div class="checklist-items">
+              <div class="checklist-item"><input type="checkbox" id="bd1b"><label for="bd1b">Passport + multiple photocopies</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bd2b"><label for="bd2b">Business visa / letters of invitation</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bd3b"><label for="bd3b">Travel insurance + corporate coverage</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bd4b"><label for="bd4b">Expense reports folder</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bd5b"><label for="bd5b">Meeting agenda & attendee list</label></div>
+              <div class="checklist-item"><input type="checkbox" id="bd6b"><label for="bd6b">Emergency contacts (incl. head office)</label></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="packing-tip">
+          <strong>💡 Yusuf's Pro Tip:</strong> Always pack your suit and essential business items in a carry-on, never checked luggage. Airlines lose bags — it happens. And always carry a spare shirt or blouse in your hand luggage. You'll thank yourself after a long overnight flight and a morning meeting.
+        </div>
+      </div>
+
+      <!-- Reset Button -->
+      <div style="margin-top:2.5rem; text-align:center;">
+        <button onclick="resetChecklist()" class="btn btn-outline-navy">
+          <i class="fas fa-redo"></i> Reset Checklist
+        </button>
+        <a href="booking.html" class="btn btn-primary" style="margin-left:1rem;">
+          <i class="fas fa-calendar-check"></i> Book Your Trip Now
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-banner">
+    <div class="container">
+      <h2>Packed & Ready to Go?</h2>
+      <p>Let WanderLux handle everything else. Our agents will sort your flights, hotels, transfers, and experiences so you can simply arrive and explore.</p>
+      <div class="btn-row">
+        <a href="booking.html" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Start Planning</a>
+        <a href="packages.html" class="btn btn-outline-white"><i class="fas fa-compass"></i> Browse Packages</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-icon">✈</div>
+            <div class="logo-text">WanderLux <span>Travel Agency</span></div>
+          </a>
+          <p>Crafting extraordinary journeys for discerning travelers since 2009.</p>
+          <div class="footer-socials">
+            <a href="#" class="footer-social"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="footer-social"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="footer-social"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="footer-social"><i class="fab fa-pinterest-p"></i></a>
+          </div>
+        </div>
+        <div class="footer-col"><h4>Explore</h4>
+          <ul class="footer-links">
+            <li><a href="packages.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> All Destinations</a></li>
+            <li><a href="agents.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Our Agents</a></li>
+            <li><a href="booking.html"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Book a Trip</a></li>
+          </ul>
+        </div>
+        <div class="footer-col"><h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="index.html#about"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> About Us</a></li>
+            <li><a href="index.html#testimonials"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--gold)"></i> Testimonials</a></li>
+          </ul>
+        </div>
+        <div class="footer-col"><h4>Contact</h4>
+          <div class="footer-contact-item"><div class="ci"><i class="fas fa-phone"></i></div><span>+1 (800) 926-3371</span></div>
+          <div class="footer-contact-item"><div class="ci"><i class="fas fa-envelope"></i></div><span>hello@wanderlux.travel</span></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 WanderLux Travel Agency. All rights reserved.</p>
+        <div class="footer-bottom-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    function resetChecklist() {
+      document.querySelectorAll('.checklist-item input[type="checkbox"]').forEach(cb => {
+        cb.checked = false;
+        cb.closest('.checklist-item').classList.remove('checked');
+      });
+    }
+  </script>
+</body>
+</html>
