@@ -19,16 +19,35 @@
     .package-option {
       border: 2px solid var(--gray-200);
       border-radius: var(--radius-sm);
-      padding: .9rem 1rem;
+      padding: .9rem 1rem .9rem 2.6rem; /* left space for dot */
       cursor: pointer;
       transition: var(--transition);
-      display: flex;
-      align-items: center;
-      gap: .75rem;
+      position: relative;
+      user-select: none;
     }
     .package-option:hover { border-color: var(--ocean); background: rgba(26,111,168,.03); }
     .package-option.selected { border-color: var(--ocean); background: rgba(26,111,168,.07); }
-    .package-option input { accent-color: var(--ocean); }
+
+    /* Custom dot — replaces native radio */
+    .package-option::before {
+      content: '';
+      position: absolute;
+      left: .85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--gray-300);
+      border-radius: 50%;
+      background: #fff;
+      transition: border-color .15s ease, background .15s ease;
+    }
+    .package-option:hover::before  { border-color: var(--ocean); }
+    .package-option.selected::before {
+      border-color: var(--ocean);
+      background: var(--ocean);
+      box-shadow: inset 0 0 0 3px #fff; /* white inner ring = filled dot look */
+    }
     .package-option-label { font-size: .88rem; font-weight: 600; color: var(--navy); }
     .package-option-price { font-size: .78rem; color: var(--gold); font-weight: 700; margin-top: .1rem; }
 
@@ -86,16 +105,48 @@
     .addon-item {
       border: 1.5px solid var(--gray-200);
       border-radius: var(--radius-sm);
-      padding: 1rem;
+      padding: 1rem 2.75rem 1rem 1rem; /* right padding leaves room for check indicator */
       display: flex;
       align-items: flex-start;
       gap: .75rem;
       cursor: pointer;
       transition: var(--transition);
+      position: relative;
+      user-select: none;
     }
-    .addon-item:hover { border-color: var(--ocean); }
-    .addon-item.selected { border-color: var(--ocean); background: rgba(26,111,168,.05); }
-    .addon-item input { accent-color: var(--ocean); margin-top: 3px; flex-shrink: 0; }
+    .addon-item:hover { border-color: var(--ocean); background: rgba(26,111,168,.02); }
+    .addon-item.selected {
+      border-color: var(--ocean);
+      background: rgba(26,111,168,.06);
+    }
+
+    /* Custom circle indicator, top-right of each card */
+    .addon-item::after {
+      content: '';
+      position: absolute;
+      top: .9rem;
+      right: .9rem;
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--gray-300);
+      border-radius: 50%;
+      background: #fff;
+      transition: background .18s ease, border-color .18s ease,
+                  transform .18s cubic-bezier(.34,1.56,.64,1);
+    }
+    .addon-item:hover::after {
+      border-color: var(--ocean);
+    }
+    .addon-item.selected::after {
+      background: var(--ocean);
+      border-color: var(--ocean);
+      /* SVG checkmark via background-image */
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 9'%3E%3Cpath d='M1 4.5L4.5 8L11 1' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 11px 8px;
+      transform: scale(1.1);
+    }
     .addon-name { font-weight: 700; font-size: .9rem; color: var(--navy); }
     .addon-desc { font-size: .8rem; color: var(--gray-600); margin-top: .2rem; }
     .addon-price { font-size: .85rem; font-weight: 700; color: var(--gold); margin-top: .4rem; }
@@ -214,35 +265,27 @@
                   </label>
                   <div class="package-select-grid">
                     <div class="package-option selected" onclick="selectPackage(this, 'Maldives Overwater Bungalow', 3499)">
-                      <input type="radio" name="package" checked />
-                      <div><div class="package-option-label">🇲🇻 Maldives Escape</div><div class="package-option-price">From $3,499/pp</div></div>
+                      <div><div class="package-option-label">🇲🇻 Maldives Escape</div><div class="package-option-price">From <span data-usd="3499">$3,499</span>/pp</div></div>
                     </div>
                     <div class="package-option" onclick="selectPackage(this, 'Paris Art & Romance', 2199)">
-                      <input type="radio" name="package" />
-                      <div><div class="package-option-label">🇫🇷 Paris Romance</div><div class="package-option-price">From $2,199/pp</div></div>
+                      <div><div class="package-option-label">🇫🇷 Paris Romance</div><div class="package-option-price">From <span data-usd="2199">$2,199</span>/pp</div></div>
                     </div>
                     <div class="package-option" onclick="selectPackage(this, 'Bali Spirit Journey', 1799)">
-                      <input type="radio" name="package" />
-                      <div><div class="package-option-label">🇮🇩 Bali Spirit</div><div class="package-option-price">From $1,799/pp</div></div>
+                      <div><div class="package-option-label">🇮🇩 Bali Spirit</div><div class="package-option-price">From <span data-usd="1799">$1,799</span>/pp</div></div>
                     </div>
                     <div class="package-option" onclick="selectPackage(this, 'Japan Cherry Blossom', 2899)">
-                      <input type="radio" name="package" />
-                      <div><div class="package-option-label">🇯🇵 Japan Tour</div><div class="package-option-price">From $2,899/pp</div></div>
+                      <div><div class="package-option-label">🇯🇵 Japan Tour</div><div class="package-option-price">From <span data-usd="2899">$2,899</span>/pp</div></div>
                     </div>
                     <div class="package-option" onclick="selectPackage(this, 'Africa Safari', 4299)">
-                      <input type="radio" name="package" />
-                      <div><div class="package-option-label">🇰🇪 Africa Safari</div><div class="package-option-price">From $4,299/pp</div></div>
+                      <div><div class="package-option-label">🇰🇪 Africa Safari</div><div class="package-option-price">From <span data-usd="4299">$4,299</span>/pp</div></div>
                     </div>
                     <div class="package-option" onclick="selectPackage(this, 'Costa Rica Adventure', 2499)">
-                      <input type="radio" name="package" />
-                      <div><div class="package-option-label">🇨🇷 Costa Rica</div><div class="package-option-price">From $2,499/pp</div></div>
+                      <div><div class="package-option-label">🇨🇷 Costa Rica</div><div class="package-option-price">From <span data-usd="2499">$2,499</span>/pp</div></div>
                     </div>
                     <div class="package-option" onclick="selectPackage(this, 'Santorini Sunsets', 2599)">
-                      <input type="radio" name="package" />
-                      <div><div class="package-option-label">🇬🇷 Santorini</div><div class="package-option-price">From $2,599/pp</div></div>
+                      <div><div class="package-option-label">🇬🇷 Santorini</div><div class="package-option-price">From <span data-usd="2599">$2,599</span>/pp</div></div>
                     </div>
                     <div class="package-option" onclick="selectPackage(this, 'Custom / Other', 0)">
-                      <input type="radio" name="package" />
                       <div><div class="package-option-label">✍️ Custom Trip</div><div class="package-option-price">Bespoke pricing</div></div>
                     </div>
                   </div>
@@ -410,70 +453,46 @@
                 <p style="color:var(--gray-600);font-size:.9rem;margin-bottom:1.5rem;">Select any extras to make your trip truly extraordinary. All add-ons are priced per person.</p>
 
                 <div class="addon-grid">
-                  <label class="addon-item" id="addon-insurance">
-                    <input type="checkbox" onchange="updateAddons(this, 'Travel Insurance', 149)" />
-                    <div>
-                      <div class="addon-name">🛡 Comprehensive Travel Insurance</div>
-                      <div class="addon-desc">Full medical, cancellation, luggage & delay coverage. Highly recommended.</div>
-                      <div class="addon-price">+$149 / person</div>
-                    </div>
-                  </label>
-                  <label class="addon-item" id="addon-transfer">
-                    <input type="checkbox" onchange="updateAddons(this, 'Airport Transfers', 89)" />
-                    <div>
-                      <div class="addon-name">🚐 Private Airport Transfers</div>
-                      <div class="addon-desc">Luxury vehicle pick-up & drop-off at all airports and hotels.</div>
-                      <div class="addon-price">+$89 / person</div>
-                    </div>
-                  </label>
-                  <label class="addon-item" id="addon-guide">
-                    <input type="checkbox" onchange="updateAddons(this, 'Private Local Guide', 199)" />
-                    <div>
-                      <div class="addon-name">🧑‍🦮 Private Local Guide (3 days)</div>
-                      <div class="addon-desc">An expert local guide dedicated entirely to your group for 3 days.</div>
-                      <div class="addon-price">+$199 / person</div>
-                    </div>
-                  </label>
-                  <label class="addon-item" id="addon-photo">
-                    <input type="checkbox" onchange="updateAddons(this, 'Professional Photography', 299)" />
-                    <div>
-                      <div class="addon-name">📸 Professional Photography Session</div>
-                      <div class="addon-desc">A 2-hour shoot with a local professional photographer. Digital album included.</div>
-                      <div class="addon-price">+$299 / session</div>
-                    </div>
-                  </label>
-                  <label class="addon-item" id="addon-spa">
-                    <input type="checkbox" onchange="updateAddons(this, 'Spa Package', 179)" />
-                    <div>
-                      <div class="addon-name">💆 Luxury Spa Package</div>
-                      <div class="addon-desc">2 x 60-minute treatments including massage, facial, and sauna access.</div>
-                      <div class="addon-price">+$179 / person</div>
-                    </div>
-                  </label>
-                  <label class="addon-item" id="addon-dining">
-                    <input type="checkbox" onchange="updateAddons(this, 'Fine Dining Experience', 229)" />
-                    <div>
-                      <div class="addon-name">🍽 Exclusive Fine Dining Evening</div>
-                      <div class="addon-desc">Michelin-starred or top-rated local restaurant experience with curated wine pairing.</div>
-                      <div class="addon-price">+$229 / person</div>
-                    </div>
-                  </label>
-                  <label class="addon-item" id="addon-balloon">
-                    <input type="checkbox" onchange="updateAddons(this, 'Hot Air Balloon Ride', 349)" />
-                    <div>
-                      <div class="addon-name">🎈 Sunrise Hot Air Balloon</div>
-                      <div class="addon-desc">A once-in-a-lifetime sunrise balloon ride over iconic landscapes.</div>
-                      <div class="addon-price">+$349 / person</div>
-                    </div>
-                  </label>
-                  <label class="addon-item" id="addon-checklist">
-                    <input type="checkbox" onchange="updateAddons(this, 'Packing Kit Box', 79)" />
-                    <div>
-                      <div class="addon-name">🧳 WanderLux Packing Kit Box</div>
-                      <div class="addon-desc">Curated travel essentials kit delivered before departure. Includes adapters, organizers & more.</div>
-                      <div class="addon-price">+$79 / person</div>
-                    </div>
-                  </label>
+                  <div class="addon-item" id="addon-insurance" onclick="toggleAddon(this,'Travel Insurance',149)">
+                    <div class="addon-name">🛡 Comprehensive Travel Insurance</div>
+                    <div class="addon-desc">Full medical, cancellation, luggage &amp; delay coverage. Highly recommended.</div>
+                    <div class="addon-price">+<span data-usd="149">$149</span> / person</div>
+                  </div>
+                  <div class="addon-item" id="addon-transfer" onclick="toggleAddon(this,'Airport Transfers',89)">
+                    <div class="addon-name">🚐 Private Airport Transfers</div>
+                    <div class="addon-desc">Luxury vehicle pick-up &amp; drop-off at all airports and hotels.</div>
+                    <div class="addon-price">+<span data-usd="89">$89</span> / person</div>
+                  </div>
+                  <div class="addon-item" id="addon-guide" onclick="toggleAddon(this,'Private Local Guide',199)">
+                    <div class="addon-name">🧑‍🦮 Private Local Guide (3 days)</div>
+                    <div class="addon-desc">An expert local guide dedicated entirely to your group for 3 days.</div>
+                    <div class="addon-price">+<span data-usd="199">$199</span> / person</div>
+                  </div>
+                  <div class="addon-item" id="addon-photo" onclick="toggleAddon(this,'Professional Photography',299)">
+                    <div class="addon-name">📸 Professional Photography Session</div>
+                    <div class="addon-desc">A 2-hour shoot with a local professional photographer. Digital album included.</div>
+                    <div class="addon-price">+<span data-usd="299">$299</span> / session</div>
+                  </div>
+                  <div class="addon-item" id="addon-spa" onclick="toggleAddon(this,'Luxury Spa Package',179)">
+                    <div class="addon-name">💆 Luxury Spa Package</div>
+                    <div class="addon-desc">2 x 60-minute treatments including massage, facial, and sauna access.</div>
+                    <div class="addon-price">+<span data-usd="179">$179</span> / person</div>
+                  </div>
+                  <div class="addon-item" id="addon-dining" onclick="toggleAddon(this,'Fine Dining Experience',229)">
+                    <div class="addon-name">🍽 Exclusive Fine Dining Evening</div>
+                    <div class="addon-desc">Michelin-starred or top-rated local restaurant experience with curated wine pairing.</div>
+                    <div class="addon-price">+<span data-usd="229">$229</span> / person</div>
+                  </div>
+                  <div class="addon-item" id="addon-balloon" onclick="toggleAddon(this,'Hot Air Balloon Ride',349)">
+                    <div class="addon-name">🎈 Sunrise Hot Air Balloon</div>
+                    <div class="addon-desc">A once-in-a-lifetime sunrise balloon ride over iconic landscapes.</div>
+                    <div class="addon-price">+<span data-usd="349">$349</span> / person</div>
+                  </div>
+                  <div class="addon-item" id="addon-checklist" onclick="toggleAddon(this,'Packing Kit Box',79)">
+                    <div class="addon-name">🧳 WanderLux Packing Kit Box</div>
+                    <div class="addon-desc">Curated travel essentials kit delivered before departure. Includes adapters, organizers &amp; more.</div>
+                    <div class="addon-price">+<span data-usd="79">$79</span> / person</div>
+                  </div>
                 </div>
 
                 <hr class="form-divider" />
@@ -760,17 +779,13 @@
         ? '$' + total.toLocaleString() : 'Custom Quote';
     }
 
-    function updateAddons(checkbox, name, price) {
-      const parent = checkbox.closest('.addon-item');
-      if (checkbox.checked) {
-        addonTotal += price;
-        parent.classList.add('selected');
-      } else {
-        addonTotal -= price;
-        parent.classList.remove('selected');
-      }
+    function toggleAddon(el, name, price) {
+      const on = el.classList.toggle('selected');
+      addonTotal += on ? price : -price;
       document.getElementById('summaryAddons').textContent = addonTotal > 0 ? '+$' + addonTotal.toLocaleString() : '$0';
-      const addedNames = [...document.querySelectorAll('.addon-item input:checked')].map(cb => cb.closest('.addon-item').querySelector('.addon-name').textContent.split(' ').slice(1).join(' ')).join(', ');
+      const addedNames = [...document.querySelectorAll('.addon-item.selected')]
+        .map(d => d.querySelector('.addon-name').textContent.replace(/^\S+\s/, ''))
+        .join(', ');
       document.getElementById('review-addons').textContent = addedNames || 'None selected';
       updateTotal();
     }

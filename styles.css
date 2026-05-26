@@ -176,9 +176,17 @@ input, select, textarea { font-family: inherit; }
 .nav-inner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
+  gap: 0;
 }
+
+/* Logo pinned left, never shrinks */
+.nav-logo  { flex-shrink: 0; }
+
+/* Links take all remaining space, centered */
+.nav-links { flex: 1; justify-content: center; }
+
+/* CTA pinned right, never shrinks */
+.nav-cta   { flex-shrink: 0; }
 
 .nav-logo {
   display: flex;
@@ -218,7 +226,7 @@ input, select, textarea { font-family: inherit; }
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .nav-links a {
@@ -1776,6 +1784,22 @@ footer {
   .booking-summary { position: static; }
 }
 
+/* ── Navbar squeeze fix: hide phone, tighten links ────────────── */
+@media (max-width: 980px) {
+  .nav-phone { display: none; }           /* reclaim the most space */
+  .nav-links  { gap: 1.1rem; }
+  .nav-inner  { gap: 1rem; }
+}
+
+/* ── Further squeeze: shrink the Get a Quote button ──────────── */
+@media (max-width: 860px) {
+  .nav-cta .btn-primary {
+    padding: .6rem 1rem;
+    font-size: .82rem;
+  }
+  .nav-links { gap: .85rem; font-size: .85rem; }
+}
+
 @media (max-width: 768px) {
   .nav-links, .nav-cta { display: none; }
   .hamburger { display: flex; }
@@ -1831,6 +1855,7 @@ footer {
   padding: 0;
   display: flex;
   align-items: center;
+  overflow: hidden;            /* clamp to exactly 36px — no wrapping bulge */
   transform: translateY(0);
   transition: transform .4s cubic-bezier(.4,0,.2,1);
 }
@@ -1845,14 +1870,17 @@ footer {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;           /* never wrap inside the bar */
+  min-width: 0;                /* allow flex children to shrink */
 }
 
 .trust-bar-items {
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .trust-bar-item {
@@ -2050,7 +2078,8 @@ footer {
   display: inline-block;
 }
 
-.chat-close {
+.chat-close,
+.chat-key-btn {
   background: rgba(255,255,255,.15);
   border: none;
   color: var(--white);
@@ -2062,8 +2091,10 @@ footer {
   cursor: pointer;
   font-size: .75rem;
   transition: background var(--transition);
+  flex-shrink: 0;
 }
-.chat-close:hover { background: rgba(255,255,255,.25); }
+.chat-close:hover,
+.chat-key-btn:hover { background: rgba(255,255,255,.28); }
 
 .chat-messages {
   padding: 1.25rem;
@@ -2188,6 +2219,63 @@ footer {
 }
 
 .chat-send:hover { background: var(--ocean-light); }
+
+/* ── Chat: online dot on avatar ─────────────────────────────── */
+.chat-agent-avatar {
+  position: relative;
+}
+.chat-online-dot {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 10px;
+  height: 10px;
+  background: #2ecc71;
+  border-radius: 50%;
+  border: 2px solid var(--navy);
+}
+
+/* ── Chat: typing indicator ─────────────────────────────────── */
+.typing-bubble {
+  display: flex !important;
+  align-items: center;
+  gap: 5px;
+  padding: .65rem 1rem !important;
+  min-width: 58px;
+}
+
+.typing-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--gray-400);
+  border-radius: 50%;
+  animation: typingBounce 1.3s ease-in-out infinite;
+  flex-shrink: 0;
+}
+.typing-dot:nth-child(2) { animation-delay: .18s; }
+.typing-dot:nth-child(3) { animation-delay: .36s; }
+
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0);    opacity: .6; }
+  30%           { transform: translateY(-5px); opacity: 1;  }
+}
+
+/* ── Chat: status dot beside agent name ─────────────────────── */
+.status-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: #2ecc71;
+  border-radius: 50%;
+  margin-right: 2px;
+  vertical-align: middle;
+  animation: pulse-status 2s ease-in-out infinite;
+}
+
+@keyframes pulse-status {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: .4; }
+}
 
 /* ── Price Alert Modal ──────────────────────────────────────── */
 #priceAlertModal {
@@ -2445,12 +2533,28 @@ footer {
 }
 
 /* ── Media query additions ──────────────────────────────────── */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+  /* Hide accreditation badges first */
   .trust-bar-accreditations { display: none; }
-  .trust-bar-items { gap: .85rem; }
+  .trust-bar-items { gap: 1rem; }
+}
+
+@media (max-width: 768px) {
+  .trust-bar-items { gap: .7rem; }
+  /* Hide middle two items — keep "Free consultation" + "24/7 Support" */
+  .trust-bar-item:nth-child(3),
+  .trust-bar-item:nth-child(4),
+  .trust-bar-divider:nth-child(2),
+  .trust-bar-divider:nth-child(3) { display: none; }
   .quiz-cta-inner { grid-template-columns: 1fr; }
   .quiz-cta-visual { display: none; }
   #chatPanel { width: calc(100vw - 3.5rem); right: 0; }
+}
+
+@media (max-width: 520px) {
+  /* Only currency switcher remains — hide all text items */
+  .trust-bar-items { display: none; }
+  .trust-bar-inner { justify-content: flex-end; }
 }
 
 @media (max-width: 480px) {
@@ -2483,84 +2587,65 @@ footer {
 /* ── Cursor spotlight ────────────────────────────────────────── */
 #cursorSpotlight {
   position: fixed;
+  top: 0;
+  left: 0;
   pointer-events: none;
   z-index: 9990;
-  width: 400px;
-  height: 400px;
+  width: 440px;
+  height: 440px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(201,168,76,.06) 0%, transparent 70%);
-  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(201,168,76,.07) 0%, transparent 68%);
+  /* JS drives: translate(mouseX - 220px, mouseY - 220px) */
+  will-change: transform;
   transition: opacity .4s ease;
   opacity: 0;
 }
 
 body:not(.touch-device) #cursorSpotlight { opacity: 1; }
 
-/* ── Custom cursor (desktop only) ───────────────────────────── */
-@media (hover: hover) and (pointer: fine) {
-  body { cursor: none; }
-  a, button, [role="button"], select, input, textarea, label { cursor: none; }
-}
-
+/* ── Custom cursor ring (desktop only) ──────────────────────── */
+/* Native pointer stays visible — this is an additive aura ring  */
 #customCursor {
   position: fixed;
+  top: 0;
+  left: 0;
   pointer-events: none;
   z-index: 99999;
-  mix-blend-mode: normal;
   transition: opacity .3s ease;
 }
 
-.cursor-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--gold);
-  border-radius: 50%;
-  position: absolute;
-  top: -4px;
-  left: -4px;
-  transition: transform .15s ease, width .25s ease, height .25s ease,
-              background .25s ease, top .25s ease, left .25s ease;
-}
+/* Dot is hidden — native cursor fills that role */
+.cursor-dot { display: none; }
 
 .cursor-ring {
   width: 36px;
   height: 36px;
-  border: 1.5px solid rgba(201,168,76,.5);
+  border: 1.5px solid rgba(201,168,76,.55);
   border-radius: 50%;
-  position: absolute;
-  top: -18px;
-  left: -18px;
-  transition: transform .08s ease, width .25s ease, height .25s ease,
-              top .25s ease, left .25s ease, border-color .25s ease,
-              background .25s ease;
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* translate(x - 18px, y - 18px) keeps the ring centred on the cursor */
+  will-change: transform;
+  transition: width .22s ease, height .22s ease,
+              border-color .22s ease, background .22s ease,
+              opacity .22s ease;
 }
 
-/* Cursor hover states */
-body.cursor-hover .cursor-dot {
-  width: 12px;
-  height: 12px;
-  top: -6px;
-  left: -6px;
-  background: var(--gold);
-}
-
+/* Hover state — ring grows slightly */
 body.cursor-hover .cursor-ring {
   width: 52px;
   height: 52px;
-  top: -26px;
-  left: -26px;
-  border-color: rgba(201,168,76,.7);
-  background: rgba(201,168,76,.05);
+  border-color: rgba(201,168,76,.75);
+  background: rgba(201,168,76,.06);
 }
 
-body.cursor-click .cursor-dot {
-  transform: scale(2);
-  background: var(--gold-light);
-}
-
+/* Click state — ring pulses inward */
 body.cursor-click .cursor-ring {
-  transform: scale(0.7);
+  width: 28px;
+  height: 28px;
   border-color: var(--gold);
+  background: rgba(201,168,76,.12);
 }
 
 /* ── Button ripple ───────────────────────────────────────────── */
@@ -2582,30 +2667,77 @@ body.cursor-click .cursor-ring {
   to { transform: scale(4); opacity: 0; }
 }
 
-/* ── 3-D card tilt ───────────────────────────────────────────── */
-.tilt-card {
-  transform-style: preserve-3d;
-  transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
-  will-change: transform;
+/* ── Card hover lift (pure CSS — composited, zero layout cost) ── */
+/* Destination & package cards */
+.dest-card,
+.pkg-card {
+  transition: transform .32s cubic-bezier(.34,1.4,.64,1),
+              box-shadow .32s ease;
+}
+.dest-card:hover,
+.pkg-card:hover {
+  transform: translateY(-7px) scale(1.015);
+  box-shadow: 0 22px 50px rgba(13,31,60,.22);
 }
 
-.tilt-card .tilt-shine {
+/* Agent cards */
+.agent-card {
+  transition: transform .32s cubic-bezier(.34,1.4,.64,1),
+              box-shadow .32s ease;
+}
+.agent-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 44px rgba(13,31,60,.18);
+}
+
+/* Testimonial cards */
+.testi-card {
+  transition: transform .32s cubic-bezier(.34,1.4,.64,1),
+              box-shadow .32s ease;
+}
+.testi-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(13,31,60,.14);
+}
+
+/* Profile mini cards */
+.profile-card-mini {
+  transition: transform .28s cubic-bezier(.34,1.4,.64,1),
+              box-shadow .28s ease, border-color .28s ease;
+}
+.profile-card-mini:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: var(--ocean);
+  box-shadow: 0 12px 30px rgba(26,111,168,.15);
+}
+
+/* Subtle diagonal glint on card hover via pseudo-element */
+.dest-card,
+.pkg-card,
+.agent-card {
+  overflow: hidden;
+  position: relative;
+}
+.dest-card::before,
+.pkg-card::before,
+.agent-card::before {
+  content: '';
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,.18) 0%, transparent 60%);
+  background: linear-gradient(135deg,
+    rgba(255,255,255,.10) 0%,
+    rgba(255,255,255,.02) 45%,
+    transparent 55%);
   opacity: 0;
   transition: opacity .3s ease;
   pointer-events: none;
-  z-index: 10;
+  z-index: 2;
 }
-
-.tilt-card:hover .tilt-shine { opacity: 1; }
-
-/* ── Magnetic button wrapper ─────────────────────────────────── */
-.magnetic-wrapper {
-  display: inline-block;
-  position: relative;
+.dest-card:hover::before,
+.pkg-card:hover::before,
+.agent-card:hover::before {
+  opacity: 1;
 }
 
 /* ── Page transition overlay ─────────────────────────────────── */
@@ -2677,14 +2809,7 @@ img.lazy-blur.loaded {
   100% { background-position: 200% center; }
 }
 
-/* ── Hover lift enhancement ──────────────────────────────────── */
-.dest-card,
-.pkg-card,
-.agent-card,
-.testi-card {
-  transition: transform .35s cubic-bezier(.34,1.56,.64,1),
-              box-shadow .35s ease;
-}
+/* Hover lift transitions live in the "Card hover lift" block above */
 
 /* ── Number counter ──────────────────────────────────────────── */
 .counter-num {
