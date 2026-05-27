@@ -76,17 +76,21 @@
           <button class="filter-btn" data-filter="family">👨‍👩‍👧 Family</button>
           <button class="filter-btn" data-filter="honeymoon">💑 Honeymoon</button>
         </div>
-        <select style="border:1.5px solid var(--gray-200); border-radius:50px; padding:.5rem 1.2rem; font-size:.85rem; color:var(--gray-600); cursor:pointer;">
-          <option>Sort: Most Popular</option>
-          <option>Price: Low to High</option>
-          <option>Price: High to Low</option>
-          <option>Duration: Short to Long</option>
-          <option>Highest Rated</option>
+        <select id="pkgSort" style="border:1.5px solid var(--gray-200); border-radius:50px; padding:.5rem 1.2rem; font-size:.85rem; color:var(--gray-600); cursor:pointer;">
+          <option value="popular">Sort: Most Popular</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="duration-asc">Duration: Short to Long</option>
+          <option value="rating-desc">Highest Rated</option>
         </select>
       </div>
 
+      <!-- Flat results container (used when a filter or sort is active) -->
+      <div id="pkgResultsBar" style="display:none; margin-bottom:1.25rem; font-size:.9rem; color:var(--gray-600);"></div>
+      <div class="pkg-grid" id="pkgFlatGrid" style="display:none; margin-bottom:4rem;"></div>
+
       <!-- ─── SECTION: BEACH & ISLAND ─── -->
-      <div style="margin-bottom:4rem;">
+      <div class="pkg-section" style="margin-bottom:4rem;">
         <h2 style="font-family:var(--font-head); color:var(--navy); font-size:1.75rem; margin-bottom:1.75rem; padding-bottom:.75rem; border-bottom:2px solid var(--gray-200);">
           🏖 Beach & Island Getaways
         </h2>
@@ -180,7 +184,7 @@
       </div>
 
       <!-- ─── SECTION: CULTURE & HISTORY ─── -->
-      <div style="margin-bottom:4rem;">
+      <div class="pkg-section" style="margin-bottom:4rem;">
         <h2 style="font-family:var(--font-head); color:var(--navy); font-size:1.75rem; margin-bottom:1.75rem; padding-bottom:.75rem; border-bottom:2px solid var(--gray-200);">
           🏛 Cultural & City Experiences
         </h2>
@@ -268,11 +272,33 @@
             </div>
           </div>
 
+          <div class="pkg-card" data-cat="culture adventure family">
+            <div class="pkg-img">
+              <img src="https://images.unsplash.com/photo-1576771304215-6d4d30f7bb63?w=700&q=80" alt="Québec City" loading="lazy" />
+              <span class="pkg-ribbon new">New</span>
+            </div>
+            <div class="pkg-body">
+              <div class="pkg-country">🇨🇦 Québec, Canada</div>
+              <h3 class="pkg-title">Québec Gastronomie & Nature</h3>
+              <p class="pkg-desc">Wander the UNESCO-listed Old Québec, taste your way through the Jean-Talon Market, hike the gorges of Jacques-Cartier National Park, and end each evening at a table d'hôte that rivals anything in Paris.</p>
+              <div class="pkg-perks">
+                <span class="pkg-perk"><i class="fas fa-utensils"></i> Gastronomy Tour</span>
+                <span class="pkg-perk"><i class="fas fa-hiking"></i> National Park Hike</span>
+                <span class="pkg-perk"><i class="fas fa-landmark"></i> Old City & Ramparts</span>
+                <span class="pkg-perk"><i class="fas fa-snowflake"></i> Winter Carnival Option</span>
+              </div>
+              <div class="pkg-footer">
+                <div class="pkg-price"><div class="from">From</div><div class="amount" data-usd="1899">$1,899</div><div class="per">/person • 7 nights</div></div>
+                <a href="booking.html" class="btn btn-primary" style="padding:.65rem 1.25rem; font-size:.85rem;">Book Now</a>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
 
       <!-- ─── SECTION: ADVENTURE ─── -->
-      <div style="margin-bottom:4rem;">
+      <div class="pkg-section" style="margin-bottom:4rem;">
         <h2 style="font-family:var(--font-head); color:var(--navy); font-size:1.75rem; margin-bottom:1.75rem; padding-bottom:.75rem; border-bottom:2px solid var(--gray-200);">
           🧗 Adventure & Wildlife Expeditions
         </h2>
@@ -364,7 +390,7 @@
       </div>
 
       <!-- ─── SECTION: FAMILY ─── -->
-      <div style="margin-bottom:4rem;">
+      <div class="pkg-section" style="margin-bottom:4rem;">
         <h2 style="font-family:var(--font-head); color:var(--navy); font-size:1.75rem; margin-bottom:1.75rem; padding-bottom:.75rem; border-bottom:2px solid var(--gray-200);">
           👨‍👩‍👧 Family-Friendly Holidays
         </h2>
