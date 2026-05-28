@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Staff Portal — WanderLux Travel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:    #0d1f3c;
+      --navy2:   #162d52;
+      --ocean:   #1a6fa8;
+      --gold:    #c9a84c;
+      --white:   #ffffff;
+      --g100:    #f4f6f9;
+      --g200:    #e8ecf1;
+      --g400:    #9aa5b4;
+      --g600:    #5a6475;
+      --g800:    #2c3344;
+      --green:   #1e8449;
+      --red:     #c0392b;
+      --radius:  10px;
+      --shadow:  0 4px 20px rgba(13,31,60,.1);
+      --tr:      .22s ease;
+      --font-h:  'Playfair Display', Georgia, serif;
+      --font-b:  'Inter', system-ui, sans-serif;
+    }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: var(--font-b); background: #eef1f6; color: var(--g800); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; font-family: inherit; }
+    input, select, textarea { font-family: inherit; font-size: .9rem; }
+
+    /* ── Login Screen ──────────────────────────────────────── */
+    #loginScreen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--navy) 0%, #1a3a6b 100%);
+      padding: 1.5rem;
+    }
+    .login-card {
+      background: var(--white);
+      border-radius: 18px;
+      padding: 2.75rem 2.5rem;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 24px 60px rgba(0,0,0,.25);
+      text-align: center;
+    }
+    .login-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .65rem;
+      margin-bottom: 1.75rem;
+    }
+    .login-logo-icon {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, var(--navy), var(--ocean));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--white); font-size: 1.2rem;
+    }
+    .login-logo-text { font-family: var(--font-h); font-size: 1.25rem; color: var(--navy); font-weight: 700; }
+    .login-badge {
+      display: inline-block;
+      background: rgba(201,168,76,.12);
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,.3);
+      border-radius: 20px;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .25rem .85rem;
+      margin-bottom: 1.5rem;
+    }
+    .login-card h2 { font-family: var(--font-h); font-size: 1.5rem; color: var(--navy); margin-bottom: .4rem; }
+    .login-card p  { font-size: .85rem; color: var(--g600); margin-bottom: 1.75rem; }
+    .pin-inputs {
+      display: flex; gap: .75rem; justify-content: center; margin-bottom: 1.5rem;
+    }
+    .pin-inputs input {
+      width: 56px; height: 64px;
+      border: 2px solid var(--g200);
+      border-radius: 10px;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--navy);
+      outline: none;
+      transition: border-color var(--tr), box-shadow var(--tr);
+      -webkit-text-security: disc;
+    }
+    .pin-inputs input:focus { border-color: var(--ocean); box-shadow: 0 0 0 3px rgba(26,111,168,.12); }
+    .pin-inputs input.error { border-color: var(--red); }
+    .login-btn {
+      width: 100%; padding: .85rem;
+      background: linear-gradient(135deg, var(--navy), var(--ocean));
+      color: var(--white);
+      border: none; border-radius: 10px;
+      font-size: 1rem; font-weight: 700;
+      letter-spacing: .03em;
+      transition: opacity var(--tr), transform var(--tr);
+    }
+    .login-btn:hover { opacity: .9; transform: translateY(-1px); }
+    .login-error {
+      color: var(--red); font-size: .82rem; margin-top: .9rem;
+      display: none;
+    }
+    .login-note { font-size: .75rem; color: var(--g400); margin-top: 1.25rem; }
+
+    /* ── Portal Layout ─────────────────────────────────────── */
+    #portal { display: none; min-height: 100vh; }
+
+    .sp-topbar {
+      background: var(--navy);
+      color: var(--white);
+      padding: 0 2rem;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,.2);
+    }
+    .sp-topbar-left { display: flex; align-items: center; gap: .85rem; }
+    .sp-topbar-logo { font-family: var(--font-h); font-size: 1.05rem; font-weight: 700; }
+    .sp-topbar-logo span { color: var(--gold); }
+    .sp-badge {
+      background: rgba(201,168,76,.18); color: var(--gold);
+      border: 1px solid rgba(201,168,76,.3);
+      font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      padding: .2rem .65rem; border-radius: 20px;
+    }
+    .sp-topbar-right { display: flex; align-items: center; gap: 1.25rem; }
+    .sp-staff-pill {
+      display: flex; align-items: center; gap: .5rem;
+      background: rgba(255,255,255,.08); border-radius: 20px;
+      padding: .3rem .85rem .3rem .5rem;
+      font-size: .82rem;
+    }
+    .sp-staff-avatar {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--ocean), var(--gold));
+      display: flex; align-items: center; justify-content: center;
+      font-size: .7rem; font-weight: 700;
+      color: var(--white);
+    }
+    .sp-logout {
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+      color: rgba(255,255,255,.75); border-radius: 8px;
+      padding: .35rem .85rem; font-size: .8rem; font-weight: 600;
+      transition: var(--tr);
+    }
+    .sp-logout:hover { background: rgba(255,255,255,.18); color: var(--white); }
+
+    .sp-main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    /* ── Tab nav ── */
+    .sp-tabs {
+      display: flex; gap: .5rem;
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: .35rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+      width: fit-content;
+    }
+    .sp-tab {
+      padding: .55rem 1.35rem;
+      border-radius: 7px;
+      border: none;
+      background: transparent;
+      font-size: .88rem; font-weight: 600;
+      color: var(--g600);
+      transition: var(--tr);
+      display: flex; align-items: center; gap: .4rem;
+    }
+    .sp-tab.active { background: var(--navy); color: var(--white); }
+    .sp-tab:not(.active):hover { background: var(--g100); color: var(--navy); }
+
+    /* ── Form card ── */
+    .sp-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+    .sp-card-header {
+      display: flex; align-items: center; gap: .75rem;
+      padding: 1.25rem 1.75rem;
+      border-bottom: 1.5px solid var(--g200);
+    }
+    .sp-card-icon {
+      width: 36px; height: 36px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, var(--navy), var(--ocean));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--white); font-size: .85rem;
+    }
+    .sp-card-header h3 { font-size: 1rem; font-weight: 700; color: var(--navy); }
+    .sp-card-header p  { font-size: .78rem; color: var(--g600); margin-top: .1rem; }
+    .sp-card-body { padding: 1.75rem; }
+
+    /* ── Form elements ── */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.1rem;
+    }
+    .form-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .form-grid.col-1  { grid-template-columns: 1fr; }
+    .form-group { display: flex; flex-direction: column; gap: .35rem; }
+    .form-group.span-2 { grid-column: span 2; }
+    .form-group.span-3 { grid-column: span 3; }
+    label {
+      font-size: .78rem; font-weight: 700; color: var(--navy);
+      letter-spacing: .02em; text-transform: uppercase;
+    }
+    label .req { color: #e74c3c; }
+    input[type="text"], input[type="email"], input[type="tel"],
+    input[type="date"], input[type="number"], select, textarea {
+      padding: .65rem .9rem;
+      border: 1.5px solid var(--g200);
+      border-radius: 8px;
+      font-size: .9rem;
+      color: var(--g800);
+      background: var(--white);
+      transition: border-color var(--tr), box-shadow var(--tr);
+      outline: none;
+      width: 100%;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--ocean);
+      box-shadow: 0 0 0 3px rgba(26,111,168,.1);
+    }
+    input.invalid, select.invalid, textarea.invalid {
+      border-color: var(--red);
+    }
+    textarea { resize: vertical; min-height: 90px; }
+    .field-hint { font-size: .72rem; color: var(--g400); margin-top: .15rem; }
+
+    /* ── Interest checkboxes ── */
+    .interest-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: .65rem;
+    }
+    .interest-chip {
+      display: flex; align-items: center; gap: .5rem;
+      border: 1.5px solid var(--g200);
+      border-radius: 8px;
+      padding: .6rem .9rem;
+      cursor: pointer;
+      transition: var(--tr);
+      user-select: none;
+      font-size: .85rem; font-weight: 600; color: var(--g800);
+    }
+    .interest-chip input { display: none; }
+    .interest-chip:hover { border-color: var(--ocean); background: rgba(26,111,168,.03); color: var(--navy); }
+    .interest-chip.checked {
+      border-color: var(--ocean);
+      background: rgba(26,111,168,.08);
+      color: var(--navy);
+    }
+    .interest-chip .dot {
+      width: 14px; height: 14px; border-radius: 50%;
+      border: 2px solid var(--g400);
+      flex-shrink: 0;
+      transition: var(--tr);
+    }
+    .interest-chip.checked .dot {
+      background: var(--ocean);
+      border-color: var(--ocean);
+    }
+
+    /* ── Priority selector ── */
+    .priority-group { display: flex; gap: .6rem; }
+    .priority-btn {
+      flex: 1; padding: .55rem .4rem;
+      border: 1.5px solid var(--g200);
+      border-radius: 8px;
+      background: transparent;
+      font-size: .8rem; font-weight: 700;
+      color: var(--g600);
+      transition: var(--tr);
+      text-align: center;
+    }
+    .priority-btn[data-p="low"].active    { border-color: #27ae60; background: rgba(39,174,96,.08); color: #1e8449; }
+    .priority-btn[data-p="medium"].active { border-color: var(--gold); background: rgba(201,168,76,.08); color: #a0762a; }
+    .priority-btn[data-p="high"].active   { border-color: #e67e22; background: rgba(230,126,34,.08); color: #c0642a; }
+    .priority-btn[data-p="urgent"].active { border-color: var(--red); background: rgba(192,57,43,.08); color: var(--red); }
+    .priority-btn:not(.active):hover { border-color: var(--g400); background: var(--g100); }
+
+    /* ── Section divider ── */
+    .sp-divider {
+      height: 1.5px; background: var(--g200);
+      margin: 1.75rem 0;
+    }
+
+    /* ── Action bar ── */
+    .sp-action-bar {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.25rem 1.75rem;
+      background: var(--g100);
+      border-top: 1.5px solid var(--g200);
+      flex-wrap: wrap;
+    }
+    .sp-action-bar .left { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
+    .sp-btn {
+      display: inline-flex; align-items: center; gap: .45rem;
+      padding: .65rem 1.35rem;
+      border-radius: 9px; border: none;
+      font-size: .88rem; font-weight: 700;
+      transition: var(--tr);
+    }
+    .sp-btn-primary {
+      background: linear-gradient(135deg, var(--navy), var(--ocean));
+      color: var(--white);
+    }
+    .sp-btn-primary:hover { opacity: .88; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(13,31,60,.2); }
+    .sp-btn-outline {
+      background: var(--white);
+      color: var(--navy);
+      border: 1.5px solid var(--g200);
+    }
+    .sp-btn-outline:hover { border-color: var(--navy); background: var(--g100); }
+    .sp-btn-danger {
+      background: transparent;
+      color: var(--red);
+      border: 1.5px solid rgba(192,57,43,.25);
+    }
+    .sp-btn-danger:hover { background: rgba(192,57,43,.06); border-color: var(--red); }
+    .save-status {
+      font-size: .8rem; color: var(--g600);
+      display: flex; align-items: center; gap: .4rem;
+    }
+    .save-status.saved { color: var(--green); }
+
+    /* ── Client list ── */
+    #clientsPane { display: none; }
+    .clients-toolbar {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 1.25rem; flex-wrap: wrap;
+    }
+    .search-wrap {
+      position: relative; flex: 1; min-width: 200px;
+    }
+    .search-wrap i {
+      position: absolute; left: .85rem; top: 50%;
+      transform: translateY(-50%);
+      color: var(--g400); font-size: .85rem;
+    }
+    .search-wrap input {
+      padding-left: 2.4rem;
+    }
+    .clients-count {
+      font-size: .82rem; color: var(--g600);
+      white-space: nowrap;
+    }
+    .clients-table-wrap {
+      background: var(--white); border-radius: var(--radius);
+      box-shadow: var(--shadow); overflow: hidden;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    thead tr { background: var(--navy); }
+    thead th {
+      padding: .8rem 1.1rem;
+      text-align: left; font-size: .72rem;
+      font-weight: 700; letter-spacing: .07em;
+      text-transform: uppercase; color: rgba(255,255,255,.65);
+    }
+    thead th:first-child { color: rgba(255,255,255,.4); width: 36px; padding-left: 1.25rem; }
+    tbody tr { border-bottom: 1px solid var(--g200); transition: background var(--tr); }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: rgba(26,111,168,.03); }
+    tbody td { padding: .85rem 1.1rem; font-size: .86rem; color: var(--g800); vertical-align: middle; }
+    tbody td:first-child { color: var(--g400); font-size: .75rem; padding-left: 1.25rem; }
+    .client-name { font-weight: 700; color: var(--navy); }
+    .client-sub  { font-size: .75rem; color: var(--g600); margin-top: .1rem; }
+    .pill {
+      display: inline-block;
+      padding: .2rem .65rem;
+      border-radius: 20px;
+      font-size: .72rem; font-weight: 700;
+    }
+    .pill-low    { background: rgba(39,174,96,.1);  color: #1a7a3c; }
+    .pill-medium { background: rgba(201,168,76,.1); color: #8a6022; }
+    .pill-high   { background: rgba(230,126,34,.1); color: #a04e10; }
+    .pill-urgent { background: rgba(192,57,43,.1);  color: #922b21; }
+    .pill-interest { background: rgba(26,111,168,.1); color: var(--ocean); margin: .1rem .15rem .1rem 0; }
+    .tbl-actions { display: flex; gap: .4rem; }
+    .tbl-btn {
+      padding: .3rem .65rem;
+      border-radius: 6px; border: 1px solid var(--g200);
+      background: var(--white); color: var(--g600);
+      font-size: .75rem; font-weight: 600;
+      transition: var(--tr);
+    }
+    .tbl-btn:hover { border-color: var(--ocean); color: var(--ocean); }
+    .tbl-btn.del:hover { border-color: var(--red); color: var(--red); }
+    .empty-state {
+      text-align: center; padding: 4rem 2rem;
+      color: var(--g400);
+    }
+    .empty-state i { font-size: 2.5rem; margin-bottom: 1rem; opacity: .4; display: block; }
+    .empty-state p { font-size: .9rem; }
+
+    /* ── Toast ── */
+    .sp-toast {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 9999;
+      background: var(--g800); color: var(--white);
+      padding: .75rem 1.25rem;
+      border-radius: 10px;
+      font-size: .88rem; font-weight: 600;
+      display: flex; align-items: center; gap: .6rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,.2);
+      animation: toastIn .25s ease forwards;
+      max-width: 340px;
+    }
+    .sp-toast.success { background: var(--green); }
+    .sp-toast.error   { background: var(--red); }
+    @keyframes toastIn  { from { opacity:0; transform: translateY(10px); } to { opacity:1; transform:none; } }
+    @keyframes toastOut { from { opacity:1; } to { opacity:0; transform: translateY(6px); } }
+
+    /* ── Confirm dialog ── */
+    .sp-confirm-overlay {
+      position: fixed; inset: 0; z-index: 8000;
+      background: rgba(13,31,60,.55); backdrop-filter: blur(4px);
+      display: none; align-items: center; justify-content: center; padding: 1rem;
+    }
+    .sp-confirm-overlay.open { display: flex; }
+    .sp-confirm-box {
+      background: var(--white); border-radius: 14px;
+      padding: 2rem 2rem 1.5rem;
+      max-width: 380px; width: 100%;
+      box-shadow: 0 20px 50px rgba(0,0,0,.2);
+      text-align: center;
+    }
+    .sp-confirm-box .icon { font-size: 2rem; margin-bottom: .75rem; }
+    .sp-confirm-box h4 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: .4rem; }
+    .sp-confirm-box p  { font-size: .85rem; color: var(--g600); margin-bottom: 1.5rem; }
+    .sp-confirm-btns   { display: flex; gap: .75rem; justify-content: center; }
+
+    /* ── Responsive ── */
+    @media (max-width: 720px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .form-grid.cols-3 { grid-template-columns: 1fr 1fr; }
+      .form-group.span-2, .form-group.span-3 { grid-column: span 1; }
+      .sp-main { padding: 1.5rem 1rem 3rem; }
+      .sp-card-body { padding: 1.25rem; }
+      .sp-topbar { padding: 0 1rem; }
+      .sp-topbar .sp-staff-pill span { display: none; }
+      table { font-size: .8rem; }
+      thead th:nth-child(4), thead th:nth-child(5),
+      tbody td:nth-child(4), tbody td:nth-child(5) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     LOGIN SCREEN
+══════════════════════════════════════════════ -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-logo-icon">✈</div>
+      <div class="login-logo-text">WanderLux</div>
+    </div>
+    <div class="login-badge">Staff Portal</div>
+    <h2>Staff Sign-In</h2>
+    <p>Enter your 4-digit PIN to access the client booking system.</p>
+    <div class="pin-inputs" id="pinInputs">
+      <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="off" />
+      <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="off" />
+      <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="off" />
+      <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="off" />
+    </div>
+    <button class="login-btn" id="loginBtn" onclick="attemptLogin()">
+      <i class="fas fa-unlock-alt"></i> Access Portal
+    </button>
+    <div class="login-error" id="loginError">
+      <i class="fas fa-exclamation-circle"></i> Incorrect PIN. Please try again.
+    </div>
+    <div class="login-note">For access issues, contact your system administrator.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PORTAL
+══════════════════════════════════════════════ -->
+<div id="portal">
+
+  <!-- Top bar -->
+  <div class="sp-topbar">
+    <div class="sp-topbar-left">
+      <div class="sp-topbar-logo">WanderLux <span>Staff Portal</span></div>
+      <div class="sp-badge">Internal</div>
+    </div>
+    <div class="sp-topbar-right">
+      <div class="sp-staff-pill">
+        <div class="sp-staff-avatar" id="staffInitials">ST</div>
+        <span id="staffName">Staff</span>
+      </div>
+      <div style="font-size:.78rem;color:rgba(255,255,255,.5);" id="portalDate"></div>
+      <button class="sp-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="sp-main">
+
+    <!-- Tabs -->
+    <div class="sp-tabs">
+      <button class="sp-tab active" id="tab-new" onclick="switchTab('new')">
+        <i class="fas fa-user-plus"></i> New Client Booking
+      </button>
+      <button class="sp-tab" id="tab-clients" onclick="switchTab('clients')">
+        <i class="fas fa-list"></i> Client Records
+        <span id="clientCountBadge" style="background:var(--ocean);color:#fff;border-radius:20px;font-size:.68rem;padding:.1rem .5rem;margin-left:.2rem;display:none;"></span>
+      </button>
+    </div>
+
+    <!-- ── NEW BOOKING PANE ── -->
+    <div id="newPane">
+
+      <!-- Client Identity -->
+      <div class="sp-card">
+        <div class="sp-card-header">
+          <div class="sp-card-icon"><i class="fas fa-user"></i></div>
+          <div>
+            <h3>Client Information</h3>
+            <p>Personal details and contact information</p>
+          </div>
+        </div>
+        <div class="sp-card-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Title</label>
+              <select id="f-title">
+                <option>Mr.</option><option>Mrs.</option><option>Ms.</option>
+                <option>Dr.</option><option>Prof.</option><option>Mx.</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Client Priority <span class="req">*</span></label>
+              <div class="priority-group" id="priorityGroup">
+                <button type="button" class="priority-btn active" data-p="low" onclick="setPriority('low')">🟢 Low</button>
+                <button type="button" class="priority-btn" data-p="medium" onclick="setPriority('medium')">🟡 Medium</button>
+                <button type="button" class="priority-btn" data-p="high" onclick="setPriority('high')">🟠 High</button>
+                <button type="button" class="priority-btn" data-p="urgent" onclick="setPriority('urgent')">🔴 Urgent</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>First Name <span class="req">*</span></label>
+              <input type="text" id="f-fname" placeholder="First name" />
+            </div>
+            <div class="form-group">
+              <label>Last Name <span class="req">*</span></label>
+              <input type="text" id="f-lname" placeholder="Last name" />
+            </div>
+            <div class="form-group">
+              <label>Date of Birth</label>
+              <input type="date" id="f-dob" />
+            </div>
+            <div class="form-group">
+              <label>Nationality</label>
+              <select id="f-nationality">
+                <option value="">— Select —</option>
+                <option>American</option><option>British</option><option>Canadian</option>
+                <option>Australian</option><option>French</option><option>German</option>
+                <option>Japanese</option><option>Brazilian</option><option>Indian</option>
+                <option>Chinese</option><option>Spanish</option><option>Italian</option>
+                <option>Mexican</option><option>South African</option><option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Email Address <span class="req">*</span></label>
+              <input type="email" id="f-email" placeholder="client@example.com" />
+            </div>
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="tel" id="f-phone" placeholder="+1 (555) 000-0000" />
+            </div>
+            <div class="form-group">
+              <label>Country of Residence</label>
+              <select id="f-country">
+                <option value="">— Select —</option>
+                <option>United States</option><option>United Kingdom</option><option>Canada</option>
+                <option>Australia</option><option>France</option><option>Germany</option>
+                <option>Japan</option><option>Brazil</option><option>India</option>
+                <option>Spain</option><option>Italy</option><option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Client Source</label>
+              <select id="f-source">
+                <option value="">— Select —</option>
+                <option>Walk-in</option>
+                <option>Phone enquiry</option>
+                <option>Website enquiry form</option>
+                <option>Instagram / Social media</option>
+                <option>Referral — existing client</option>
+                <option>Travel magazine / press</option>
+                <option>Google / search</option>
+                <option>Corporate account</option>
+                <option>Travel fair / event</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="sp-divider"></div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Passport Number</label>
+              <input type="text" id="f-passport" placeholder="e.g. P123456789" autocomplete="off" />
+              <div class="field-hint">Stored locally — not transmitted externally.</div>
+            </div>
+            <div class="form-group">
+              <label>Passport Expiry</label>
+              <input type="date" id="f-passport-exp" />
+            </div>
+            <div class="form-group">
+              <label>Dietary Requirements</label>
+              <select id="f-dietary">
+                <option>None</option><option>Vegetarian</option><option>Vegan</option>
+                <option>Gluten-Free</option><option>Halal</option><option>Kosher</option>
+                <option>Nut Allergy</option><option>Dairy-Free</option><option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Accessibility Needs</label>
+              <select id="f-access">
+                <option>None</option><option>Wheelchair access required</option>
+                <option>Mobility assistance</option><option>Visual impairment</option>
+                <option>Hearing impairment</option><option>Other (see notes)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Travel Preferences -->
+      <div class="sp-card">
+        <div class="sp-card-header">
+          <div class="sp-card-icon"><i class="fas fa-globe"></i></div>
+          <div>
+            <h3>Travel Preferences & Interests</h3>
+            <p>Select all that apply — used to match the right packages</p>
+          </div>
+        </div>
+        <div class="sp-card-body">
+
+          <label style="display:block;margin-bottom:.75rem;">Travel Interests <span class="req">*</span></label>
+          <div class="interest-grid" id="interestGrid">
+            <label class="interest-chip" onclick="toggleChip(this)">
+              <input type="checkbox" value="Beach & Islands" />
+              <span class="dot"></span> 🏖 Beach & Islands
+            </label>
+            <label class="interest-chip" onclick="toggleChip(this)">
+              <input type="checkbox" value="Culture & History" />
+              <span class="dot"></span> 🏛 Culture & History
+            </label>
+            <label class="interest-chip" onclick="toggleChip(this)">
+              <input type="checkbox" value="Adventure & Hiking" />
+              <span class="dot"></span> 🧗 Adventure & Hiking
+            </label>
+            <label class="interest-chip" onclick="toggleChip(this)">
+              <input type="checkbox" value="Luxury & Wellness" />
+              <span class="dot"></span> 💎 Luxury & Wellness
+            </label>
+            <label class="interest-chip" onclick="toggleChip(this)">
+              <input type="checkbox" value="Family Travel" />
+              <span class="dot"></span> 👨‍👩‍👧 Family Travel
+            </label>
+            <label class="interest-chip" onclick="toggleChip(this)">
+              <input type="checkbox" value="Honeymoon / Romance" />
+              <span class="dot"></span> 💑 Honeymoon / Romance
+            </label>
+            <label class="interest-chip" onclick="toggleChip(this)">
+              <input type="checkbox" value="Food & Wine" />
+              <span class="dot"></span> 🍷 Food & Wine
+            </label>
+            <label class="interest-chip" onclick="toggleChip(this)">
+              <input type="checkbox" value="Wildlife & Safari" />
+              <span class="dot"></span> 🦁 Wildlife & Safari
+            </label>
+            <label class="interest-chip" onclick="toggleChip(this)">
+              <input type="checkbox" value="Ski & Winter Sports" />
+              <span class="dot"></span> ⛷ Ski & Winter Sports
+            </label>
+            <label class="interest-chip" onclick="toggleChip(this)">
+              <input type="checkbox" value="Cruise & Sailing" />
+              <span class="dot"></span> 🚢 Cruise & Sailing
+            </label>
+            <label class="interest-chip" onclick="toggleChip(this)">
+              <input type="checkbox" value="Photography Travel" />
+              <span class="dot"></span> 📸 Photography Travel
+            </label>
+            <label class="interest-chip" onclick="toggleChip(this)">
+              <input type="checkbox" value="Eco & Sustainable" />
+              <span class="dot"></span> 🌿 Eco & Sustainable
+            </label>
+          </div>
+
+          <div class="sp-divider"></div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Preferred Destination Region</label>
+              <select id="f-region">
+                <option value="">— No preference —</option>
+                <option>Europe</option><option>Southeast Asia</option><option>Indian Ocean</option>
+                <option>East Africa</option><option>The Americas</option><option>Middle East</option>
+                <option>Oceania / Pacific</option><option>Caribbean</option><option>South America</option>
+                <option>North Africa</option><option>Anywhere / Surprise me</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Preferred Hotel Style</label>
+              <select id="f-hotel">
+                <option>No preference</option>
+                <option>Boutique / Design hotel</option>
+                <option>5-Star luxury resort</option>
+                <option>Overwater or villa</option>
+                <option>Eco-lodge / tented camp</option>
+                <option>City hotel / urban</option>
+                <option>Ryokan / traditional inn</option>
+                <option>All-inclusive resort</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Budget per Person (USD)</label>
+              <select id="f-budget">
+                <option value="">— Select —</option>
+                <option>Under $2,000</option>
+                <option>$2,000 – $4,000</option>
+                <option>$4,000 – $8,000</option>
+                <option>$8,000 – $15,000</option>
+                <option>$15,000 – $30,000</option>
+                <option>$30,000+</option>
+                <option>Flexible / No limit</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Trip Type</label>
+              <select id="f-trip-type">
+                <option>Leisure / Holiday</option>
+                <option>Honeymoon / Anniversary</option>
+                <option>Family Trip</option>
+                <option>Adventure Expedition</option>
+                <option>Business & Leisure</option>
+                <option>Group / Corporate</option>
+                <option>Solo Travel</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trip Details -->
+      <div class="sp-card">
+        <div class="sp-card-header">
+          <div class="sp-card-icon"><i class="fas fa-calendar-alt"></i></div>
+          <div>
+            <h3>Trip Details</h3>
+            <p>Dates, traveler numbers, and package selection</p>
+          </div>
+        </div>
+        <div class="sp-card-body">
+          <div class="form-grid cols-3">
+            <div class="form-group">
+              <label>Departure Date</label>
+              <input type="date" id="f-depart" />
+            </div>
+            <div class="form-group">
+              <label>Return Date</label>
+              <input type="date" id="f-return" />
+            </div>
+            <div class="form-group">
+              <label>Flexibility</label>
+              <select id="f-flexibility">
+                <option>Fixed dates</option>
+                <option>±3 days flexible</option>
+                <option>±1 week flexible</option>
+                <option>Very flexible</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Adults</label>
+              <input type="number" id="f-adults" min="1" max="20" value="2" />
+            </div>
+            <div class="form-group">
+              <label>Children (under 18)</label>
+              <input type="number" id="f-children" min="0" max="10" value="0" />
+            </div>
+            <div class="form-group">
+              <label>Departure City / Airport</label>
+              <input type="text" id="f-departure-city" placeholder="e.g. New York (JFK)" />
+            </div>
+            <div class="form-group span-2">
+              <label>Package of Interest</label>
+              <select id="f-package">
+                <option value="">— Not yet decided —</option>
+                <option>🇲🇻 Maldives Overwater Bungalow Escape</option>
+                <option>🇬🇷 Santorini Sunset & Wine Tour</option>
+                <option>🇮🇩 Bali Spirit & Adventure Journey</option>
+                <option>🇸🇨 Seychelles Private Island Retreat</option>
+                <option>🇫🇷 Paris Art, Food & Romance</option>
+                <option>🇯🇵 Japan Cherry Blossom Grand Tour</option>
+                <option>🇲🇦 Morocco Spice Route Adventure</option>
+                <option>🇮🇹 Italian Dolce Vita Experience</option>
+                <option>🇨🇦 Québec Gastronomie & Nature</option>
+                <option>🇰🇪 East Africa Safari & Big Five</option>
+                <option>🇦🇷🇨🇱 Patagonia: End of the World Trek</option>
+                <option>🇨🇷 Costa Rica Eco-Adventure</option>
+                <option>🇳🇵 Everest Base Camp Trek</option>
+                <option>🇺🇸 Hawaii Multi-Island Family Fun</option>
+                <option>🇳🇱 Benelux Cities Family Tour</option>
+                <option>🇮🇸 Iceland Northern Lights & Geysers</option>
+                <option>✍️ Custom / Bespoke Itinerary</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Assigned Agent</label>
+              <select id="f-agent">
+                <option value="">— Assign later —</option>
+                <option>Sophia Laurent</option>
+                <option>Marcus Reid</option>
+                <option>Aiko Tanaka</option>
+                <option>Daniel Moreno</option>
+                <option>Priya Mehta</option>
+                <option>James Okafor</option>
+                <option>Elena Vasquez</option>
+                <option>Yusuf Al-Rashid</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Internal Notes -->
+      <div class="sp-card">
+        <div class="sp-card-header">
+          <div class="sp-card-icon"><i class="fas fa-lock"></i></div>
+          <div>
+            <h3>Internal Staff Notes</h3>
+            <p>Visible to staff only — not shared with the client</p>
+          </div>
+        </div>
+        <div class="sp-card-body">
+          <div class="form-grid col-1">
+            <div class="form-group">
+              <label>Client Notes & Preferences (Internal)</label>
+              <textarea id="f-notes" rows="4" placeholder="e.g. VIP returning client, prefers window seats, allergic to shellfish, celebrating 10th anniversary — arrange a room decoration surprise…"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Follow-Up Date</label>
+              <input type="date" id="f-followup" style="max-width:240px;" />
+              <div class="field-hint">Schedule when to next contact this client.</div>
+            </div>
+          </div>
+
+          <div class="sp-divider"></div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Booking Status</label>
+              <select id="f-status">
+                <option value="enquiry">🔵 New Enquiry</option>
+                <option value="proposal">🟡 Proposal Sent</option>
+                <option value="negotiating">🟠 Negotiating</option>
+                <option value="confirmed">🟢 Booking Confirmed</option>
+                <option value="travelling">✈️ Currently Travelling</option>
+                <option value="completed">✅ Trip Completed</option>
+                <option value="cancelled">❌ Cancelled</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Enquiry Channel</label>
+              <select id="f-channel">
+                <option>In-person consultation</option>
+                <option>Phone call</option>
+                <option>Website form</option>
+                <option>Email</option>
+                <option>Live chat</option>
+                <option>WhatsApp / SMS</option>
+                <option>Social media DM</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action bar -->
+        <div class="sp-action-bar">
+          <div class="left">
+            <button class="sp-btn sp-btn-primary" onclick="saveClient()">
+              <i class="fas fa-save"></i> Save Client Record
+            </button>
+            <button class="sp-btn sp-btn-outline" onclick="clearForm()">
+              <i class="fas fa-times"></i> Clear Form
+            </button>
+          </div>
+          <div class="save-status" id="saveStatus"></div>
+        </div>
+      </div>
+
+    </div><!-- /newPane -->
+
+    <!-- ── CLIENTS PANE ── -->
+    <div id="clientsPane">
+      <div class="clients-toolbar">
+        <div class="search-wrap">
+          <i class="fas fa-search"></i>
+          <input type="text" id="clientSearch" placeholder="Search by name, email, destination…" oninput="renderClients()" />
+        </div>
+        <div class="clients-count" id="clientsCount"></div>
+        <button class="sp-btn sp-btn-primary" onclick="switchTab('new')" style="white-space:nowrap;">
+          <i class="fas fa-plus"></i> New Client
+        </button>
+      </div>
+      <div class="clients-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Client</th>
+              <th>Interests</th>
+              <th>Package / Destination</th>
+              <th>Dates</th>
+              <th>Status</th>
+              <th>Priority</th>
+              <th>Agent</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="clientsTbody"></tbody>
+        </table>
+        <div class="empty-state" id="clientsEmpty" style="display:none;">
+          <i class="fas fa-folder-open"></i>
+          <p>No client records yet. Save your first client booking above.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /sp-main -->
+</div><!-- /portal -->
+
+<!-- Confirm dialog -->
+<div class="sp-confirm-overlay" id="confirmOverlay">
+  <div class="sp-confirm-box">
+    <div class="icon">🗑</div>
+    <h4>Delete Client Record?</h4>
+    <p>This action cannot be undone. The client record will be permanently removed.</p>
+    <div class="sp-confirm-btns">
+      <button class="sp-btn sp-btn-outline" onclick="closeConfirm()">Cancel</button>
+      <button class="sp-btn" style="background:var(--red);color:#fff;" id="confirmDeleteBtn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ── Config ─────────────────────────────────────────────── */
+  // Change this PIN and the staff name map to suit your team.
+  const STAFF_PINS = {
+    '1234': 'Staff Member',
+    '5678': 'Sophia Laurent',
+    '9012': 'Marcus Reid',
+    '3456': 'Aiko Tanaka',
+    '7890': 'Daniel Moreno',
+  };
+  const STORAGE_KEY = 'wl_staff_clients_v1';
+  const SESSION_KEY = 'wl_staff_session';
+
+  /* ── Session ─────────────────────────────────────────────── */
+  let currentStaffName = '';
+  let currentPriority  = 'low';
+  let pendingDeleteId  = null;
+
+  function checkSession() {
+    const s = sessionStorage.getItem(SESSION_KEY);
+    if (s) {
+      currentStaffName = s;
+      openPortal(s);
+    }
+  }
+
+  function openPortal(name) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('portal').style.display = 'block';
+    document.getElementById('staffName').textContent = name;
+    const initials = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+    document.getElementById('staffInitials').textContent = initials;
+    const now = new Date();
+    document.getElementById('portalDate').textContent =
+      now.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
+    renderClients();
+    updateClientBadge();
+  }
+
+  function logout() {
+    sessionStorage.removeItem(SESSION_KEY);
+    document.getElementById('portal').style.display = 'none';
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.querySelectorAll('.pin-inputs input').forEach(i => i.value = '');
+    document.getElementById('loginError').style.display = 'none';
+  }
+
+  /* ── Login ───────────────────────────────────────────────── */
+  (function initPinInputs() {
+    const inputs = document.querySelectorAll('.pin-inputs input');
+    inputs.forEach((inp, idx) => {
+      inp.addEventListener('input', () => {
+        inp.classList.remove('error');
+        document.getElementById('loginError').style.display = 'none';
+        if (inp.value && idx < inputs.length - 1) inputs[idx + 1].focus();
+      });
+      inp.addEventListener('keydown', e => {
+        if (e.key === 'Backspace' && !inp.value && idx > 0) inputs[idx - 1].focus();
+        if (e.key === 'Enter') attemptLogin();
+      });
+      // Accept only digits
+      inp.addEventListener('beforeinput', e => {
+        if (e.data && !/^\d$/.test(e.data)) e.preventDefault();
+      });
+    });
+    inputs[0].focus();
+  })();
+
+  function attemptLogin() {
+    const inputs = document.querySelectorAll('.pin-inputs input');
+    const pin = Array.from(inputs).map(i => i.value).join('');
+    if (pin.length < 4) {
+      inputs.forEach(i => i.classList.add('error'));
+      document.getElementById('loginError').style.display = 'block';
+      return;
+    }
+    const name = STAFF_PINS[pin];
+    if (name) {
+      currentStaffName = name;
+      sessionStorage.setItem(SESSION_KEY, name);
+      openPortal(name);
+    } else {
+      inputs.forEach(i => { i.value = ''; i.classList.add('error'); });
+      document.getElementById('loginError').style.display = 'block';
+      inputs[0].focus();
+    }
+  }
+
+  /* ── Tab switching ───────────────────────────────────────── */
+  function switchTab(tab) {
+    document.getElementById('newPane').style.display     = tab === 'new'     ? 'block' : 'none';
+    document.getElementById('clientsPane').style.display = tab === 'clients' ? 'block' : 'none';
+    document.getElementById('tab-new').classList.toggle('active',     tab === 'new');
+    document.getElementById('tab-clients').classList.toggle('active', tab === 'clients');
+    if (tab === 'clients') renderClients();
+  }
+
+  /* ── Interest chips ──────────────────────────────────────── */
+  function toggleChip(label) {
+    // The click already toggles the checkbox naturally; we just sync the class
+    setTimeout(() => {
+      const cb = label.querySelector('input[type="checkbox"]');
+      label.classList.toggle('checked', cb.checked);
+    }, 0);
+  }
+
+  function getInterests() {
+    return Array.from(document.querySelectorAll('#interestGrid input:checked'))
+                .map(i => i.value);
+  }
+
+  function setInterests(arr) {
+    document.querySelectorAll('#interestGrid label').forEach(label => {
+      const cb  = label.querySelector('input');
+      const on  = arr.includes(cb.value);
+      cb.checked = on;
+      label.classList.toggle('checked', on);
+    });
+  }
+
+  /* ── Priority ────────────────────────────────────────────── */
+  function setPriority(p) {
+    currentPriority = p;
+    document.querySelectorAll('.priority-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.p === p);
+    });
+  }
+
+  /* ── Data helpers ────────────────────────────────────────── */
+  function loadClients() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+    catch { return []; }
+  }
+  function saveClients(arr) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+  }
+
+  /* ── Save client ─────────────────────────────────────────── */
+  function saveClient() {
+    const fname = document.getElementById('f-fname').value.trim();
+    const lname = document.getElementById('f-lname').value.trim();
+    const email = document.getElementById('f-email').value.trim();
+
+    // Basic validation
+    let valid = true;
+    ['f-fname','f-lname','f-email'].forEach(id => {
+      const el = document.getElementById(id);
+      const empty = !el.value.trim();
+      el.classList.toggle('invalid', empty);
+      if (empty) valid = false;
+    });
+    if (!valid) {
+      showToast('Please fill in the required fields (name & email).', 'error');
+      return;
+    }
+
+    const client = {
+      id:          Date.now(),
+      createdBy:   currentStaffName,
+      createdAt:   new Date().toISOString(),
+      title:       document.getElementById('f-title').value,
+      firstName:   fname,
+      lastName:    lname,
+      dob:         document.getElementById('f-dob').value,
+      nationality: document.getElementById('f-nationality').value,
+      email,
+      phone:        document.getElementById('f-phone').value.trim(),
+      country:      document.getElementById('f-country').value,
+      source:       document.getElementById('f-source').value,
+      passport:     document.getElementById('f-passport').value.trim(),
+      passportExp:  document.getElementById('f-passport-exp').value,
+      dietary:      document.getElementById('f-dietary').value,
+      access:       document.getElementById('f-access').value,
+      interests:    getInterests(),
+      region:       document.getElementById('f-region').value,
+      hotel:        document.getElementById('f-hotel').value,
+      budget:       document.getElementById('f-budget').value,
+      tripType:     document.getElementById('f-trip-type').value,
+      depart:       document.getElementById('f-depart').value,
+      returnDate:   document.getElementById('f-return').value,
+      flexibility:  document.getElementById('f-flexibility').value,
+      adults:       document.getElementById('f-adults').value,
+      children:     document.getElementById('f-children').value,
+      depCity:      document.getElementById('f-departure-city').value.trim(),
+      package:      document.getElementById('f-package').value,
+      agent:        document.getElementById('f-agent').value,
+      notes:        document.getElementById('f-notes').value.trim(),
+      followUp:     document.getElementById('f-followup').value,
+      status:       document.getElementById('f-status').value,
+      channel:      document.getElementById('f-channel').value,
+      priority:     currentPriority,
+    };
+
+    const clients = loadClients();
+    clients.unshift(client);
+    saveClients(clients);
+    updateClientBadge();
+    showToast(`${fname} ${lname} saved successfully.`, 'success');
+
+    const el = document.getElementById('saveStatus');
+    el.className = 'save-status saved';
+    el.innerHTML = '<i class="fas fa-check-circle"></i> Saved ' + new Date().toLocaleTimeString();
+    setTimeout(() => { el.className = 'save-status'; el.innerHTML = ''; }, 5000);
+
+    clearForm();
+  }
+
+  /* ── Clear form ──────────────────────────────────────────── */
+  function clearForm() {
+    ['f-fname','f-lname','f-email','f-phone','f-passport','f-notes',
+     'f-departure-city','f-dob','f-passport-exp','f-depart','f-return','f-followup']
+      .forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.value = ''; el.classList.remove('invalid'); }
+      });
+    ['f-title','f-nationality','f-country','f-source','f-dietary','f-access',
+     'f-region','f-hotel','f-budget','f-trip-type','f-flexibility','f-package',
+     'f-agent','f-status','f-channel']
+      .forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.selectedIndex = 0;
+      });
+    document.getElementById('f-adults').value   = '2';
+    document.getElementById('f-children').value = '0';
+    setInterests([]);
+    setPriority('low');
+  }
+
+  /* ── Render client list ──────────────────────────────────── */
+  function renderClients() {
+    const clients = loadClients();
+    const q = (document.getElementById('clientSearch')?.value || '').toLowerCase();
+    const filtered = q
+      ? clients.filter(c =>
+          `${c.firstName} ${c.lastName} ${c.email} ${c.package} ${c.region}`.toLowerCase().includes(q)
+        )
+      : clients;
+
+    const tbody = document.getElementById('clientsTbody');
+    const empty = document.getElementById('clientsEmpty');
+
+    document.getElementById('clientsCount').textContent =
+      `${filtered.length} record${filtered.length !== 1 ? 's' : ''}`;
+
+    if (!filtered.length) {
+      tbody.innerHTML = '';
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+
+    const STATUS_LABELS = {
+      enquiry:     '🔵 Enquiry',
+      proposal:    '🟡 Proposal',
+      negotiating: '🟠 Negotiating',
+      confirmed:   '🟢 Confirmed',
+      travelling:  '✈️ Travelling',
+      completed:   '✅ Completed',
+      cancelled:   '❌ Cancelled',
+    };
+
+    tbody.innerHTML = filtered.map((c, i) => {
+      const chips = (c.interests || [])
+        .slice(0, 3)
+        .map(t => `<span class="pill pill-interest">${t.split(' ')[0]}</span>`)
+        .join('');
+      const moreInterests = c.interests?.length > 3
+        ? `<span class="pill pill-interest">+${c.interests.length - 3}</span>` : '';
+      const dateStr = c.depart
+        ? new Date(c.depart).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'2-digit' })
+        : '—';
+      return `
+        <tr>
+          <td>${filtered.length - i}</td>
+          <td>
+            <div class="client-name">${c.title} ${c.firstName} ${c.lastName}</div>
+            <div class="client-sub">${c.email}</div>
+          </td>
+          <td>${chips}${moreInterests}</td>
+          <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${c.package || '—'}</td>
+          <td>${dateStr}</td>
+          <td><span style="font-size:.8rem;">${STATUS_LABELS[c.status] || c.status}</span></td>
+          <td><span class="pill pill-${c.priority || 'low'}">${(c.priority || 'low').charAt(0).toUpperCase() + (c.priority||'low').slice(1)}</span></td>
+          <td style="font-size:.8rem;">${c.agent || '—'}</td>
+          <td>
+            <div class="tbl-actions">
+              <button class="tbl-btn" onclick="loadClient(${c.id})" title="Load & Edit">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="tbl-btn del" onclick="confirmDelete(${c.id})" title="Delete">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>`;
+    }).join('');
+  }
+
+  /* ── Load client into form ───────────────────────────────── */
+  function loadClient(id) {
+    const c = loadClients().find(x => x.id === id);
+    if (!c) return;
+
+    document.getElementById('f-title').value          = c.title || 'Mr.';
+    document.getElementById('f-fname').value           = c.firstName || '';
+    document.getElementById('f-lname').value           = c.lastName || '';
+    document.getElementById('f-dob').value             = c.dob || '';
+    document.getElementById('f-nationality').value     = c.nationality || '';
+    document.getElementById('f-email').value           = c.email || '';
+    document.getElementById('f-phone').value           = c.phone || '';
+    document.getElementById('f-country').value         = c.country || '';
+    document.getElementById('f-source').value          = c.source || '';
+    document.getElementById('f-passport').value        = c.passport || '';
+    document.getElementById('f-passport-exp').value    = c.passportExp || '';
+    document.getElementById('f-dietary').value         = c.dietary || 'None';
+    document.getElementById('f-access').value          = c.access || 'None';
+    document.getElementById('f-region').value          = c.region || '';
+    document.getElementById('f-hotel').value           = c.hotel || '';
+    document.getElementById('f-budget').value          = c.budget || '';
+    document.getElementById('f-trip-type').value       = c.tripType || '';
+    document.getElementById('f-depart').value          = c.depart || '';
+    document.getElementById('f-return').value          = c.returnDate || '';
+    document.getElementById('f-flexibility').value     = c.flexibility || '';
+    document.getElementById('f-adults').value          = c.adults || '2';
+    document.getElementById('f-children').value        = c.children || '0';
+    document.getElementById('f-departure-city').value  = c.depCity || '';
+    document.getElementById('f-package').value         = c.package || '';
+    document.getElementById('f-agent').value           = c.agent || '';
+    document.getElementById('f-notes').value           = c.notes || '';
+    document.getElementById('f-followup').value        = c.followUp || '';
+    document.getElementById('f-status').value          = c.status || 'enquiry';
+    document.getElementById('f-channel').value         = c.channel || '';
+    setInterests(c.interests || []);
+    setPriority(c.priority || 'low');
+
+    switchTab('new');
+    showToast(`${c.firstName} ${c.lastName} loaded for editing.`);
+  }
+
+  /* ── Delete client ───────────────────────────────────────── */
+  function confirmDelete(id) {
+    pendingDeleteId = id;
+    document.getElementById('confirmOverlay').classList.add('open');
+  }
+  function closeConfirm() {
+    pendingDeleteId = null;
+    document.getElementById('confirmOverlay').classList.remove('open');
+  }
+  document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
+    if (pendingDeleteId === null) return;
+    const clients = loadClients().filter(c => c.id !== pendingDeleteId);
+    saveClients(clients);
+    closeConfirm();
+    renderClients();
+    updateClientBadge();
+    showToast('Client record deleted.', 'error');
+  });
+  document.getElementById('confirmOverlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('confirmOverlay')) closeConfirm();
+  });
+
+  /* ── Badge ───────────────────────────────────────────────── */
+  function updateClientBadge() {
+    const n = loadClients().length;
+    const badge = document.getElementById('clientCountBadge');
+    badge.textContent = n;
+    badge.style.display = n > 0 ? 'inline' : 'none';
+  }
+
+  /* ── Toast ───────────────────────────────────────────────── */
+  function showToast(msg, type = '') {
+    document.querySelectorAll('.sp-toast').forEach(t => t.remove());
+    const t = document.createElement('div');
+    t.className = 'sp-toast' + (type ? ' ' + type : '');
+    const icon = type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
+    t.innerHTML = `<i class="fas ${icon}"></i> ${msg}`;
+    document.body.appendChild(t);
+    setTimeout(() => {
+      t.style.animation = 'toastOut .3s ease forwards';
+      setTimeout(() => t.remove(), 300);
+    }, 3000);
+  }
+
+  /* ── Init ────────────────────────────────────────────────── */
+  checkSession();
+</script>
+</body>
+</html>

@@ -226,7 +226,7 @@ input, select, textarea { font-family: inherit; }
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.1rem;
 }
 
 .nav-links a {
@@ -263,7 +263,27 @@ input, select, textarea { font-family: inherit; }
 .nav-cta {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: .75rem;
+}
+
+/* ── Staff portal nav button ──────────────────────────────── */
+.nav-staff-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,.4);
+  font-size: .75rem;
+  transition: var(--transition);
+  border: 1.5px solid rgba(255,255,255,.15);
+  flex-shrink: 0;
+}
+.nav-staff-btn:hover {
+  color: var(--gold);
+  border-color: rgba(201,168,76,.6);
+  background: rgba(201,168,76,.1);
 }
 
 .nav-phone {
@@ -1785,23 +1805,26 @@ footer {
 }
 
 /* ── Navbar squeeze fix: hide phone, tighten links ────────────── */
-@media (max-width: 980px) {
-  .nav-phone { display: none; }           /* reclaim the most space */
-  .nav-links  { gap: 1.1rem; }
-  .nav-inner  { gap: 1rem; }
+@media (max-width: 1080px) {
+  .nav-phone { display: none; }
+  .nav-links  { gap: .85rem; }
+  .nav-inner  { gap: .75rem; }
 }
 
 /* ── Further squeeze: shrink the Get a Quote button ──────────── */
-@media (max-width: 860px) {
+@media (max-width: 900px) {
   .nav-cta .btn-primary {
-    padding: .6rem 1rem;
-    font-size: .82rem;
+    padding: .55rem .9rem;
+    font-size: .8rem;
   }
-  .nav-links { gap: .85rem; font-size: .85rem; }
+  .nav-links { gap: .65rem; font-size: .82rem; }
 }
 
 @media (max-width: 768px) {
-  .nav-links, .nav-cta { display: none; }
+  .nav-links { display: none; }
+  /* Keep nav-cta visible but only show the staff lock icon */
+  .nav-cta .nav-phone,
+  .nav-cta .btn-primary { display: none; }
   .hamburger { display: flex; }
 
   .nav-links.open {
