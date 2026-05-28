@@ -551,6 +551,385 @@ if (filterBtns.length && destCards.length) {
 })();
 
 // ══════════════════════════════════════════════════════════════
+//  DESTINATION DETAILS MODAL
+// ══════════════════════════════════════════════════════════════
+(function initDestDetailsModal() {
+  const DEST_DETAILS = {
+    'maldives-bungalow': {
+      title: 'Maldives Overwater Bungalow Escape',
+      location: '🇲🇻 Maldives, Indian Ocean',
+      price: '$3,499', duration: '7 nights',
+      images: [
+        'https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=900&q=85',
+        'https://images.unsplash.com/photo-1540202404-a2f29b4b3f11?w=900&q=85',
+        'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=900&q=85',
+        'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=900&q=85',
+      ],
+      description: 'Spend seven luminous nights in a glass-floored overwater villa suspended above the turquoise lagoon of North Malé Atoll. Wake to the sound of gentle waves directly beneath your feet, step off your private sun deck straight into the warm Indian Ocean, and let the world\'s most pristine coral reef unfold beneath you. Every detail — from daily spa credits to a moonlit sunset cruise — is curated so you never have to think about anything except absolute relaxation.',
+      highlights: ['Private infinity pool villa over the lagoon', 'Glass-floor panels revealing live coral reef', 'All-inclusive: gourmet meals, cocktails & non-alcoholic drinks', 'Guided snorkelling & scuba discovery dive', 'Sunset dolphin cruise & private sandbank picnic'],
+      included: ['Return international flights (economy)', 'Speedboat transfers from Malé airport', '7 nights overwater villa (all-inclusive)', 'Daily breakfast, lunch & dinner', '$200 spa credit per couple', 'Snorkelling gear & guided reef tours', '24/7 dedicated concierge'],
+      itinerary: ['Day 1 — Arrive Malé, speedboat transfer, welcome cocktail & villa check-in', 'Days 2–3 — Reef snorkelling, dolphin cruise, spa treatments', 'Days 4–5 — Sandbank picnic, sunset sailing, local island village visit', 'Days 6–7 — Scuba discovery dive, farewell dinner on the beach', 'Day 7 — Checkout & transfer to Malé airport'],
+    },
+    'santorini-sunset': {
+      title: 'Santorini Sunset & Wine Tour',
+      location: '🇬🇷 Santorini, Greece',
+      price: '$2,599', duration: '7 nights',
+      images: [
+        'https://images.unsplash.com/photo-1571366343168-631c5bcca7a4?w=900&q=85',
+        'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=900&q=85',
+        'https://images.unsplash.com/photo-1601581875309-fafbf2d3ed3a?w=900&q=85',
+        'https://images.unsplash.com/photo-1504512485720-7d83a16ee930?w=900&q=85',
+      ],
+      description: 'Perched on the rim of a submerged volcanic caldera, Santorini is one of the world\'s most dramatic landscapes. This curated week moves you through white-washed Cycladic villages, hidden wine caves carved into volcanic pumice, and cliff-side terraces where the sun melts into the Aegean in a blaze of gold and violet. A private catamaran day caps the experience with sea-cave swimming, onboard Greek feast, and the famous Oia sunset from the water.',
+      highlights: ['Clifftop cave-suite hotel with caldera panoramas', 'Private catamaran sailing day around the caldera', 'Guided Assyrtiko wine tasting at three estate wineries', 'Sunset dinner reservation at Oia\'s most acclaimed terrace', 'Guided tour of ancient Akrotiri ruins (Bronze Age Pompeii)'],
+      included: ['Return flights', '7 nights cave-suite hotel (B&B)', 'Full-day private catamaran cruise (lunch included)', 'Wine tour with 3 wineries & sommelier guide', 'Airport & port transfers', 'Akrotiri archaeological site guided tour'],
+      itinerary: ['Day 1 — Fly in, settle into cave suite, evening walk to Fira', 'Days 2–3 — Oia village exploration, wine tour, sunset from Oia', 'Day 4 — Full-day private catamaran (Red Beach, hot springs, swim stops)', 'Days 5–6 — Akrotiri ruins, black-sand beach, cooking class', 'Day 7 — Final caldera breakfast, transfer to airport'],
+    },
+    'bali-spirit': {
+      title: 'Bali Spirit & Adventure Journey',
+      location: '🇮🇩 Bali, Indonesia',
+      price: '$1,799', duration: '8 nights',
+      images: [
+        'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=900&q=85',
+        'https://images.unsplash.com/photo-1537953773345-d172ccf13cf4?w=900&q=85',
+        'https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=900&q=85',
+        'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=900&q=85',
+      ],
+      description: 'Bali rewards every type of traveller. This eight-night journey balances adrenaline with serenity — a 3 AM summit hike up the active Mount Batur volcano for a sunrise above the clouds, then rice-terrace trekking through Ubud\'s impossibly green landscape, temple ceremonies, an afternoon learning to cook Balinese spice pastes from scratch, and surf lessons at Seminyak\'s golden beach. Staying across two boutique villas, you\'ll feel the full spectrum of the Island of the Gods.',
+      highlights: ['Sunrise hike to the crater rim of Mt Batur (2,152 m)', 'Private Balinese cooking class in a family compound', 'Temple ceremony at Tanah Lot & Besakih Mother Temple', 'Surf lessons in Seminyak with a certified instructor', 'Morning yoga and sound-healing session in Ubud'],
+      included: ['Return flights', '4 nights Ubud jungle villa & 4 nights Seminyak beach villa', 'Daily breakfast', 'All guided activities (volcano hike, temples, cooking, yoga)', 'Airport & inter-villa transfers', 'Surf equipment & lessons'],
+      itinerary: ['Day 1 — Arrive Denpasar, transfer to Ubud jungle villa', 'Days 2–3 — Mt Batur sunrise hike, Ubud temple tour & cooking class', 'Days 4–5 — Tegalalang rice terrace trek, yoga retreat, Tanah Lot sunset', 'Day 6 — Transfer to Seminyak beach villa', 'Days 7–8 — Surf lessons, beach club, Besakih temple visit', 'Day 8 — Return transfer to Ngurah Rai Airport'],
+    },
+    'seychelles-private': {
+      title: 'Seychelles Private Island Retreat',
+      location: '🇸🇨 Seychelles, Indian Ocean',
+      price: '$4,899', duration: '9 nights',
+      images: [
+        'https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=900&q=85',
+        'https://images.unsplash.com/photo-1541480601022-2308c0f02487?w=900&q=85',
+        'https://images.unsplash.com/photo-1566202427-bac0eed99a29?w=900&q=85',
+        'https://images.unsplash.com/photo-1559628233-100c798642c4?w=900&q=85',
+      ],
+      description: 'There are fewer than 200 people on this island and you\'re one of them. The Seychelles inner islands combine one of the rarest geological spectacles on earth — ancient granite boulders that look sculpted by a giant — with beaches so white they almost hurt to look at and water so clear it reads as light rather than colour. A dedicated butler, a private beach, world-class seafood, and the profound stillness of a place that feels genuinely untouched.',
+      highlights: ['Dedicated personal butler throughout your stay', 'Private beach exclusive to your villa', 'Snorkelling the Sainte Anne Marine National Park', 'Island-hopping by private speedboat to Praslin & La Digue', 'Open-air seafood dinner under the stars on the beach'],
+      included: ['Return international flights', '9 nights private island resort (full board)', 'All meals & premium drinks', 'Dedicated butler service', 'Daily snorkelling & water-sports equipment', 'Island-hopping speedboat excursion', 'Seaplane or helicopter transfer from Mahé'],
+      itinerary: ['Day 1 — Fly to Mahé, helicopter transfer to private island, villa welcome', 'Days 2–4 — Reef snorkelling, kayaking, butler-arranged beach picnics', 'Days 5–6 — Island-hop to Praslin (Vallée de Mai, coco-de-mer palms) & La Digue (Anse Source d\'Argent)', 'Days 7–8 — Marine park dive, spa day, sunset catamaran', 'Day 9 — Farewell breakfast, helicopter return to Mahé, fly home'],
+    },
+    'paris-romance': {
+      title: 'Paris Art, Food & Romance',
+      location: '🇫🇷 Paris, France',
+      price: '$2,199', duration: '6 nights',
+      images: [
+        'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=900&q=85',
+        'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=900&q=85',
+        'https://images.unsplash.com/photo-1508050919630-b135583b29ab?w=900&q=85',
+        'https://images.unsplash.com/photo-1548885841-d3c05fb78cd3?w=900&q=85',
+      ],
+      description: 'Paris rewards those who go beyond the tourist trail. This six-night itinerary gets you into the Louvre before the doors open to the public, books you a table at a chef\'s-table dinner where the Michelin inspector eats, sends you to Versailles on a Tuesday when the crowds are thin, and finishes with Champagne on the Eiffel Tower\'s second-floor terrace as the lights of Paris come on below you. This is the city as Parisians experience it — beautiful, unhurried, and endlessly delicious.',
+      highlights: ['Early-access private Louvre tour (1 hour before public opening)', 'Michelin-starred chef\'s-table dinner for two', 'Champagne tasting at the Eiffel Tower second-floor terrace', 'Full-day Versailles palace & gardens guided tour', 'Morning croissant & coffee walking tour of Le Marais'],
+      included: ['Return flights', '6 nights 4-star hotel in 7th arrondissement', 'Daily breakfast', 'Private Louvre tour (guide & skip-the-line tickets)', 'Versailles day trip (transport, guide, palace entry)', 'Michelin dinner reservation & pre-paid deposit', 'Eiffel Tower summit tickets'],
+      itinerary: ['Day 1 — Arrive CDG, hotel check-in, Seine evening stroll', 'Day 2 — Early Louvre private tour, afternoon at Musée d\'Orsay', 'Day 3 — Versailles full-day excursion', 'Day 4 — Le Marais walking tour, Sainte-Chapelle, Michelin dinner', 'Day 5 — Montmartre & Sacré-Cœur, Eiffel Tower Champagne evening', 'Day 6 — Morning at leisure, CDG departure'],
+    },
+    'japan-cherry': {
+      title: 'Japan Cherry Blossom Grand Tour',
+      location: '🇯🇵 Tokyo & Kyoto, Japan',
+      price: '$2,899', duration: '9 nights',
+      images: [
+        'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=900&q=85',
+        'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=900&q=85',
+        'https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=900&q=85',
+        'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=900&q=85',
+      ],
+      description: 'Cherry blossom season transforms Japan into something from another world — pink canopies over ancient shrines, petals drifting across neon-lit streets, centuries of tradition colliding with futuristic design. This nine-night grand tour takes you from the controlled chaos of Shibuya to a centuries-old ryokan inn in the mountains of Hakone, then south on the bullet train to Kyoto\'s sublime temple gardens and the Arashiyama bamboo forest. A private tea ceremony in a wooden Machiya townhouse is the quiet highlight that stays with you longest.',
+      highlights: ['Timed sakura viewing at Shinjuku Gyoen & Maruyama Park', 'Overnight stay in a traditional Hakone mountain ryokan', 'Shinkansen (bullet train) Tokyo–Kyoto first class', 'Private tea ceremony in a restored Kyoto Machiya', 'Guided dawn walk through Arashiyama Bamboo Grove'],
+      included: ['Return international flights', '4 nights Tokyo (boutique hotel) + 2 nights Hakone ryokan + 3 nights Kyoto inn', 'JR Pass (14-day unlimited bullet train)', 'Daily breakfast (ryokan: full kaiseki dinner included)', 'Private tea ceremony & bamboo grove guided walk', 'All transfers & airport pickups'],
+      itinerary: ['Days 1–4 — Tokyo: Shibuya, Asakusa, TeamLab, Shinjuku Gyoen sakura', 'Day 5 — Transfer to Hakone ryokan: Mt Fuji views & onsen evening', 'Day 6 — Shinkansen to Kyoto, check into Kyoto inn', 'Days 7–8 — Fushimi Inari at dawn, Arashiyama bamboo, Nishiki Market, tea ceremony', 'Day 9 — Nara day trip (bowing deer!), fly home from Osaka Kansai'],
+    },
+    'morocco-spice': {
+      title: 'Morocco Spice Route Adventure',
+      location: '🇲🇦 Morocco, North Africa',
+      price: '$1,999', duration: '8 nights',
+      images: [
+        'https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=900&q=85',
+        'https://images.unsplash.com/photo-1548738671-3e38f55f31d4?w=900&q=85',
+        'https://images.unsplash.com/photo-1568219656418-15c329312bf1?w=900&q=85',
+        'https://images.unsplash.com/photo-1553913861-c0fddf2619ee?w=900&q=85',
+      ],
+      description: 'Morocco is a full sensory assault in the best possible way — the call to prayer echoing across rooftops of ochre-coloured medinas, the smell of cumin and saffron drifting from spice souks, the surreal silence of the Sahara at night broken only by the flicker of lantern light in a Berber luxury camp. This eight-night route moves from Marrakech to the Draa Valley to the desert dunes of Merzouga and back via the walled blue city of Chefchaouen.',
+      highlights: ['Two-night luxury glamping camp in the Sahara at Erg Chebbi', 'Sunset camel trek across the Merzouga dunes', 'Guided souk and tannery tour in Fès el-Bali (UNESCO medina)', 'Riad stay in Marrakech with rooftop Atlas Mountain views', 'Cooking class preparing a traditional tagine & couscous'],
+      included: ['Return international flights', 'All accommodation (riad Marrakech, Draa Valley lodge, Sahara camp, Fès riad)', 'Daily breakfast + most dinners', 'Private driver-guide throughout', 'Camel trek & Sahara overnight camp', 'All guided tours (medinas, tanneries, spice souk)', 'Airport transfers'],
+      itinerary: ['Days 1–2 — Marrakech: Djemaa el-Fna, Majorelle Garden, cooking class', 'Day 3 — Drive via Aït Ben Haddou kasbah to Draa Valley', 'Days 4–5 — Merzouga: afternoon camel trek, Sahara sunset, 2-night desert camp', 'Day 6 — Drive north through Middle Atlas cedar forests to Fès', 'Days 7–8 — Fès el-Bali medina, tanneries, Bou Inania medersa; fly home from Fès'],
+    },
+    'italy-dolce': {
+      title: 'Italian Dolce Vita Experience',
+      location: '🇮🇹 Rome & Amalfi, Italy',
+      price: '$3,199', duration: '10 nights',
+      images: [
+        'https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=900&q=85',
+        'https://images.unsplash.com/photo-1514890547357-a9ee288728e0?w=900&q=85',
+        'https://images.unsplash.com/photo-1554978989-b4fbd6254ce7?w=900&q=85',
+        'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=900&q=85',
+      ],
+      description: 'Italy at its most indulgent begins before sunrise at the Colosseum when it\'s empty of tourists and magnificent in golden light. Four days in Rome plunge you into two and a half thousand years of civilisation, then a private car winds you south along the Amalfi Coast\'s vertiginous cliff road to a terrace-villa in Positano where the sea glitters at the foot of coloured houses stacked up a cliff. The finale: a private yacht excursion to Capri and a limoncello tasting at a family grove above the azure water.',
+      highlights: ['Dawn private access to the Colosseum & Roman Forum (no crowds)', 'Amalfi Coast scenic drive with local guide', 'Private yacht excursion to Capri & Blue Grotto', 'Limoncello tasting at a family-run Sorrento grove', 'Pizza & pasta cooking class in a Naples trattoria'],
+      included: ['Return international flights', '4 nights Rome (4-star, near Trastevere) + 6 nights Amalfi Coast villa hotel', 'Daily breakfast', 'Private Rome dawn Colosseum tour', 'Amalfi Coast private car & guide', 'Private yacht (full day, crew, lunch & snorkelling)', 'Naples cooking class', 'All transfers'],
+      itinerary: ['Days 1–4 — Rome: Colosseum dawn, Vatican, Trevi Fountain, Borghese Gallery, cooking class', 'Day 5 — Private car south: Pompeii ruins, arrive Positano', 'Days 6–8 — Amalfi Coast: Ravello, Atrani, boat excursion to grottos', 'Days 9–10 — Private yacht to Capri, Blue Grotto, limoncello grove; fly home from Naples'],
+    },
+    'quebec-gastronomy': {
+      title: 'Québec Gastronomie & Nature',
+      location: '🇨🇦 Québec, Canada',
+      price: '$1,899', duration: '7 nights',
+      images: [
+        'https://images.unsplash.com/photo-1576771304215-6d4d30f7bb63?w=900&q=85',
+        'https://images.unsplash.com/photo-1541814974-e498a9fc5e7f?w=900&q=85',
+        'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&q=85',
+        'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=900&q=85',
+      ],
+      description: 'Old Québec is the only walled city north of Mexico and its cobblestone streets, the iconic Château Frontenac, and French-speaking terrasses feel transplanted straight from Normandy. But Québec is far more than its postcard image — the Jean-Talon Market is a seasonal feast of local produce, Jacques-Cartier National Park\'s sandstone gorges reward hikers with views rivalling the Canadian Rockies, and the farm-to-table restaurant scene quietly rivals anything in Montréal. Best of all, it\'s approachable — no language barrier, easy logistics, and genuinely warm welcome.',
+      highlights: ['Guided walk of UNESCO-listed Old Québec & Plains of Abraham', 'Farm-to-table dinner at one of Québec City\'s top restaurants', 'Hiking the Bras-du-Nord gorges in Jacques-Cartier National Park', 'Tasting tour of the Jean-Talon Market with a local chef', 'Île d\'Orléans cycling tour through apple orchards and cideries'],
+      included: ['Return flights', '7 nights boutique hotel in Old Québec (B&B)', 'Guided walking tour of the walled city & Plains of Abraham', 'Jacques-Cartier National Park day trip with hiking guide', 'Jean-Talon Market chef-led tasting tour', 'Île d\'Orléans cycling & cider tour', 'Airport transfers'],
+      itinerary: ['Day 1 — Fly to Québec City, check in to Old Québec hotel, evening on Rue Saint-Jean', 'Days 2–3 — Walled city walking tour, Château Frontenac, Plains of Abraham, Musée des Beaux-Arts', 'Day 4 — Jacques-Cartier National Park gorge hike (full day)', 'Days 5–6 — Jean-Talon Market tasting, Île d\'Orléans cycling & cidery tour, farewell dinner', 'Day 7 — Morning at leisure, airport transfer'],
+    },
+    'kenya-safari': {
+      title: 'East Africa Safari & Big Five',
+      location: '🇰🇪 Kenya & Tanzania, Africa',
+      price: '$4,299', duration: '10 nights',
+      images: [
+        'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=900&q=85',
+        'https://images.unsplash.com/photo-1549366021-9f761d450615?w=900&q=85',
+        'https://images.unsplash.com/photo-1535941339077-2dd1c7963098?w=900&q=85',
+        'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=900&q=85',
+      ],
+      description: 'Few experiences recalibrate your sense of scale like witnessing the Great Migration — a river of 1.5 million wildebeest and zebra thundering across the Mara River in a crossing that has no script and no guarantee. This ten-night expedition pairs the Maasai Mara with the Serengeti and Ngorongoro Crater, staying in small luxury tented camps where camp lanterns glow at dusk and the lions call at night. A dawn hot-air balloon flight delivers a perspective even the finest game drives cannot match.',
+      highlights: ['Guided game drives morning & evening across Maasai Mara & Serengeti', 'Hot-air balloon safari at sunrise over the savannah', 'Ngorongoro Crater full-day descent (world\'s largest caldera)', 'Maasai village cultural visit & warrior dance', 'Night game drive with spotlight (leopard & serval specialists)'],
+      included: ['Return international flights (including internal bush flights)', '10 nights luxury tented camps (full board)', 'All meals & non-alcoholic drinks at camp', 'All game drives in open 4×4 vehicles with expert guide', 'Balloon safari (champagne bush breakfast included)', 'Maasai village visit', 'Park entry fees & government levies'],
+      itinerary: ['Days 1–4 — Maasai Mara: morning & evening game drives, Mara River crossing viewpoint', 'Day 5 — Bush flight to the Serengeti, afternoon drive', 'Days 6–7 — Serengeti central: big cat territories, night drive', 'Day 8 — Balloon safari at dawn, bush breakfast, afternoon at leisure', 'Day 9 — Ngorongoro Crater full-day descent', 'Day 10 — Fly Arusha–Nairobi–home'],
+    },
+    'patagonia-trek': {
+      title: 'Patagonia: End of the World Trek',
+      location: '🇦🇷🇨🇱 Patagonia, South America',
+      price: '$3,599', duration: '12 nights',
+      images: [
+        'https://images.unsplash.com/photo-1531794612983-eb66a24dd2e5?w=900&q=85',
+        'https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=900&q=85',
+        'https://images.unsplash.com/photo-1493558103817-58b2924bce98?w=900&q=85',
+        'https://images.unsplash.com/photo-1510797215324-95aa89f43c33?w=900&q=85',
+      ],
+      description: 'At the very bottom of the world, where the Andes spine dissolves into the Southern Ice Field and the Pacific tears at fractured coastlines, Patagonia exists on a scale that makes you feel wonderfully small. The W-Trek circuit through Torres del Paine is among the planet\'s greatest multi-day hikes — turquoise lakes, seracs of the Grey Glacier calving into the water, and the three granite towers turning amber at sunrise. This twelve-night expedition pairs the Chilean park with Argentina\'s Perito Moreno glacier — the only advancing glacier on earth — and the gaucho cowboy culture of the pampas.',
+      highlights: ['W-Trek circuit hike in Torres del Paine (3 days)', 'Glacier Grey boat excursion to the ice wall', 'Perito Moreno glacier walkway (Argentina)', 'Wildlife spotting: condors, guanacos, pumas, Andean foxes', 'Estancia gaucho experience on the Patagonian steppe'],
+      included: ['Return international flights (Santiago or Buenos Aires)', 'All accommodation (lodges, refugios & estancia)', 'Daily breakfast + most dinners', 'Expert English-speaking trekking guide', 'Glacier Grey catamaran excursion', 'Perito Moreno boardwalk & boat tour', 'All internal transport'],
+      itinerary: ['Days 1–2 — Fly to Punta Arenas, transfer to Torres del Paine', 'Days 3–5 — W-Trek: Valle del Francés, Mirador Británico, Grey Glacier boat', 'Day 6 — Rest day + Estancia gaucho dinner', 'Days 7–8 — Fly Puerto Natales → El Calafate, Los Glaciares National Park', 'Days 9–10 — Perito Moreno glacier walkway and boat excursion', 'Days 11–12 — El Chaltén Fitzroy trek; fly home via Buenos Aires'],
+    },
+    'costa-rica-eco': {
+      title: 'Costa Rica Eco-Adventure',
+      location: '🇨🇷 Costa Rica, Central America',
+      price: '$2,499', duration: '10 nights',
+      images: [
+        'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=900&q=85',
+        'https://images.unsplash.com/photo-1591122959573-98792e45e3f5?w=900&q=85',
+        'https://images.unsplash.com/photo-1596014263847-e37a25e26949?w=900&q=85',
+        'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=900&q=85',
+      ],
+      description: '"Pura Vida" — pure life — is more than a slogan in Costa Rica; it\'s a philosophy you absorb without trying. In a country smaller than West Virginia, you can breakfast in a cloud forest with howler monkeys in the canopy overhead, zip-line above an active volcano at noon, watch leatherback sea turtles nesting on a dark-sand beach at midnight, and fall asleep in an eco-lodge perched above a Pacific surf break. Biodiversity here is staggering — over 500,000 species in 0.03% of Earth\'s surface.',
+      highlights: ['Zip-line over Monteverde Cloud Forest Reserve canopy', 'Arenal Volcano night hike & lava field walk', 'White-water rafting on the Río Pacuare (Class III–IV)', 'Tortuguero sea turtle nesting tour (July–October)', 'Corcovado National Park guided rainforest trek (most biodiverse on earth)'],
+      included: ['Return international flights', 'All accommodation (eco-lodges throughout)', 'Daily breakfast + several guided activity meals', 'All guided activities (zip-line, volcano hike, rafting, sea turtles, Corcovado)', 'Inter-regional transport (domestic flights/shuttles)', 'Arenal hot springs evening pass'],
+      itinerary: ['Days 1–3 — Arenal: volcano hike, hanging bridges, hot springs, waterfall hike', 'Days 4–5 — Monteverde Cloud Forest: zip-line, night walk, hummingbird garden', 'Days 6–7 — Pacuare River: 2-day rafting expedition & jungle lodge', 'Day 8 — Transfer to Osa Peninsula (Corcovado)', 'Days 9–10 — Corcovado National Park guided trek; return to San José, fly home'],
+    },
+    'nepal-everest': {
+      title: 'Everest Base Camp Trek',
+      location: '🇳🇵 Nepal, Himalayas',
+      price: '$2,799', duration: '14 nights',
+      images: [
+        'https://images.unsplash.com/photo-1523731407965-2430cd12f5e4?w=900&q=85',
+        'https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=900&q=85',
+        'https://images.unsplash.com/photo-1594387303855-9d959c38cf2d?w=900&q=85',
+        'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=900&q=85',
+      ],
+      description: 'The trek to Everest Base Camp is among the world\'s great pilgrimages — not because of its technical difficulty (it requires no ropes or crampons in normal conditions) but because of what it passes through: Sherpa villages where prayer flags flutter above stone monasteries, rhododendron forests turning crimson in April, and increasingly stark high-altitude terrain until the air thins and the south face of the world\'s highest mountain fills your entire field of vision. This 14-night itinerary includes two crucial acclimatisation days and is guided throughout by an experienced Sherpa team.',
+      highlights: ['Reach Everest Base Camp at 5,364 m (17,598 ft)', 'Summit Kala Patthar (5,643 m) for the classic Everest panorama', 'Visit Tengboche Monastery — highest monastery in the world', 'Acclimatisation day hike to Nangkartshang Peak above Dingboche', 'Sherpa cultural dinner in Namche Bazaar'],
+      included: ['Return flights to Kathmandu + Lukla scenic flight', 'All teahouse accommodation on trek', 'All meals (breakfast, lunch & dinner) throughout trek', 'Experienced English-speaking Sherpa guide & porters', 'Sagarmatha National Park permit & TIMS card', 'Comprehensive trek medical kit & oxygen', 'Optional helicopter return from Base Camp (upgrade)'],
+      itinerary: ['Days 1–2 — Fly Kathmandu → Lukla, trek to Phakding & Namche Bazaar', 'Day 3 — Acclimatisation day, Namche viewpoint, Sherpa Museum', 'Days 4–6 — Trek Tengboche Monastery, Dingboche (acclimatise day)', 'Days 7–8 — Lobuche → Gorak Shep → Everest Base Camp (Day 7 afternoon)', 'Day 9 — Pre-dawn Kala Patthar summit for sunrise; descend to Pheriche', 'Days 10–12 — Trek out to Lukla; Day 13 fly Lukla–Kathmandu', 'Day 14 — Cultural tour of Kathmandu; evening departure'],
+    },
+    'hawaii-family': {
+      title: 'Hawaii Multi-Island Family Fun',
+      location: '🇺🇸 Hawaii, USA',
+      price: '$2,999', duration: '10 nights',
+      images: [
+        'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&q=85',
+        'https://images.unsplash.com/photo-1542259009477-d625272157b7?w=900&q=85',
+        'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=900&q=85',
+        'https://images.unsplash.com/photo-1598135753163-6167c1a1ad65?w=900&q=85',
+      ],
+      description: 'Hawaii works for every family because it delivers grown-up wonder alongside pure childhood joy in equal measure. On Maui the kids snorkel with sea turtles at sunrise while adults watch from the boat; on the Big Island you stand at the edge of an active lava field and then cool off in a black-sand beach cove; on Oahu you catch your first wave at Waikiki, visit Pearl Harbor, and watch the sunset from Diamond Head crater. Three islands, ten nights, memories that stick for decades.',
+      highlights: ['Sea-turtle snorkelling at Molokini Crater, Maui (family-friendly)', 'Volcano National Park lava viewing & lava tube walk, Big Island', 'Waikiki Beach surfing lesson (all ages from 4+)', 'Polynesian Cultural Centre full-day experience', 'Road to Hana scenic drive with bamboo forest & waterfalls'],
+      included: ['Return domestic flights + inter-island flights', 'All accommodation (beach resorts each island)', 'Daily breakfast', 'All guided family activities (snorkel, volcano tour, surf lesson, cultural centre)', 'Rental car on Big Island & Maui', 'Airport and hotel transfers on Oahu'],
+      itinerary: ['Days 1–3 — Maui: Molokini snorkel, Road to Hana, Haleakalā sunrise', 'Days 4–5 — Fly to Big Island: Volcano NP lava tour, black-sand beach, manta-ray night snorkel', 'Days 6–7 — Fly to Oahu: Pearl Harbor, Polynesian Cultural Centre', 'Days 8–10 — Oahu: Waikiki surf lesson, Diamond Head hike, North Shore shrimp trucks, fly home'],
+    },
+    'benelux-family': {
+      title: 'Benelux Cities Family Tour',
+      location: '🇳🇱 Amsterdam & Brussels, Europe',
+      price: '$2,299', duration: '7 nights',
+      images: [
+        'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=85',
+        'https://images.unsplash.com/photo-1468136185887-40e24e2c48a1?w=900&q=85',
+        'https://images.unsplash.com/photo-1534350723404-8cf31bcd38d2?w=900&q=85',
+        'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=900&q=85',
+      ],
+      description: 'The Benelux is Europe at its most child-friendly and culturally rich. Amsterdam\'s canal ring is a UNESCO World Heritage cycling adventure waiting to happen — rent bakfiets (cargo bikes) and pedal the family across bridges and over drawbridges, stopping at the Anne Frank House and the Rijksmuseum. Then the Thalys train drops you in Brussels in 90 minutes, where Belgian chocolate workshops, waffle-eating contests, and the spectacular Grand-Place square await. Bruges adds medieval fairytale atmosphere by boat along its moated canals.',
+      highlights: ['Family cycling tour of Amsterdam\'s canal ring on cargo bikes', 'Amsterdam Rijksmuseum family-oriented guided visit', 'Belgian chocolate workshop in Brussels (hands-on, all ages)', 'Bruges canal boat tour through the "Venice of the North"', 'Brussels Grand-Place & Atomium visit'],
+      included: ['Return international flights', '4 nights Amsterdam + 3 nights Brussels/Bruges', 'Daily breakfast', 'Cargo bike hire & canal cycling tour', 'Thalys train Amsterdam–Brussels', 'Rijksmuseum family tickets & guide', 'Belgian chocolate workshop', 'Bruges canal boat & walking tour'],
+      itinerary: ['Days 1–4 — Amsterdam: canal cycling, Rijksmuseum, Anne Frank House, Vondelpark, Stroopwafel making', 'Day 5 — Thalys to Brussels, chocolate workshop, Grand-Place evening', 'Days 6–7 — Day trip to Bruges (canal boat, waffles, horse carriage); Brussels Atomium; fly home'],
+    },
+    'iceland-aurora': {
+      title: 'Iceland Northern Lights & Geysers',
+      location: '🇮🇸 Iceland, North Atlantic',
+      price: '$2,699', duration: '7 nights',
+      images: [
+        'https://images.unsplash.com/photo-1495562569060-2eec283d3391?w=900&q=85',
+        'https://images.unsplash.com/photo-1531766978-c4c03e3b0e51?w=900&q=85',
+        'https://images.unsplash.com/photo-1530866926589-463b1ff17453?w=900&q=85',
+        'https://images.unsplash.com/photo-1476610182048-b716b8518aae?w=900&q=85',
+      ],
+      description: 'Iceland sits on the intersection of the North American and Eurasian tectonic plates — and it shows. The landscape is volcanic in every sense: geysers exploding from fissures, lava fields that look fresh even though they\'re centuries old, waterfalls thundering over basalt columns carved by retreating glaciers. In winter, the Aurora Borealis dances overhead for up to six hours a night, painting the sky in curtains of green and violet. In summer, the Midnight Sun means you can hike at 11 PM in broad daylight. Iceland works in every season for every age.',
+      highlights: ['Guided Northern Lights hunt by 4×4 (October–March, 3 guaranteed excursions)', 'Blue Lagoon geothermal spa private lagoon entry (pre-reserved)', 'Golden Circle full day: Þingvellir, Geysir eruptions, Gullfoss waterfall', 'Vatnajökull glacier walk with crampons & ice axes', 'Puffin boat tour from Reykjavik harbour (May–August)'],
+      included: ['Return international flights', '7 nights accommodation (Reykjavik hotel + glacier-edge guesthouse)', 'Daily breakfast', '3 Northern Lights guided excursions (nights)', 'Blue Lagoon premium admission (pre-booked)', 'Golden Circle full-day guided tour', 'Glacier walk with equipment & guide', 'Reykjavik airport transfers + rental car (3 days)'],
+      itinerary: ['Days 1–2 — Fly to Reykjavik, Blue Lagoon afternoon, city exploration', 'Days 3–4 — Golden Circle: Þingvellir rift valley, Geysir eruption, Gullfoss; Northern Lights hunt night 1', 'Day 5 — South Coast: Seljalandsfoss waterfall walk-behind, Skógafoss, black-sand Reynisfjara beach', 'Day 6 — Vatnajökull glacier walk; Northern Lights nights 2 & 3', 'Day 7 — Reykjavik whale-watching boat; evening departure'],
+    },
+  };
+
+  // ── Build the modal DOM ──────────────────────────────────────
+  const modal = document.createElement('div');
+  modal.id = 'destDetailsModal';
+  modal.innerHTML = `
+    <div class="ddm-overlay"></div>
+    <div class="ddm-box" role="dialog" aria-modal="true" aria-labelledby="ddmTitle">
+      <button class="ddm-close" aria-label="Close"><i class="fas fa-times"></i></button>
+      <div class="ddm-inner">
+        <!-- Gallery column -->
+        <div class="ddm-gallery">
+          <div class="ddm-img-wrap">
+            <img class="ddm-img" src="" alt="" />
+            <button class="ddm-gal-btn ddm-prev" aria-label="Previous photo"><i class="fas fa-chevron-left"></i></button>
+            <button class="ddm-gal-btn ddm-next" aria-label="Next photo"><i class="fas fa-chevron-right"></i></button>
+            <div class="ddm-counter"></div>
+          </div>
+          <div class="ddm-thumbs"></div>
+        </div>
+        <!-- Info column -->
+        <div class="ddm-info">
+          <div class="ddm-loc"></div>
+          <h2 class="ddm-title" id="ddmTitle"></h2>
+          <div class="ddm-price-row">
+            <div class="ddm-price-block"><span class="ddm-from">From</span><span class="ddm-price"></span><span class="ddm-per"></span></div>
+          </div>
+          <p class="ddm-desc"></p>
+          <div class="ddm-section">
+            <div class="ddm-section-title"><i class="fas fa-star"></i> Highlights</div>
+            <ul class="ddm-highlights"></ul>
+          </div>
+          <div class="ddm-section">
+            <div class="ddm-section-title"><i class="fas fa-check-circle"></i> What's Included</div>
+            <ul class="ddm-included"></ul>
+          </div>
+          <div class="ddm-section ddm-itin-section">
+            <div class="ddm-section-title"><i class="fas fa-route"></i> Itinerary Overview</div>
+            <ol class="ddm-itinerary"></ol>
+          </div>
+          <a href="booking.html" class="btn btn-primary ddm-cta"><i class="fas fa-plane"></i> Book This Trip</a>
+        </div>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+
+  const overlay  = modal.querySelector('.ddm-overlay');
+  const box      = modal.querySelector('.ddm-box');
+  const closeBtn = modal.querySelector('.ddm-close');
+  const imgEl    = modal.querySelector('.ddm-img');
+  const prevBtn  = modal.querySelector('.ddm-prev');
+  const nextBtn  = modal.querySelector('.ddm-next');
+  const counter  = modal.querySelector('.ddm-counter');
+  const thumbsEl = modal.querySelector('.ddm-thumbs');
+
+  let currentImages = [];
+  let currentIdx    = 0;
+
+  function setImage(idx) {
+    currentIdx = (idx + currentImages.length) % currentImages.length;
+    imgEl.style.opacity = '0';
+    setTimeout(() => {
+      imgEl.src = currentImages[currentIdx];
+      imgEl.style.opacity = '1';
+    }, 150);
+    counter.textContent = `${currentIdx + 1} / ${currentImages.length}`;
+    thumbsEl.querySelectorAll('.ddm-thumb').forEach((t, i) => {
+      t.classList.toggle('active', i === currentIdx);
+    });
+  }
+
+  function openModal(destId) {
+    const d = DEST_DETAILS[destId];
+    if (!d) return;
+
+    // Populate text fields
+    modal.querySelector('.ddm-loc').textContent    = d.location;
+    modal.querySelector('.ddm-title').textContent  = d.title;
+    modal.querySelector('.ddm-price').textContent  = d.price;
+    modal.querySelector('.ddm-per').textContent    = `/ person · ${d.duration}`;
+    modal.querySelector('.ddm-desc').textContent   = d.description;
+
+    const hlEl = modal.querySelector('.ddm-highlights');
+    hlEl.innerHTML = d.highlights.map(h => `<li><i class="fas fa-check"></i> ${h}</li>`).join('');
+
+    const incEl = modal.querySelector('.ddm-included');
+    incEl.innerHTML = d.included.map(i => `<li><i class="fas fa-check"></i> ${i}</li>`).join('');
+
+    const itEl = modal.querySelector('.ddm-itinerary');
+    itEl.innerHTML = d.itinerary.map(s => `<li>${s}</li>`).join('');
+
+    // Gallery
+    currentImages = d.images;
+    thumbsEl.innerHTML = d.images.map((src, i) =>
+      `<img class="ddm-thumb${i === 0 ? ' active' : ''}" src="${src}" data-idx="${i}" alt="Photo ${i + 1}" loading="lazy" />`
+    ).join('');
+    thumbsEl.querySelectorAll('.ddm-thumb').forEach(t => {
+      t.addEventListener('click', () => setImage(parseInt(t.dataset.idx)));
+    });
+
+    imgEl.src = d.images[0];
+    currentIdx = 0;
+    counter.textContent = `1 / ${d.images.length}`;
+
+    // Open
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  prevBtn.addEventListener('click', () => setImage(currentIdx - 1));
+  nextBtn.addEventListener('click', () => setImage(currentIdx + 1));
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', closeModal);
+  document.addEventListener('keydown', e => {
+    if (!modal.classList.contains('open')) return;
+    if (e.key === 'Escape')     closeModal();
+    if (e.key === 'ArrowLeft')  setImage(currentIdx - 1);
+    if (e.key === 'ArrowRight') setImage(currentIdx + 1);
+  });
+
+  // Wire up all Details buttons
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.btn-see-details');
+    if (!btn) return;
+    const card = btn.closest('[data-dest-id]');
+    if (card) openModal(card.dataset.destId);
+  });
+})();
+
+// ══════════════════════════════════════════════════════════════
 //  PACKING GUIDE TABS
 // ══════════════════════════════════════════════════════════════
 const tabBtns     = document.querySelectorAll('.tab-btn[data-tab]');
